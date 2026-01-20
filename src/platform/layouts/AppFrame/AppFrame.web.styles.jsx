@@ -1,0 +1,184 @@
+/**
+ * AppFrame Web Styles
+ * Styled-components for Web platform
+ * File: AppFrame.web.styles.jsx
+ */
+
+import styled from 'styled-components';
+
+const StyledContainer = styled.div.withConfig({
+  displayName: 'StyledContainer',
+  componentId: 'StyledContainer',
+}).attrs(({ testID }) => ({
+  'data-testid': testID,
+}))`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  overflow: hidden;
+`;
+
+const StyledHeader = styled.header.withConfig({
+  displayName: 'StyledHeader',
+  componentId: 'StyledHeader',
+})`
+  /* Header surface is owned by the header component (e.g. GlobalHeader). */
+  padding: 0;
+  position: relative;
+  z-index: 3;
+`;
+
+const StyledBanner = styled.section.withConfig({
+  displayName: 'StyledBanner',
+  componentId: 'StyledBanner',
+})`
+  width: 100%;
+`;
+
+const StyledBreadcrumbs = styled.nav.withConfig({
+  displayName: 'StyledBreadcrumbs',
+  componentId: 'StyledBreadcrumbs',
+})`
+  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.md}px;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+`;
+
+const StyledBody = styled.div.withConfig({
+  displayName: 'StyledBody',
+  componentId: 'StyledBody',
+})`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+`;
+
+const StyledSidebar = styled.aside.withConfig({
+  displayName: 'StyledSidebar',
+  componentId: 'StyledSidebar',
+  shouldForwardProp: (prop) => !['sidebarWidth', 'sidebarCollapsed', 'collapsedWidth'].includes(prop),
+})`
+  display: none;
+  width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+  min-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+  max-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+  flex: 0 0 auto;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border-right: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+  overflow: hidden;
+  transition: width 0.2s ease;
+  position: relative;
+  box-shadow: ${({ theme }) => {
+    const shadow = theme.shadows?.sm;
+    if (!shadow) return 'none';
+    return `${shadow.shadowOffset?.width || 0}px ${shadow.shadowOffset?.height || 1}px ${shadow.shadowRadius || 2}px rgba(0, 0, 0, ${shadow.shadowOpacity || 0.1})`;
+  }};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}px) {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+`;
+
+const StyledContent = styled.main.withConfig({
+  displayName: 'StyledContent',
+  componentId: 'StyledContent',
+  shouldForwardProp: (prop) => prop !== 'hasSidebar',
+})`
+  flex: 1;
+  padding: ${({ theme }) => theme.spacing.md}px;
+  min-width: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md}px;
+  max-width: ${({ hasSidebar }) => (hasSidebar ? '100%' : '1200px')};
+  margin: 0;
+  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}px) {
+    padding: ${({ theme }) => theme.spacing.sm}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}px) {
+    padding: ${({ theme }) => theme.spacing.lg}px;
+  }
+`;
+
+const StyledContentBody = styled.div.withConfig({
+  displayName: 'StyledContentBody',
+  componentId: 'StyledContentBody',
+})`
+  flex: 1;
+  min-height: 0;
+`;
+
+const StyledFooter = styled.footer.withConfig({
+  displayName: 'StyledFooter',
+  componentId: 'StyledFooter',
+})`
+  /* Footer surface is owned by the footer component (e.g. GlobalFooter). */
+  background-color: transparent;
+  border-top: none;
+  padding: 0;
+  margin-top: auto;
+`;
+
+const StyledOverlay = styled.div.withConfig({
+  displayName: 'StyledOverlay',
+  componentId: 'StyledOverlay',
+})`
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.overlay.backdrop};
+  backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
+  -webkit-backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
+`;
+
+const StyledSkipLink = styled.a.withConfig({
+  displayName: 'StyledSkipLink',
+  componentId: 'StyledSkipLink',
+})`
+  position: absolute;
+  top: ${({ theme }) => -theme.spacing.xl - theme.spacing.sm}px;
+  left: 0;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.text.inverse};
+  padding: ${({ theme }) => theme.spacing.xs}px;
+  text-decoration: none;
+  z-index: 6;
+
+  &:focus {
+    top: 0;
+  }
+`;
+
+export {
+  StyledBody,
+  StyledBanner,
+  StyledBreadcrumbs,
+  StyledContainer,
+  StyledContent,
+  StyledContentBody,
+  StyledFooter,
+  StyledHeader,
+  StyledOverlay,
+  StyledSidebar,
+  StyledSkipLink,
+};

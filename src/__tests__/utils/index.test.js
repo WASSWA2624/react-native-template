@@ -14,6 +14,7 @@ describe('utils/index.js (barrel export)', () => {
     expect(utils.clamp).toBeDefined();
     expect(utils.normalizeWhitespace).toBeDefined();
     expect(utils.safeJsonParse).toBeDefined();
+    expect(utils.BANNER_VARIANTS).toBeDefined();
   });
 
   test('should export formatter functions', () => {
@@ -43,6 +44,7 @@ describe('utils/index.js (barrel export)', () => {
       'clamp',
       'normalizeWhitespace',
       'safeJsonParse',
+      'BANNER_VARIANTS',
     ];
     expectedExports.forEach((exportName) => {
       expect(utils).toHaveProperty(exportName);

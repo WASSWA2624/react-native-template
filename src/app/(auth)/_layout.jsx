@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Slot, useRouter } from 'expo-router';
+import { useShellBanners, useUiState } from '@hooks';
 import { useAuthGuard } from '@navigation/guards';
+import { AuthFrame } from '@platform/layouts';
+import { LoadingOverlay, NoticeSurface, ShellBanners } from '@platform/components';
+import GlobalFooter, { FOOTER_VARIANTS } from '@platform/components/navigation/GlobalFooter';
 
 /**
  * Auth Group Layout
@@ -18,6 +22,8 @@ import { useAuthGuard } from '@navigation/guards';
 const AuthLayout = () => {
   const router = useRouter();
   const { authenticated } = useAuthGuard({ skipRedirect: true });
+  const { isLoading } = useUiState();
+  const banners = useShellBanners();
   
   // Use ref to track if redirect has been performed to prevent multiple redirects
   const hasRedirected = useRef(false);
@@ -33,7 +39,25 @@ const AuthLayout = () => {
     }
   }, [authenticated, router]);
   
-  return <Slot />;
+  const bannerSlot = banners.length ? <ShellBanners banners={banners} testID="auth-shell-banners" /> : null;
+  const overlaySlot = isLoading ? <LoadingOverlay visible testID="auth-loading-overlay" /> : null;
+
+  return (
+    <AuthFrame
+      testID="auth-route-layout"
+      banner={bannerSlot}
+      overlay={overlaySlot}
+      notices={<NoticeSurface testID="auth-notice-surface" />}
+      footer={(
+        <GlobalFooter
+          variant={FOOTER_VARIANTS.AUTH}
+          testID="auth-footer"
+        />
+      )}
+    >
+      <Slot />
+    </AuthFrame>
+  );
 };
 
 export default AuthLayout;

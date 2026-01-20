@@ -7,6 +7,7 @@ import { networkListener, syncManager, hydration } from '@offline';
 import store from '@store';
 import { actions } from '@store/slices/network.slice';
 import { logger } from '@logging';
+import { NETWORK_QUALITY } from '@utils/networkQuality';
 
 jest.mock('@offline', () => ({
   networkListener: {
@@ -29,6 +30,7 @@ jest.mock('@store', () => ({
 jest.mock('@store/slices/network.slice', () => ({
   actions: {
     setOnline: jest.fn((isOnline) => ({ type: 'network/setOnline', payload: isOnline })),
+    setQuality: jest.fn((quality) => ({ type: 'network/setQuality', payload: quality })),
   },
 }));
 
@@ -44,7 +46,10 @@ jest.mock('@logging', () => ({
 describe('Offline Initialization', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    networkListener.checkConnectivity.mockResolvedValue(true);
+    networkListener.checkConnectivity.mockResolvedValue({
+      isOnline: true,
+      quality: NETWORK_QUALITY.GOOD,
+    });
     hydration.hydrate.mockResolvedValue({ queue: [] });
   });
 
@@ -68,28 +73,38 @@ describe('Offline Initialization', () => {
     expect(networkListener.subscribe).toHaveBeenCalledWith(expect.any(Function));
 
     // Simulate network status change
-    networkChangeCallback(false);
+    networkChangeCallback({ isOnline: false, quality: NETWORK_QUALITY.UNKNOWN });
     expect(store.dispatch).toHaveBeenCalledWith(actions.setOnline(false));
+    expect(store.dispatch).toHaveBeenCalledWith(actions.setQuality(NETWORK_QUALITY.UNKNOWN));
 
-    networkChangeCallback(true);
+    networkChangeCallback({ isOnline: true, quality: NETWORK_QUALITY.GOOD });
     expect(store.dispatch).toHaveBeenCalledWith(actions.setOnline(true));
+    expect(store.dispatch).toHaveBeenCalledWith(actions.setQuality(NETWORK_QUALITY.GOOD));
   });
 
   it('initializes current network status in Redux store', async () => {
-    networkListener.checkConnectivity.mockResolvedValue(true);
+    networkListener.checkConnectivity.mockResolvedValue({
+      isOnline: true,
+      quality: NETWORK_QUALITY.GOOD,
+    });
 
     await initOffline();
 
     expect(networkListener.checkConnectivity).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(actions.setOnline(true));
+    expect(store.dispatch).toHaveBeenCalledWith(actions.setQuality(NETWORK_QUALITY.GOOD));
   });
 
   it('initializes network status as offline when connectivity check returns false', async () => {
-    networkListener.checkConnectivity.mockResolvedValue(false);
+    networkListener.checkConnectivity.mockResolvedValue({
+      isOnline: false,
+      quality: NETWORK_QUALITY.UNKNOWN,
+    });
 
     await initOffline();
 
     expect(store.dispatch).toHaveBeenCalledWith(actions.setOnline(false));
+    expect(store.dispatch).toHaveBeenCalledWith(actions.setQuality(NETWORK_QUALITY.UNKNOWN));
   });
 
   it('triggers state hydration', async () => {

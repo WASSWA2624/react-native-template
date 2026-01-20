@@ -27,6 +27,15 @@ jest.mock('expo-router', () => ({
   Slot: ({ children }) => children || null,
 }));
 
+jest.mock('@hooks', () => ({
+  useI18n: () => ({
+    t: (key) => key,
+    locale: 'en',
+  }),
+  useUiState: () => ({ isLoading: false }),
+  useShellBanners: () => [],
+}));
+
 describe('AuthLayout with Auth Guard', () => {
   let mockRouter;
 

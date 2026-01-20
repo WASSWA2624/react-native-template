@@ -3,11 +3,13 @@
  * File: network.slice.test.js
  */
 import { actions, reducer } from '@store/slices/network.slice';
+import { NETWORK_QUALITY } from '@utils/networkQuality';
 
 describe('Network Slice', () => {
   const initialState = {
     isOnline: true,
     isSyncing: false,
+    quality: NETWORK_QUALITY.UNKNOWN,
   };
 
   beforeEach(() => {
@@ -29,7 +31,7 @@ describe('Network Slice', () => {
 
     it('should set online status to false', () => {
       const state = reducer(initialState, actions.setOnline(false));
-      expect(state.isOnline).toBe(false);
+    expect(state.isOnline).toBe(false);
     });
 
     it('should toggle online status', () => {
@@ -52,13 +54,20 @@ describe('Network Slice', () => {
     });
   });
 
+  describe('setQuality', () => {
+    it('should set network quality', () => {
+      const state = reducer(initialState, actions.setQuality(NETWORK_QUALITY.LOW));
+      expect(state.quality).toBe(NETWORK_QUALITY.LOW);
+    });
+  });
+
   describe('multiple actions', () => {
     it('should handle multiple state updates', () => {
       let state = reducer(initialState, actions.setOnline(false));
       state = reducer(state, actions.setSyncing(true));
 
       expect(state.isOnline).toBe(false);
-      expect(state.isSyncing).toBe(true);
+    expect(state.isSyncing).toBe(true);
     });
   });
 });

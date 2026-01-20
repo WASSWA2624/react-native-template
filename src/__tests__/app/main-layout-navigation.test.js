@@ -17,18 +17,55 @@ import MainRouteLayoutWeb from '@platform/layouts/route-layouts/MainRouteLayout/
 import MainRouteLayoutAndroid from '@platform/layouts/route-layouts/MainRouteLayout/MainRouteLayout.android';
 import MainRouteLayoutIOS from '@platform/layouts/route-layouts/MainRouteLayout/MainRouteLayout.ios';
 import { useAuthGuard } from '@navigation/guards';
-import { Header, TabBar, Sidebar } from '@platform/components';
+import { GlobalHeader, TabBar, Sidebar } from '@platform/components';
 import { Slot } from 'expo-router';
 
 // Mock dependencies
+const mockEnTranslations = require('@i18n/locales/en.json');
+jest.mock('@hooks', () => ({
+  useI18n: () => ({
+    t: (key) => {
+      const keys = key.split('.');
+      let value = mockEnTranslations;
+      for (const k of keys) {
+        value = value?.[k];
+        if (value === undefined) return key;
+      }
+      return value || key;
+    },
+    locale: 'en',
+  }),
+  usePrimaryNavigation: () => ({
+    mainItems: [
+      { id: 'home', label: 'Home', href: '/home' },
+    ],
+    patientItems: [
+      { id: 'home', label: 'Home', href: '/' },
+    ],
+    isItemVisible: jest.fn(() => true),
+  }),
+  useShellBanners: () => [],
+  useUiState: () => ({ isLoading: false }),
+}));
+
 jest.mock('@navigation/guards', () => ({
   useAuthGuard: jest.fn(),
 }));
 
 jest.mock('@platform/components', () => ({
-  Header: jest.fn(({ accessibilityLabel, testID, ...props }) => (
+  GlobalHeader: jest.fn(({ accessibilityLabel, testID, ...props }) => (
     <div data-testid={testID} aria-label={accessibilityLabel} {...props}>
-      Mock Header
+      Mock GlobalHeader
+    </div>
+  )),
+  LanguageControls: jest.fn(({ testID, ...props }) => (
+    <div data-testid={testID} {...props}>
+      Mock LanguageControls
+    </div>
+  )),
+  ThemeControls: jest.fn(({ testID, ...props }) => (
+    <div data-testid={testID} {...props}>
+      Mock ThemeControls
     </div>
   )),
   TabBar: jest.fn(({ accessibilityLabel, testID, ...props }) => (
@@ -41,6 +78,21 @@ jest.mock('@platform/components', () => ({
       Mock Sidebar
     </div>
   )),
+  ShellBanners: jest.fn(({ testID, ...props }) => (
+    <div data-testid={testID} {...props}>
+      Mock ShellBanners
+    </div>
+  )),
+  LoadingOverlay: jest.fn(({ testID, ...props }) => (
+    <div data-testid={testID} {...props}>
+      Mock LoadingOverlay
+    </div>
+  )),
+  NoticeSurface: jest.fn(({ testID, ...props }) => (
+    <div data-testid={testID} {...props}>
+      Mock NoticeSurface
+    </div>
+  )),
 }));
 
 jest.mock('@platform/layouts', () => {
@@ -48,6 +100,14 @@ jest.mock('@platform/layouts', () => {
   return {
     MainLayout: jest.fn(({ children, header, footer, sidebar, ...props }) => (
       <div data-testid="main-layout" {...props}>
+        {header}
+        {sidebar}
+        {children}
+        {footer}
+      </div>
+    )),
+    AppFrame: jest.fn(({ children, header, footer, sidebar, ...props }) => (
+      <div data-testid="app-frame" {...props}>
         {header}
         {sidebar}
         {children}
@@ -79,21 +139,21 @@ describe('MainLayout with Navigation Skeleton', () => {
   });
 
   describe('Mobile Platform (Android/iOS)', () => {
-    it('should render Header, Slot, and TabBar on iOS', () => {
+    it('should render GlobalHeader, Slot, and TabBar on iOS', () => {
       const { getByTestId } = render(<MainRouteLayoutIOS />);
 
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
     });
 
-    it('should render Header with correct accessibility props on iOS', () => {
+    it('should render GlobalHeader with correct accessibility props on iOS', () => {
       render(<MainRouteLayoutIOS />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation header',
+        accessibilityLabel: mockEnTranslations.navigation.header.title,
         testID: 'main-header',
       });
     });
@@ -104,7 +164,7 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(TabBar).toHaveBeenCalled();
       const tabBarCall = TabBar.mock.calls[0];
       expect(tabBarCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation tab bar',
+        accessibilityLabel: mockEnTranslations.navigation.tabBar.title,
         testID: 'main-tabbar',
       });
     });
@@ -118,19 +178,19 @@ describe('MainLayout with Navigation Skeleton', () => {
     it('should render correct layout structure on Android', () => {
       const { getByTestId } = render(<MainRouteLayoutAndroid />);
 
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
       expect(Sidebar).not.toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
     });
 
-    it('should render Header with correct accessibility props on Android', () => {
+    it('should render GlobalHeader with correct accessibility props on Android', () => {
       render(<MainRouteLayoutAndroid />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation header',
+        accessibilityLabel: mockEnTranslations.navigation.header.title,
         testID: 'main-header',
       });
     });
@@ -141,18 +201,18 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(TabBar).toHaveBeenCalled();
       const tabBarCall = TabBar.mock.calls[0];
       expect(tabBarCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation tab bar',
+        accessibilityLabel: mockEnTranslations.navigation.tabBar.title,
         testID: 'main-tabbar',
       });
     });
   });
 
   describe('Web Platform', () => {
-    it('should render Sidebar, Header, and Slot on web platform', () => {
+    it('should render Sidebar, GlobalHeader, and Slot on web platform', () => {
       const { getByTestId } = render(<MainRouteLayoutWeb />);
 
       expect(Sidebar).toHaveBeenCalled();
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
     });
 
@@ -162,18 +222,18 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(Sidebar).toHaveBeenCalled();
       const sidebarCall = Sidebar.mock.calls[0];
       expect(sidebarCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation sidebar',
+        accessibilityLabel: mockEnTranslations.navigation.sidebar.title,
         testID: 'main-sidebar',
       });
     });
 
-    it('should render Header with correct accessibility props on web', () => {
+    it('should render GlobalHeader with correct accessibility props on web', () => {
       render(<MainRouteLayoutWeb />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation header',
+        accessibilityLabel: mockEnTranslations.navigation.header.title,
         testID: 'main-header',
       });
     });
@@ -184,11 +244,11 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(TabBar).not.toHaveBeenCalled();
     });
 
-    it('should render correct layout structure on web (Sidebar + Header + Slot)', () => {
+    it('should render correct layout structure on web (Sidebar + GlobalHeader + Slot)', () => {
       const { getByTestId } = render(<MainRouteLayoutWeb />);
 
       expect(Sidebar).toHaveBeenCalled();
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).not.toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
     });
@@ -228,13 +288,13 @@ describe('MainLayout with Navigation Skeleton', () => {
   });
 
   describe('Accessibility', () => {
-    it('should provide accessibilityLabel for Header on iOS', () => {
+    it('should provide accessibilityLabel for GlobalHeader on iOS', () => {
       render(<MainRouteLayoutIOS />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation header',
+        accessibilityLabel: mockEnTranslations.navigation.header.title,
       });
     });
 
@@ -244,7 +304,7 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(TabBar).toHaveBeenCalled();
       const tabBarCall = TabBar.mock.calls[0];
       expect(tabBarCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation tab bar',
+        accessibilityLabel: mockEnTranslations.navigation.tabBar.title,
       });
     });
 
@@ -254,25 +314,25 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(Sidebar).toHaveBeenCalled();
       const sidebarCall = Sidebar.mock.calls[0];
       expect(sidebarCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation sidebar',
+        accessibilityLabel: mockEnTranslations.navigation.sidebar.title,
       });
     });
 
-    it('should provide accessibilityLabel for Header on web', () => {
+    it('should provide accessibilityLabel for GlobalHeader on web', () => {
       render(<MainRouteLayoutWeb />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
-        accessibilityLabel: 'Main navigation header',
+        accessibilityLabel: mockEnTranslations.navigation.header.title,
       });
     });
 
     it('should provide testID for all navigation components on iOS', () => {
       render(<MainRouteLayoutIOS />);
 
-      expect(Header).toHaveBeenCalled();
-      const headerCall = Header.mock.calls[0];
+      expect(GlobalHeader).toHaveBeenCalled();
+      const headerCall = GlobalHeader.mock.calls[0];
       expect(headerCall[0]).toMatchObject({
         testID: 'main-header',
       });
@@ -299,7 +359,7 @@ describe('MainLayout with Navigation Skeleton', () => {
     it('should render mobile layout structure on iOS', () => {
       const { getByTestId } = render(<MainRouteLayoutIOS />);
 
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
       expect(Sidebar).not.toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
@@ -308,7 +368,7 @@ describe('MainLayout with Navigation Skeleton', () => {
     it('should render mobile layout structure on Android', () => {
       const { getByTestId } = render(<MainRouteLayoutAndroid />);
 
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
       expect(Sidebar).not.toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
@@ -318,7 +378,7 @@ describe('MainLayout with Navigation Skeleton', () => {
       const { getByTestId } = render(<MainRouteLayoutWeb />);
 
       expect(Sidebar).toHaveBeenCalled();
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).not.toHaveBeenCalled();
       expect(getByTestId('slot')).toBeDefined();
     });
@@ -329,7 +389,7 @@ describe('MainLayout with Navigation Skeleton', () => {
       render(<MainRouteLayoutIOS />);
 
       // Verify components are called (order is handled by React render)
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
     });
 
@@ -337,7 +397,7 @@ describe('MainLayout with Navigation Skeleton', () => {
       render(<MainRouteLayoutAndroid />);
 
       // Verify components are called (order is handled by React render)
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
       expect(TabBar).toHaveBeenCalled();
     });
 
@@ -346,7 +406,7 @@ describe('MainLayout with Navigation Skeleton', () => {
 
       // Verify components are called (order is handled by React render)
       expect(Sidebar).toHaveBeenCalled();
-      expect(Header).toHaveBeenCalled();
+      expect(GlobalHeader).toHaveBeenCalled();
     });
 
     it('should render Slot component between navigation components', () => {

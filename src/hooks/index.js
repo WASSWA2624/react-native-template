@@ -12,4 +12,10 @@ export { default as useI18n } from './useI18n';
 export { default as useDebounce } from './useDebounce';
 export { default as usePagination } from './usePagination';
 export { default as useAsyncState } from './useAsyncState';
+export { default as useAuth } from './useAuth';
+export { default as usePrimaryNavigation } from './usePrimaryNavigation';
+export { default as useUiState } from './useUiState';
+export { default as useNetworkBanner } from './useNetworkBanner';
+export { default as useShellBanners } from './useShellBanners';
+export { default as useFocusTrap } from './useFocusTrap';
 

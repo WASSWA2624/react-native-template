@@ -6,6 +6,7 @@ import { networkListener, syncManager, hydration } from '@offline';
 import { logger } from '@logging';
 import store from '@store';
 import { actions } from '@store/slices/network.slice';
+import { NETWORK_QUALITY } from '@utils/networkQuality';
 
 export async function initOffline() {
   try {
@@ -13,13 +14,19 @@ export async function initOffline() {
     networkListener.startListening();
     
     // Subscribe to network changes and update Redux store
-    networkListener.subscribe((isOnline) => {
+    networkListener.subscribe((snapshot) => {
+      const isOnline = Boolean(snapshot?.isOnline);
+      const quality = snapshot?.quality ?? NETWORK_QUALITY.UNKNOWN;
       store.dispatch(actions.setOnline(isOnline));
+      store.dispatch(actions.setQuality(quality));
     });
     
     // Initialize current network status in store
     const currentStatus = await networkListener.checkConnectivity();
-    store.dispatch(actions.setOnline(currentStatus));
+    const isOnline = Boolean(currentStatus?.isOnline);
+    const quality = currentStatus?.quality ?? NETWORK_QUALITY.UNKNOWN;
+    store.dispatch(actions.setOnline(isOnline));
+    store.dispatch(actions.setQuality(quality));
     
     // Initialize request queue
     // Queue is initialized lazily when first request is queued

@@ -12,5 +12,8 @@ export { default as LandingScreen } from './common/LandingScreen';
 export { default as NotFoundScreen } from './common/NotFoundScreen';
 export { default as ErrorScreen } from './common/ErrorScreen';
 
+// Auth screens (authentication screens)
+export { default as LoginScreen } from './auth/LoginScreen';
+
 // Main screens (authenticated/main screens)
 export { default as HomeScreen } from './main/HomeScreen';

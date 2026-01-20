@@ -15,6 +15,14 @@ describe('UI Slice', () => {
     theme: 'light',
     locale: 'en',
     isLoading: false,
+    sidebarWidth: 260,
+    isSidebarCollapsed: false,
+    isHeaderHidden: false,
+    headerActionVisibility: {
+      notifications: true,
+      network: true,
+      fullscreen: true,
+    },
     isAuthenticated: false,
     user: null,
   };

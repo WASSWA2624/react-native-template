@@ -1,0 +1,214 @@
+/**
+ * GlobalFooter Component Styles - Web
+ * Styled-components for GlobalFooter web implementation
+ * File: GlobalFooter.web.styles.jsx
+ */
+import styled from 'styled-components';
+
+const StyledFooter = styled.footer.withConfig({
+  displayName: 'StyledFooter',
+  componentId: 'StyledFooter',
+})`
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+  padding: ${({ theme }) => theme.spacing.md}px;
+`;
+
+const StyledFooterContent = styled.div.withConfig({
+  displayName: 'StyledFooterContent',
+  componentId: 'StyledFooterContent',
+})`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm}px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+`;
+
+const StyledFooterRow = styled.div.withConfig({
+  displayName: 'StyledFooterRow',
+  componentId: 'StyledFooterRow',
+})`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing.sm}px;
+  flex-wrap: wrap;
+`;
+
+const StyledStatusGroup = styled.div.withConfig({
+  displayName: 'StyledStatusGroup',
+  componentId: 'StyledStatusGroup',
+})`
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm}px;
+`;
+
+const StyledStatusBadge = styled.div.withConfig({
+  displayName: 'StyledStatusBadge',
+  componentId: 'StyledStatusBadge',
+})`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
+  border-radius: ${({ theme }) => theme.radius.md}px;
+  background-color: ${({ theme, tone }) => {
+    if (tone === 'success') return theme.colors.success;
+    if (tone === 'warning') return theme.colors.warning;
+    if (tone === 'error') return theme.colors.error;
+    return theme.colors.background.tertiary;
+  }};
+`;
+
+const StyledEnvironmentInfo = styled.span.withConfig({
+  displayName: 'StyledEnvironmentInfo',
+  componentId: 'StyledEnvironmentInfo',
+})`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
+`;
+
+const StyledLegalLinks = styled.div.withConfig({
+  displayName: 'StyledLegalLinks',
+  componentId: 'StyledLegalLinks',
+})`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.sm}px;
+  align-items: center;
+`;
+
+const StyledLegalLink = styled.a.withConfig({
+  displayName: 'StyledLegalLink',
+  componentId: 'StyledLegalLink',
+})`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`;
+
+const StyledLegalButton = styled.button.withConfig({
+  displayName: 'StyledLegalButton',
+  componentId: 'StyledLegalButton',
+})`
+  background: none;
+  border: none;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`;
+
+const StyledLegalText = styled.span.withConfig({
+  displayName: 'StyledLegalText',
+  componentId: 'StyledLegalText',
+})`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+`;
+
+const StyledQuickActionsGroup = styled.div.withConfig({
+  displayName: 'StyledQuickActionsGroup',
+  componentId: 'StyledQuickActionsGroup',
+})`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+  flex-wrap: wrap;
+`;
+
+const StyledQuickActionButton = styled.button.withConfig({
+  displayName: 'StyledQuickActionButton',
+  componentId: 'StyledQuickActionButton',
+})`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
+  min-height: 44px;
+  border-radius: ${({ theme }) => theme.radius.md}px;
+  border: 1px solid
+    ${({ theme, isPrimary }) => (isPrimary ? theme.colors.primary : theme.colors.background.tertiary)};
+  background-color: ${({ theme, isPrimary }) =>
+    isPrimary ? theme.colors.primary : theme.colors.background.primary};
+  cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.6 : 1)};
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme, isPrimary }) =>
+      isPrimary ? theme.colors.primary : theme.colors.background.tertiary};
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`;
+
+const StyledQuickActionIcon = styled.span.withConfig({
+  displayName: 'StyledQuickActionIcon',
+  componentId: 'StyledQuickActionIcon',
+})`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledQuickActionsSlot = styled.div.withConfig({
+  displayName: 'StyledQuickActionsSlot',
+  componentId: 'StyledQuickActionsSlot',
+})`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+export {
+  StyledFooter,
+  StyledFooterContent,
+  StyledFooterRow,
+  StyledStatusGroup,
+  StyledStatusBadge,
+  StyledEnvironmentInfo,
+  StyledLegalLinks,
+  StyledLegalLink,
+  StyledLegalButton,
+  StyledLegalText,
+  StyledQuickActionsGroup,
+  StyledQuickActionButton,
+  StyledQuickActionIcon,
+  StyledQuickActionsSlot,
+};

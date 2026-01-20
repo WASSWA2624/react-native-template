@@ -5,20 +5,30 @@
  */
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIsOffline, selectIsOnline, selectIsSyncing } from '@store/selectors';
+import {
+  selectIsLowQuality,
+  selectIsOffline,
+  selectIsOnline,
+  selectIsSyncing,
+  selectNetworkQuality,
+} from '@store/selectors';
 
 const useNetwork = () => {
   const isOnline = useSelector(selectIsOnline);
   const isOffline = useSelector(selectIsOffline);
   const isSyncing = useSelector(selectIsSyncing);
+  const networkQuality = useSelector(selectNetworkQuality);
+  const isLowQuality = useSelector(selectIsLowQuality);
 
   return useMemo(
     () => ({
       isOnline,
       isOffline,
       isSyncing,
+      networkQuality,
+      isLowQuality,
     }),
-    [isOnline, isOffline, isSyncing]
+    [isOnline, isOffline, isSyncing, networkQuality, isLowQuality]
   );
 };
 

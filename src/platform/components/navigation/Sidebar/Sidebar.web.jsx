@@ -13,6 +13,7 @@ import useSidebar from './useSidebar';
 import {
   StyledSidebar,
   StyledSidebarContent,
+  StyledSidebarFooter,
   StyledNavSection,
   StyledNavSectionHeader,
   StyledNavSectionTitle,
@@ -36,6 +37,7 @@ import {
  * @param {string} props.testID - Test identifier
  * @param {string} props.className - Additional CSS class
  * @param {Object} props.style - Additional styles
+ * @param {React.ReactNode} props.footerSlot - Optional footer slot content
  */
 const SidebarWeb = ({
   items = [],
@@ -46,6 +48,7 @@ const SidebarWeb = ({
   testID,
   className,
   style,
+  footerSlot,
   ...rest
 }) => {
   const { t } = useI18n();
@@ -175,6 +178,7 @@ const SidebarWeb = ({
           </StyledNavSection>
         ))}
       </StyledSidebarContent>
+      {footerSlot ? <StyledSidebarFooter>{footerSlot}</StyledSidebarFooter> : null}
     </StyledSidebar>
   );
 };

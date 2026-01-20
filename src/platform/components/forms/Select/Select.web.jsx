@@ -57,6 +57,7 @@ import { VALIDATION_STATES } from './types';
  * @param {string} [props.testID]
  * @param {string} [props.className]
  * @param {Object} [props.style]
+ * @param {boolean} [props.compact]
  */
 const SelectWeb = ({
   label,
@@ -75,6 +76,7 @@ const SelectWeb = ({
   testID,
   className,
   style,
+  compact = false,
 }) => {
   const { t } = useI18n();
   const defaultPlaceholder = placeholder || t('common.selectPlaceholder');
@@ -203,9 +205,9 @@ const SelectWeb = ({
   };
 
   return (
-    <StyledContainer ref={rootRef} style={style} className={className}>
+    <StyledContainer ref={rootRef} style={style} className={className} $compact={compact}>
       {label ? (
-        <StyledLabelRow>
+        <StyledLabelRow $compact={compact}>
           <StyledLabel>{label}</StyledLabel>
           {required ? <StyledRequired> *</StyledRequired> : null}
         </StyledLabelRow>
@@ -219,6 +221,7 @@ const SelectWeb = ({
         disabled={disabled}
         $validationState={finalValidationState}
         $isFocused={isFocused}
+        $compact={compact}
         role="combobox"
         aria-label={accessibilityLabel || label || defaultPlaceholder}
         aria-describedby={displayHelperText ? `${testID || 'select'}-helper` : undefined}

@@ -6,9 +6,12 @@ import {
   useAsyncState,
   useDebounce,
   useI18n,
+  useNetworkBanner,
   useNetwork,
   usePagination,
+  useShellBanners,
   useTheme,
+  useUiState,
 } from '@hooks';
 
 describe('@hooks barrel', () => {
@@ -19,6 +22,9 @@ describe('@hooks barrel', () => {
     expect(typeof useDebounce).toBe('function');
     expect(typeof usePagination).toBe('function');
     expect(typeof useAsyncState).toBe('function');
+    expect(typeof useUiState).toBe('function');
+    expect(typeof useNetworkBanner).toBe('function');
+    expect(typeof useShellBanners).toBe('function');
   });
 });
 

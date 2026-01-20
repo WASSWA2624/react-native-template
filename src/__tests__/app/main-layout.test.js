@@ -48,14 +48,23 @@ jest.mock('@navigation/guards', () => ({
 jest.mock('@platform/components', () => {
   const React = require('react');
   return {
-    Header: React.forwardRef(({ children, ...props }, ref) => 
-      React.createElement('div', { ...props, ref }, children || 'Header')
+    GlobalHeader: React.forwardRef(({ children, ...props }, ref) =>
+      React.createElement('div', { ...props, ref }, children || 'GlobalHeader')
     ),
-    TabBar: React.forwardRef(({ children, ...props }, ref) => 
+    TabBar: React.forwardRef(({ children, ...props }, ref) =>
       React.createElement('div', { ...props, ref }, children || 'TabBar')
     ),
-    Sidebar: React.forwardRef(({ children, ...props }, ref) => 
+    Sidebar: React.forwardRef(({ children, ...props }, ref) =>
       React.createElement('div', { ...props, ref }, children || 'Sidebar')
+    ),
+    ShellBanners: React.forwardRef(({ children, ...props }, ref) =>
+      React.createElement('div', { ...props, ref }, children || 'ShellBanners')
+    ),
+    LoadingOverlay: React.forwardRef(({ children, ...props }, ref) =>
+      React.createElement('div', { ...props, ref }, children || 'LoadingOverlay')
+    ),
+    NoticeSurface: React.forwardRef(({ children, ...props }, ref) =>
+      React.createElement('div', { ...props, ref }, children || 'NoticeSurface')
     ),
   };
 });
@@ -64,7 +73,10 @@ jest.mock('@platform/components', () => {
 jest.mock('@platform/layouts', () => {
   const React = require('react');
   return {
-    MainLayout: React.forwardRef(({ children, ...props }, ref) => 
+    MainLayout: React.forwardRef(({ children, ...props }, ref) =>
+      React.createElement('div', { ...props, ref }, children)
+    ),
+    AppFrame: React.forwardRef(({ children, ...props }, ref) =>
       React.createElement('div', { ...props, ref }, children)
     ),
   };

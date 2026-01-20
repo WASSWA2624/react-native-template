@@ -41,6 +41,10 @@
   "greeting": {
     "hello": "Hello, {{name}}"
   },
+  "app": {
+    "name": "HMS Portal",
+    "shortName": "HMS"
+  },
   "errors": {
     "fallback": {
       "title": "Something went wrong",
@@ -76,22 +80,146 @@
       "profile": "Profile",
       "orders": "Orders",
       "settings": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "hideHeader": "Hide header",
+      "showHeader": "Show header",
+      "showMore": "Show more",
+      "customize": "Customize",
+      "overflowMenuLabel": "More header actions",
+      "customizationMenuLabel": "Header customization",
+      "actions": {
+        "notifications": "Notifications",
+        "network": "Network status",
+        "fullscreen": "Full screen toggle"
+      }
     },
     "sidebar": {
       "title": "Main navigation",
-      "label": "Navigation"
+      "label": "Navigation",
+      "resize": "Resize navigation"
+    },
+    "fullscreen": {
+      "enter": "Full screen",
+      "exit": "Exit full screen"
     },
     "tabBar": {
       "title": "Bottom navigation"
     },
+    "footer": {
+      "title": "Global footer",
+      "status": {
+        "title": "Application status",
+        "auth": "Secure sign-in enabled",
+        "main": "All systems operational",
+        "patient": "Patient services ready"
+      },
+      "environment": "{{env}} · v{{version}} (build: {{build}})",
+      "legal": {
+        "title": "Legal and support",
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "support": "Support"
+      }
+    },
+    "network": {
+      "label": "Network status",
+      "status": {
+        "online": "Online",
+        "offline": "Offline",
+        "unstable": "Unstable",
+        "syncing": "Syncing"
+      }
+    },
+    "notifications": {
+      "label": "Notifications",
+      "menuLabel": "Notifications menu",
+      "empty": "No new notifications",
+      "viewAll": "View all notifications",
+      "items": {
+        "appointments": {
+          "title": "Upcoming appointment",
+          "meta": "Today at 3:00 PM"
+        },
+        "labResults": {
+          "title": "Lab results ready",
+          "meta": "New results available"
+        },
+        "messages": {
+          "title": "New message",
+          "meta": "You have unread messages"
+        }
+      }
+    },
     "bottomNavigation": "Bottom navigation",
     "mainNavigation": "Main navigation",
+    "patientNavigation": "Patient navigation",
+    "items": {
+      "main": {
+        "home": "Home",
+        "overview": "Overview"
+      },
+      "patient": {
+        "home": "Home"
+      }
+    },
     "breadcrumbs": {
       "title": "Breadcrumb navigation",
       "label": "Breadcrumbs"
     },
     "skipToMainContent": "Skip to main content"
+  },
+  "shell": {
+    "banners": {
+      "surfaceLabel": "System status updates",
+      "offline": {
+        "title": "You are offline",
+        "message": "Some features may be unavailable until connectivity is restored.",
+        "accessibilityLabel": "Offline status notification"
+      },
+      "lowQuality": {
+        "title": "Network is unstable",
+        "message": "You may experience delays or limited functionality.",
+        "accessibilityLabel": "Low network quality notification"
+      },
+      "online": {
+        "title": "Back online",
+        "message": "Connection restored.",
+        "accessibilityLabel": "Online status notification"
+      },
+      "maintenance": {
+        "title": "Scheduled maintenance",
+        "message": "Some services may be temporarily unavailable.",
+        "accessibilityLabel": "Maintenance notification"
+      }
+    },
+    "loadingOverlay": {
+      "title": "Working...",
+      "message": "Please wait while we finish the request."
+    },
+    "notices": {
+      "surfaceLabel": "Global notifications"
+    }
+  },
+  "settings": {
+    "theme": {
+      "label": "Theme",
+      "accessibilityLabel": "Theme selector",
+      "hint": "Change the application theme",
+      "options": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark",
+        "highContrast": "High contrast"
+      }
+    },
+    "language": {
+      "label": "Language",
+      "accessibilityLabel": "Language selector",
+      "hint": "Change the application language",
+      "options": {
+        "en": "English"
+      }
+    }
   },
   "listScaffold": {
     "loading": "Loading",
@@ -126,6 +254,14 @@
     "welcome": {
       "title": "Welcome Home",
       "message": "You're successfully logged in. This is your home dashboard."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Click the button below to sign in and view the main application layouts",
+      "button": "Sign In",
+      "buttonHint": "Sign in to access the application"
     }
   },
   "notFound": {

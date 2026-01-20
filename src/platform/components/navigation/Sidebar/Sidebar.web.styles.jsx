@@ -10,25 +10,37 @@ const StyledSidebar = styled(View).withConfig({
   displayName: 'StyledSidebar',
   componentId: 'StyledSidebar',
 })`
-  width: ${({ collapsed }) => (collapsed ? '64px' : '240px')};
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-right-width: 1px;
-  border-right-color: ${({ theme }) => theme.colors.background.tertiary};
-  transition: width 0.3s ease;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  overflow-y: auto;
-  z-index: 100;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledSidebarContent = styled(View).withConfig({
   displayName: 'StyledSidebarContent',
   componentId: 'StyledSidebarContent',
 })`
+  flex: 1;
+  min-height: 0;
   padding: ${({ theme }) => theme.spacing.md}px;
   gap: ${({ theme }) => theme.spacing.sm}px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
+const StyledSidebarFooter = styled(View).withConfig({
+  displayName: 'StyledSidebarFooter',
+  componentId: 'StyledSidebarFooter',
+})`
+  padding: ${({ theme }) => theme.spacing.md}px;
+  border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.sm}px;
+  flex-shrink: 0;
 `;
 
 const StyledNavSection = styled(View).withConfig({
@@ -139,6 +151,7 @@ const StyledExpandIcon = styled(Text).withConfig({
 export {
   StyledSidebar,
   StyledSidebarContent,
+  StyledSidebarFooter,
   StyledNavSection,
   StyledNavSectionHeader,
   StyledNavSectionTitle,

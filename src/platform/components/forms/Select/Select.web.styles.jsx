@@ -9,19 +9,21 @@ import styled from 'styled-components';
 const StyledContainer = styled.div.withConfig({
   displayName: 'StyledContainer',
   componentId: 'StyledContainer',
+  shouldForwardProp: (prop) => prop !== '$compact',
 })`
-  width: 100%;
-  margin-bottom: ${({ theme }) => theme.spacing.md}px;
+  width: ${({ $compact }) => ($compact ? 'auto' : '100%')};
+  margin-bottom: ${({ $compact, theme }) => ($compact ? 0 : theme.spacing.md)}px;
 `;
 
 const StyledLabelRow = styled.div.withConfig({
   displayName: 'StyledLabelRow',
   componentId: 'StyledLabelRow',
+  shouldForwardProp: (prop) => prop !== '$compact',
 })`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+  margin-bottom: ${({ $compact, theme }) => ($compact ? theme.spacing.xs : theme.spacing.xs)}px;
 `;
 
 const StyledLabel = styled.label.withConfig({
@@ -65,7 +67,7 @@ const StyledTrigger = styled.button.withConfig({
   }};
   border-radius: ${({ theme }) => theme.radius.md}px;
   background-color: ${({ theme }) => theme.colors.background.primary};
-  padding: ${({ theme }) => theme.spacing.md}px;
+  padding: ${({ $compact, theme }) => ($compact ? theme.spacing.sm : theme.spacing.md)}px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   text-align: left;
 
@@ -121,6 +123,9 @@ const StyledMenu = styled.div.withConfig({
   border-radius: ${({ theme }) => theme.radius.md}px;
   z-index: 1000;
   overflow: hidden;
+  max-height: min(50vh, 240px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 `;
 
 const StyledOption = styled.button.withConfig({
