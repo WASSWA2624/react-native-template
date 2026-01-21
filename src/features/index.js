@@ -128,3 +128,8 @@ export * from './conversation';
 export * from './message';
 export * from './template';
 export * from './template-variable';
+export * from './report-definition';
+export * from './report-run';
+export * from './dashboard-widget';
+export * from './kpi-snapshot';
+export * from './analytics-event';
