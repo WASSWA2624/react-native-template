@@ -46,4 +46,13 @@ export { default as useAppointmentReminder } from './useAppointmentReminder';
 export { default as useProviderSchedule } from './useProviderSchedule';
 export { default as useAvailabilitySlot } from './useAvailabilitySlot';
 export { default as useVisitQueue } from './useVisitQueue';
+export { default as useEncounter } from './useEncounter';
+export { default as useClinicalNote } from './useClinicalNote';
+export { default as useDiagnosis } from './useDiagnosis';
+export { default as useProcedure } from './useProcedure';
+export { default as useVitalSign } from './useVitalSign';
+export { default as useCarePlan } from './useCarePlan';
+export { default as useClinicalAlert } from './useClinicalAlert';
+export { default as useReferral } from './useReferral';
+export { default as useFollowUp } from './useFollowUp';
 
