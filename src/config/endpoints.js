@@ -1027,6 +1027,27 @@ export const endpoints = {
     GET_PREFERENCES: `${baseUrl}/notifications/preferences`,
     UPDATE_PREFERENCES: `${baseUrl}/notifications/preferences`,
   },
+  NOTIFICATION_DELIVERIES: {
+    LIST: `${baseUrl}/notification-deliveries`,
+    CREATE: `${baseUrl}/notification-deliveries`,
+    GET: (id) => `${baseUrl}/notification-deliveries/${id}`,
+    UPDATE: (id) => `${baseUrl}/notification-deliveries/${id}`,
+    DELETE: (id) => `${baseUrl}/notification-deliveries/${id}`,
+  },
+  TEMPLATES: {
+    LIST: `${baseUrl}/templates`,
+    CREATE: `${baseUrl}/templates`,
+    GET: (id) => `${baseUrl}/templates/${id}`,
+    UPDATE: (id) => `${baseUrl}/templates/${id}`,
+    DELETE: (id) => `${baseUrl}/templates/${id}`,
+  },
+  TEMPLATE_VARIABLES: {
+    LIST: `${baseUrl}/template-variables`,
+    CREATE: `${baseUrl}/template-variables`,
+    GET: (id) => `${baseUrl}/template-variables/${id}`,
+    UPDATE: (id) => `${baseUrl}/template-variables/${id}`,
+    DELETE: (id) => `${baseUrl}/template-variables/${id}`,
+  },
   SHIPMENTS: {
     LIST: `${baseUrl}/shipments`,
     CREATE: `${baseUrl}/shipments`,
