@@ -117,3 +117,8 @@ export * from './shift-assignment';
 export * from './shift-swap-request';
 export * from './payroll-run';
 export * from './payroll-item';
+export * from './housekeeping-task';
+export * from './housekeeping-schedule';
+export * from './maintenance-request';
+export * from './asset';
+export * from './asset-service-log';
