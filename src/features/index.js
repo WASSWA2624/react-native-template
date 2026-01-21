@@ -63,3 +63,6 @@ export * from './transfer-request';
 export * from './icu-stay';
 export * from './icu-observation';
 export * from './critical-alert';
+export * from './theatre-case';
+export * from './anesthesia-record';
+export * from './post-op-note';

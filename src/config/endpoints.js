@@ -399,6 +399,27 @@ export const endpoints = {
     UPDATE: (id) => `${baseUrl}/critical-alerts/${id}`,
     DELETE: (id) => `${baseUrl}/critical-alerts/${id}`,
   },
+  THEATRE_CASES: {
+    LIST: `${baseUrl}/theatre-cases`,
+    CREATE: `${baseUrl}/theatre-cases`,
+    GET: (id) => `${baseUrl}/theatre-cases/${id}`,
+    UPDATE: (id) => `${baseUrl}/theatre-cases/${id}`,
+    DELETE: (id) => `${baseUrl}/theatre-cases/${id}`,
+  },
+  ANESTHESIA_RECORDS: {
+    LIST: `${baseUrl}/anesthesia-records`,
+    CREATE: `${baseUrl}/anesthesia-records`,
+    GET: (id) => `${baseUrl}/anesthesia-records/${id}`,
+    UPDATE: (id) => `${baseUrl}/anesthesia-records/${id}`,
+    DELETE: (id) => `${baseUrl}/anesthesia-records/${id}`,
+  },
+  POST_OP_NOTES: {
+    LIST: `${baseUrl}/post-op-notes`,
+    CREATE: `${baseUrl}/post-op-notes`,
+    GET: (id) => `${baseUrl}/post-op-notes/${id}`,
+    UPDATE: (id) => `${baseUrl}/post-op-notes/${id}`,
+    DELETE: (id) => `${baseUrl}/post-op-notes/${id}`,
+  },
   USERS: {
     GET: (id) => `${baseUrl}/users/${id}`,
     LIST: `${baseUrl}/users`,
