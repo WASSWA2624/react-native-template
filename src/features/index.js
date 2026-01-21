@@ -144,3 +144,6 @@ export * from './phi-access-log';
 export * from './data-processing-log';
 export * from './breach-notification';
 export * from './system-change-log';
+export * from './integration';
+export * from './integration-log';
+export * from './webhook-subscription';

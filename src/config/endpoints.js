@@ -984,6 +984,27 @@ export const endpoints = {
     UPDATE: (id) => `${baseUrl}/system-change-logs/${id}`,
     DELETE: (id) => `${baseUrl}/system-change-logs/${id}`,
   },
+  INTEGRATIONS: {
+    LIST: `${baseUrl}/integrations`,
+    CREATE: `${baseUrl}/integrations`,
+    GET: (id) => `${baseUrl}/integrations/${id}`,
+    UPDATE: (id) => `${baseUrl}/integrations/${id}`,
+    DELETE: (id) => `${baseUrl}/integrations/${id}`,
+  },
+  INTEGRATION_LOGS: {
+    LIST: `${baseUrl}/integration-logs`,
+    CREATE: `${baseUrl}/integration-logs`,
+    GET: (id) => `${baseUrl}/integration-logs/${id}`,
+    UPDATE: (id) => `${baseUrl}/integration-logs/${id}`,
+    DELETE: (id) => `${baseUrl}/integration-logs/${id}`,
+  },
+  WEBHOOK_SUBSCRIPTIONS: {
+    LIST: `${baseUrl}/webhook-subscriptions`,
+    CREATE: `${baseUrl}/webhook-subscriptions`,
+    GET: (id) => `${baseUrl}/webhook-subscriptions/${id}`,
+    UPDATE: (id) => `${baseUrl}/webhook-subscriptions/${id}`,
+    DELETE: (id) => `${baseUrl}/webhook-subscriptions/${id}`,
+  },
   SUBSCRIPTION_USAGE: {
     LIST: `${baseUrl}/subscription-usage`,
     CREATE: `${baseUrl}/subscription-usage`,
