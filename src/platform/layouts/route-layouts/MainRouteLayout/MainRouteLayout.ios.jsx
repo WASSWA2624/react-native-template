@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { Slot, useRouter } from 'expo-router';
-import { useAuth, useI18n, usePrimaryNavigation, useShellBanners, useUiState } from '@hooks';
+import { useAuth, useI18n, usePrimaryNavigation, useUiState } from '@hooks';
 import { useAuthGuard } from '@navigation/guards';
 import { AUTH } from '@config';
 import { AppFrame } from '@platform/layouts';
@@ -24,7 +24,6 @@ import {
   LanguageControls,
   LoadingOverlay,
   NoticeSurface,
-  ShellBanners,
   TabBar,
   ThemeControls,
 } from '@platform/components';
@@ -44,8 +43,6 @@ const MainRouteLayoutIOS = () => {
   const { isAuthenticated, logout, roles } = useAuth();
   const { isLoading } = useUiState();
   const { mainItems, isItemVisible } = usePrimaryNavigation();
-  const banners = useShellBanners();
-  const bannerSlot = banners.length ? <ShellBanners banners={banners} testID="main-shell-banners" /> : null;
   const overlaySlot = isLoading ? <LoadingOverlay visible testID="main-loading-overlay" /> : null;
   const canAccessRegister = isAuthenticated
     && AUTH.REGISTER_ROLES?.length
@@ -110,7 +107,6 @@ const MainRouteLayoutIOS = () => {
           )}
         />
       }
-      banner={bannerSlot}
       overlay={overlaySlot}
       notices={<NoticeSurface testID="main-notice-surface" />}
       accessibilityLabel={t('navigation.mainNavigation')}

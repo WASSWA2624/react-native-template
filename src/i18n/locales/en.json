@@ -58,7 +58,20 @@
       "UNAUTHORIZED": "Authentication required",
       "FORBIDDEN": "Access denied",
       "SERVER_ERROR": "Server error occurred",
-      "ROUTE_ERROR": "An error occurred while loading this page"
+      "ROUTE_ERROR": "An error occurred while loading this page",
+      "INVALID_CREDENTIALS": "Invalid credentials",
+      "MULTIPLE_TENANTS": "Multiple tenants found. Please select a tenant.",
+      "ACCOUNT_INACTIVE": "Account is not active",
+      "ACCOUNT_SUSPENDED": "Account has been suspended",
+      "ACCOUNT_PENDING": "Account is pending verification",
+      "PASSWORD_INCORRECT": "Current password is incorrect",
+      "TOKEN_INVALID": "Invalid or expired token",
+      "TOKEN_EXPIRED": "Token has expired",
+      "REFRESH_TOKEN_INVALID": "Invalid or expired refresh token",
+      "USER_NOT_FOUND": "User not found",
+      "USER_EXISTS": "User with this email already exists",
+      "SESSION_NOT_FOUND": "Session not found",
+      "ALREADY_VERIFIED": "Account is already verified"
     }
   },
   "forms": {

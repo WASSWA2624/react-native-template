@@ -24,6 +24,10 @@ const StyledMobileSidebarOverlay = styled.div.withConfig({
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints?.tablet || 768}px) and (max-width: ${({ theme }) => theme.breakpoints?.desktop || 1024}px) {
+    /* Tablet-specific adjustments */
+  }
 `;
 
 const StyledMobileSidebarPanel = styled.div.withConfig({

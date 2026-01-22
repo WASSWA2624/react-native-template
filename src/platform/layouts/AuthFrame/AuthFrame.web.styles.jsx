@@ -9,6 +9,7 @@ import styled from 'styled-components';
 const StyledContainer = styled.main.withConfig({
   displayName: 'StyledContainer',
   componentId: 'StyledContainer',
+  shouldForwardProp: (prop) => !prop.startsWith('$'),
 }).attrs(({ testID }) => ({
   'data-testid': testID,
 }))`
@@ -19,11 +20,24 @@ const StyledContainer = styled.main.withConfig({
   justify-content: center;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.lg}px;
+  ${({ $fullWidth }) =>
+    $fullWidth
+      ? `
+    padding: 0;
+    margin: 0;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+  `
+      : ''}
 `;
 
 const StyledCard = styled.section.withConfig({
   displayName: 'StyledCard',
   componentId: 'StyledCard',
+  shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   width: 100%;
   max-width: ${({ theme }) => theme.spacing.md * 25}px;
@@ -37,6 +51,18 @@ const StyledCard = styled.section.withConfig({
     }
     return 'none';
   }};
+  ${({ $fullWidth }) =>
+    $fullWidth
+      ? `
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+  `
+      : ''}
 `;
 
 const StyledHeader = styled.div.withConfig({
@@ -53,6 +79,15 @@ const StyledContent = styled.div.withConfig({
   componentId: 'StyledContent',
 })`
   width: 100%;
+  ${({ $fullWidth }) =>
+    $fullWidth
+      ? `
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  `
+      : ''}
 `;
 
 const StyledFooter = styled.div.withConfig({
@@ -67,12 +102,21 @@ const StyledFooter = styled.div.withConfig({
 const StyledBanner = styled.div.withConfig({
   displayName: 'StyledBanner',
   componentId: 'StyledBanner',
+  shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   position: absolute;
   top: ${({ theme }) => theme.spacing.md}px;
   left: ${({ theme }) => theme.spacing.md}px;
   right: ${({ theme }) => theme.spacing.md}px;
   z-index: 3;
+  ${({ $fullWidth }) =>
+    $fullWidth
+      ? `
+    left: 0;
+    right: 0;
+    top: 0;
+  `
+      : ''}
 `;
 
 const StyledNotices = styled.div.withConfig({

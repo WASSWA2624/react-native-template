@@ -3,9 +3,10 @@
  * Password input field with strength indicator for Android platform
  * File: PasswordField.android.jsx
  */
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
 import TextField from '../TextField';
+import Button from '../Button';
 import { useI18n } from '@hooks';
 import {
   StyledContainer,
@@ -41,7 +42,7 @@ const PasswordFieldAndroid = ({
   errorMessage,
   required = false,
   disabled = false,
-  showPassword = false,
+  showPassword: controlledShowPassword,
   showStrengthIndicator = true,
   accessibilityLabel,
   testID,
@@ -50,6 +51,10 @@ const PasswordFieldAndroid = ({
 }) => {
   const { t } = useI18n();
   const { passwordStrength } = usePasswordField({ password: value });
+  const [internalShowPassword, setInternalShowPassword] = useState(false);
+  
+  // Use controlled prop if provided, otherwise use internal state
+  const showPassword = controlledShowPassword !== undefined ? controlledShowPassword : internalShowPassword;
   
   // Use i18n for default values
   const defaultLabel = label || t('auth.password');
@@ -65,6 +70,18 @@ const PasswordFieldAndroid = ({
   };
   const strengthLabel = passwordStrength.strength !== undefined ? strengthLabelMap[passwordStrength.strength] : '';
 
+  const handleTogglePassword = useCallback(() => {
+    if (controlledShowPassword === undefined) {
+      setInternalShowPassword((prev) => !prev);
+    }
+  }, [controlledShowPassword]);
+
+  const toggleButtonLabel = showPassword 
+    ? t('auth.password.hide') || 'Hide password'
+    : t('auth.password.show') || 'Show password';
+
+  const toggleIcon = showPassword ? '👁️‍🗨️' : '👁️';
+
   return (
     <StyledContainer style={style} testID={testID}>
       <TextField
@@ -79,6 +96,18 @@ const PasswordFieldAndroid = ({
         secureTextEntry={!showPassword}
         accessibilityLabel={accessibilityLabel || defaultLabel}
         testID={testID}
+        suffix={
+          <Button
+            variant="text"
+            size="small"
+            onPress={handleTogglePassword}
+            disabled={disabled || controlledShowPassword !== undefined}
+            accessibilityLabel={toggleButtonLabel}
+            testID={testID ? `${testID}-toggle` : undefined}
+          >
+            {toggleIcon}
+          </Button>
+        }
         {...rest}
       />
       {showStrengthIndicator && value && (

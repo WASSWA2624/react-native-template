@@ -6,7 +6,7 @@
 import React from 'react';
 import { AuthFormLayout, Button, ErrorState, OfflineState, PasswordField, Stack, TextField } from '@platform/components';
 import { useI18n } from '@hooks';
-import { StyledActions, StyledForm, StyledLinkRow } from './LoginScreen.ios.styles';
+import { StyledActions, StyledForm, StyledFooter, StyledLinkRow, StyledLinkSeparator } from './LoginScreen.ios.styles';
 import useLoginScreen from './useLoginScreen';
 
 /**
@@ -17,8 +17,6 @@ const LoginScreenIOS = () => {
   const {
     identifier,
     password,
-    tenantId,
-    facilityId,
     errorMessage,
     isLoading,
     isOffline,
@@ -28,8 +26,6 @@ const LoginScreenIOS = () => {
     handleSubmit,
     handleChangeIdentifier,
     handleChangePassword,
-    handleChangeTenantId,
-    handleChangeFacilityId,
     handleGoToRegister,
     handleGoToForgotPassword,
     handleBiometricLogin,
@@ -45,9 +41,9 @@ const LoginScreenIOS = () => {
     />
   ) : errorMessage ? (
     <ErrorState
-      title={t('auth.login.error.title')}
+      title={null}
       description={errorMessage}
-      accessibilityLabel={t('auth.login.error.title')}
+      accessibilityLabel={errorMessage}
       testID="login-error-state"
     />
   ) : null;
@@ -57,7 +53,7 @@ const LoginScreenIOS = () => {
       <Stack spacing="sm">
         <Button
           variant="primary"
-          size="large"
+          size="medium"
           loading={isLoading}
           disabled={!canSubmit}
           onPress={handleSubmit}
@@ -70,7 +66,7 @@ const LoginScreenIOS = () => {
         {isBiometricAvailable ? (
           <Button
             variant="ghost"
-            size="large"
+            size="medium"
             loading={isBiometricChecking}
             disabled={isBiometricChecking || isOffline}
             onPress={handleBiometricLogin}
@@ -86,7 +82,7 @@ const LoginScreenIOS = () => {
   );
 
   const footerSlot = (
-    <Stack spacing="xs" align="center">
+    <StyledFooter>
       <StyledLinkRow>
         <Button
           variant="text"
@@ -98,28 +94,29 @@ const LoginScreenIOS = () => {
         >
           {t('auth.login.actions.forgotPassword')}
         </Button>
+        {canAccessRegister && (
+          <>
+            <StyledLinkSeparator>•</StyledLinkSeparator>
+            <Button
+              variant="text"
+              size="small"
+              onPress={handleGoToRegister}
+              accessibilityLabel={t('auth.login.actions.register')}
+              accessibilityHint={t('auth.login.actions.registerHint')}
+              testID="login-register"
+            >
+              {t('auth.login.actions.register')}
+            </Button>
+          </>
+        )}
       </StyledLinkRow>
-      <StyledLinkRow>
-        {canAccessRegister ? (
-          <Button
-            variant="text"
-            size="small"
-            onPress={handleGoToRegister}
-            accessibilityLabel={t('auth.login.actions.register')}
-            accessibilityHint={t('auth.login.actions.registerHint')}
-            testID="login-register"
-          >
-            {t('auth.login.actions.register')}
-          </Button>
-        ) : null}
-      </StyledLinkRow>
-    </Stack>
+    </StyledFooter>
   );
 
   return (
     <AuthFormLayout
       title={t('auth.login.title')}
-      description={t('auth.login.description')}
+      description={null}
       status={statusSlot}
       actions={actionSlot}
       footer={footerSlot}
@@ -129,7 +126,7 @@ const LoginScreenIOS = () => {
       descriptionTestID="login-description"
     >
       <StyledForm>
-        <Stack spacing="md">
+        <Stack spacing="xs">
           <TextField
             label={t('auth.login.fields.email.label')}
             placeholder={t('auth.login.fields.email.placeholder')}
@@ -137,6 +134,7 @@ const LoginScreenIOS = () => {
             onChangeText={handleChangeIdentifier}
             type="text"
             autoCapitalize="none"
+            autoComplete="username"
             accessibilityLabel={t('auth.login.fields.email.label')}
             accessibilityHint={t('auth.login.fields.email.hint')}
             testID="login-identifier"
@@ -146,27 +144,11 @@ const LoginScreenIOS = () => {
             placeholder={t('auth.login.fields.password.placeholder')}
             value={password}
             onChangeText={handleChangePassword}
+            showStrengthIndicator={false}
+            autoComplete="current-password"
             accessibilityLabel={t('auth.login.fields.password.label')}
             accessibilityHint={t('auth.login.fields.password.hint')}
             testID="login-password"
-          />
-          <TextField
-            label={t('auth.login.fields.tenant.label')}
-            placeholder={t('auth.login.fields.tenant.placeholder')}
-            value={tenantId}
-            onChangeText={handleChangeTenantId}
-            accessibilityLabel={t('auth.login.fields.tenant.label')}
-            accessibilityHint={t('auth.login.fields.tenant.hint')}
-            testID="login-tenant-id"
-          />
-          <TextField
-            label={t('auth.login.fields.facility.label')}
-            placeholder={t('auth.login.fields.facility.placeholder')}
-            value={facilityId}
-            onChangeText={handleChangeFacilityId}
-            accessibilityLabel={t('auth.login.fields.facility.label')}
-            accessibilityHint={t('auth.login.fields.facility.hint')}
-            testID="login-facility-id"
           />
         </Stack>
       </StyledForm>

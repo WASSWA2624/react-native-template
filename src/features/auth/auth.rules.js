@@ -12,7 +12,7 @@ const credentialsSchema = z
     email: z.string().email().optional(),
     phone: phoneSchema.optional(),
     password: z.string().min(1),
-    tenant_id: z.string().uuid(),
+    tenant_id: z.string().uuid().optional(),
     facility_id: z.string().uuid().optional(),
   })
   .refine((value) => Boolean(value.email || value.phone), {

@@ -57,6 +57,8 @@ const AuthLayout = () => {
   
   const bannerSlot = banners.length ? <ShellBanners banners={banners} testID="auth-shell-banners" /> : null;
   const overlaySlot = isLoading ? <LoadingOverlay visible testID="auth-loading-overlay" /> : null;
+  // Enable full-width mode for login route (uses two-column layout)
+  const isLoginRoute = pathname === '/login';
   const authHeaderActions = authenticated || isAuthenticated
     ? [
       {
@@ -80,6 +82,7 @@ const AuthLayout = () => {
   return (
     <AuthFrame
       testID="auth-route-layout"
+      fullWidth={isLoginRoute}
       header={(
         <GlobalHeader
           title={t('app.name')}

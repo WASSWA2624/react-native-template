@@ -13,11 +13,11 @@
  * - Slot rendering (child routes)
  */
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { Slot, useRouter } from 'expo-router';
 import { useWindowDimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useAuth, useFocusTrap, useI18n, usePrimaryNavigation, useShellBanners, useUiState } from '@hooks';
+import { useAuth, useFocusTrap, useI18n, usePrimaryNavigation, useUiState } from '@hooks';
 import { useAuthGuard } from '@navigation/guards';
 import { AUTH } from '@config';
 import breakpoints from '@theme/breakpoints';
@@ -29,10 +29,15 @@ import {
   LoadingOverlay,
   NetworkIndicator,
   NoticeSurface,
-  ShellBanners,
   Sidebar,
   ThemeControls,
 } from '@platform/components';
+import {
+  useHeaderActions,
+  useNotificationData,
+  useHeaderCustomizationItems,
+} from './useMainLayoutMemo';
+import useKeyboardShortcuts from './useKeyboardShortcuts';
 import { ACTION_PLACEMENTS, ACTION_VARIANTS } from '@platform/components/navigation/GlobalHeader/types';
 import GlobalFooter, { FOOTER_VARIANTS } from '@platform/components/navigation/GlobalFooter';
 import { actions as uiActions } from '@store/slices/ui.slice';
@@ -111,15 +116,16 @@ const MainRouteLayoutWeb = () => {
     return AUTH.REGISTER_ROLES.some((role) => roles.includes(role));
   }, [isAuthenticated, roles]);
   const { mainItems, isItemVisible } = usePrimaryNavigation();
-  const banners = useShellBanners();
   const { width } = useWindowDimensions();
   const isMobile = width < breakpoints.tablet;
+  const isTablet = width >= breakpoints.tablet && width < breakpoints.desktop;
   const isCompactHeader = width < breakpoints.desktop;
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
   const [isHeaderCustomizationOpen, setIsHeaderCustomizationOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const closeButtonRef = useRef(null);
   const mobileSidebarRef = useRef(null);
   const notificationsRef = useRef(null);
@@ -128,7 +134,6 @@ const MainRouteLayoutWeb = () => {
   const overflowMenuRef = useRef(null);
   const customizationWrapperRef = useRef(null);
   const customizationMenuRef = useRef(null);
-  const bannerSlot = banners.length ? <ShellBanners banners={banners} testID="main-shell-banners" /> : null;
   const overlaySlot = isLoading ? <LoadingOverlay visible testID="main-loading-overlay" /> : null;
   const resolvedSidebarWidth = useMemo(
     () => clamp(storedSidebarWidth ?? SIDEBAR_DEFAULT_WIDTH, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH),
@@ -221,6 +226,34 @@ const MainRouteLayoutWeb = () => {
       dispatch(uiActions.setSidebarCollapsed(!storedSidebarCollapsed));
     }
   }, [dispatch, isMobile, storedSidebarCollapsed]);
+
+  const handleToggleHeader = useCallback(() => {
+    if (isHeaderHidden) {
+      handleShowHeader();
+    } else {
+      handleHideHeader();
+    }
+  }, [isHeaderHidden]);
+
+  const handleOpenCommandPalette = useCallback(() => {
+    setIsCommandPaletteOpen(true);
+  }, []);
+
+  const handleCloseCommandPalette = useCallback(() => {
+    setIsCommandPaletteOpen(false);
+  }, []);
+
+  const handleShowShortcuts = useCallback(() => {
+    // TODO: Implement shortcuts help modal
+    console.log('Keyboard shortcuts help');
+  }, []);
+
+  const handleCloseMenus = useCallback(() => {
+    setIsNotificationsOpen(false);
+    setIsOverflowOpen(false);
+    setIsHeaderCustomizationOpen(false);
+    setIsCommandPaletteOpen(false);
+  }, []);
 
   const handleGoToLogin = useCallback(() => {
     router.push('/login');
@@ -394,6 +427,18 @@ const MainRouteLayoutWeb = () => {
     }
   }, []);
 
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    {
+      toggleSidebar: handleToggleSidebar,
+      toggleHeader: handleToggleHeader,
+      openCommandPalette: handleOpenCommandPalette,
+      showShortcuts: handleShowShortcuts,
+      closeMenus: handleCloseMenus,
+    },
+    true
+  );
+
   useFocusTrap(mobileSidebarRef, isMobileSidebarOpen, { initialFocusRef: closeButtonRef });
   useFocusTrap(notificationsMenuRef, isNotificationsOpen);
   useFocusTrap(overflowMenuRef, isOverflowOpen);
@@ -415,14 +460,18 @@ const MainRouteLayoutWeb = () => {
     [headerActionVisibility]
   );
 
-  const headerCustomizationItems = useMemo(
-    () => ([
-      { id: 'notifications', label: t('navigation.header.actions.notifications') },
-      { id: 'network', label: t('navigation.header.actions.network') },
-      { id: 'fullscreen', label: t('navigation.header.actions.fullscreen') },
-    ]),
-    [t]
-  );
+  // Auto-collapse sidebar on tablet portrait, auto-expand on tablet landscape
+  useEffect(() => {
+    if (isTablet && !isMobile) {
+      const isPortrait = width < breakpoints.desktop;
+      if (isPortrait && !storedSidebarCollapsed) {
+        dispatch(uiActions.setSidebarCollapsed(true));
+      }
+    }
+  }, [isTablet, width, storedSidebarCollapsed, dispatch]);
+
+  // Memoized values using custom hooks
+  const headerCustomizationItems = useHeaderCustomizationItems(t);
 
   const authHeaderActions = useMemo(() => {
     if (!isAuthenticated) {
@@ -456,21 +505,12 @@ const MainRouteLayoutWeb = () => {
     return actions;
   }, [canAccessRegister, handleGoToLogin, handleGoToRegister, isAuthenticated, logout, t]);
 
-  const headerActions = useMemo(
-    () => [
-      {
-        id: 'toggle-sidebar',
-        label: null,
-        icon: HamburgerIcon,
-        onPress: handleToggleSidebar,
-        placement: ACTION_PLACEMENTS.SECONDARY,
-        variant: ACTION_VARIANTS.GHOST,
-        accessibilityLabel: t('common.toggleMenu'),
-        isCircular: false,
-      },
-      ...authHeaderActions,
-    ],
-    [HamburgerIcon, authHeaderActions, handleToggleSidebar, t]
+  // Memoized header actions
+  const headerActions = useHeaderActions(
+    authHeaderActions,
+    HamburgerIcon,
+    handleToggleSidebar,
+    t
   );
 
   const brandTitle = useMemo(
@@ -495,7 +535,8 @@ const MainRouteLayoutWeb = () => {
     ),
     [fullscreenIconGlyph, fullscreenLabel]
   );
-  const notificationItems = useMemo(
+  // Memoized notification data
+  const rawNotificationItems = useMemo(
     () => ([
       {
         id: 'appointments',
@@ -521,10 +562,7 @@ const MainRouteLayoutWeb = () => {
     ]),
     [t]
   );
-  const unreadCount = useMemo(
-    () => notificationItems.filter((item) => item.unread).length,
-    [notificationItems]
-  );
+  const { notificationItems, unreadCount } = useNotificationData(rawNotificationItems);
   const shouldShowNotifications = isHeaderActionVisible('notifications');
   const shouldShowNetwork = isHeaderActionVisible('network');
   const shouldShowNotificationsInline = !isMobile && shouldShowNotifications;
@@ -949,7 +987,6 @@ const MainRouteLayoutWeb = () => {
             testID="main-footer"
           />
         }
-        banner={bannerSlot}
         overlay={overlaySlot}
         notices={<NoticeSurface testID="main-notice-surface" />}
         sidebarCollapsed={isSidebarCollapsed}

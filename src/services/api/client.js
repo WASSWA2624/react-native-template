@@ -30,9 +30,15 @@ const apiClient = async (config) => {
     headers = {},
     timeout = TIMEOUTS.API_REQUEST,
   } = config;
+  // #region agent log
+  fetch('http://127.0.0.1:7251/ingest/1d28b85e-4e80-4cd6-84bc-0a14f3ba6cec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'client.js:33',message:'api_client_enter',data:{url,method,hasBody:Boolean(body),timeout},timestamp:Date.now(),sessionId:'debug-session',runId:'login-redirect',hypothesisId:'H6'})}).catch(()=>{});
+  // #endregion agent log
 
   // Attach auth header
   const authConfig = await attachAuthHeader({ url, method, body, headers });
+  // #region agent log
+  fetch('http://127.0.0.1:7251/ingest/1d28b85e-4e80-4cd6-84bc-0a14f3ba6cec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'client.js:37',message:'api_client_auth_config',data:{url:authConfig?.url,method:authConfig?.method,hasHeaders:Boolean(authConfig?.headers)},timestamp:Date.now(),sessionId:'debug-session',runId:'login-redirect',hypothesisId:'H7'})}).catch(()=>{});
+  // #endregion agent log
 
   // Create abort controller for timeout
   const controller = new AbortController();
@@ -40,6 +46,9 @@ const apiClient = async (config) => {
 
   try {
     const locale = await resolveRequestLocale();
+    // #region agent log
+    fetch('http://127.0.0.1:7251/ingest/1d28b85e-4e80-4cd6-84bc-0a14f3ba6cec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'client.js:45',message:'api_client_before_fetch',data:{url:authConfig?.url,locale},timestamp:Date.now(),sessionId:'debug-session',runId:'login-redirect',hypothesisId:'H8'})}).catch(()=>{});
+    // #endregion agent log
     const response = await fetch(authConfig.url, {
       method: authConfig.method,
       headers: {
@@ -52,22 +61,40 @@ const apiClient = async (config) => {
     });
 
     clearTimeout(timeoutId);
+    // #region agent log
+    fetch('http://127.0.0.1:7251/ingest/1d28b85e-4e80-4cd6-84bc-0a14f3ba6cec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'client.js:58',message:'api_client_response',data:{status:response?.status,ok:response?.ok},timestamp:Date.now(),sessionId:'debug-session',runId:'login-redirect',hypothesisId:'H9'})}).catch(()=>{});
+    // #endregion agent log
 
+    const contentType = response.headers?.get?.('content-type') || '';
+    const hasJson = contentType.includes('application/json');
+    
     if (!response.ok) {
+      // Parse error response body
+      let errorData = null;
+      if (hasJson) {
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          // If JSON parsing fails, continue with null
+        }
+      }
+      
       const error = {
         status: response.status,
         statusText: response.statusText,
-        message: `API request failed: ${response.statusText}`,
+        message: errorData?.message || `API request failed: ${response.statusText}`,
+        errors: errorData?.errors || [],
       };
       throw await handleAuthError(error);
     }
 
-    const contentType = response.headers?.get?.('content-type') || '';
-    const hasJson = contentType.includes('application/json');
     const data = hasJson ? await response.json() : null;
     return { data, status: response.status };
   } catch (error) {
     clearTimeout(timeoutId);
+    // #region agent log
+    fetch('http://127.0.0.1:7251/ingest/1d28b85e-4e80-4cd6-84bc-0a14f3ba6cec',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'client.js:86',message:'api_client_error',data:{name:error?.name || null,message:typeof error?.message === 'string' ? error.message.slice(0,120) : null},timestamp:Date.now(),sessionId:'debug-session',runId:'login-redirect',hypothesisId:'H8'})}).catch(()=>{});
+    // #endregion agent log
     if (error.name === 'AbortError') {
       throw handleError(new Error('Request timeout'), { url });
     }

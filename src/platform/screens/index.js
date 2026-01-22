@@ -19,6 +19,8 @@ export { default as ForgotPasswordScreen } from './auth/ForgotPasswordScreen';
 export { default as ResetPasswordScreen } from './auth/ResetPasswordScreen';
 export { default as VerifyEmailScreen } from './auth/VerifyEmailScreen';
 export { default as VerifyPhoneScreen } from './auth/VerifyPhoneScreen';
+export { default as TenantSelectionScreen } from './auth/TenantSelectionScreen';
+export { default as FacilitySelectionScreen } from './auth/FacilitySelectionScreen';
 
 // Main screens (authenticated/main screens)
 export { default as HomeScreen } from './main/HomeScreen';

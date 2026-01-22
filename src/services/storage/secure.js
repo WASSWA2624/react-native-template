@@ -13,7 +13,19 @@ const reportStorageError = (error, context) => {
   });
 };
 
+const isSecureStoreAvailable = async () => {
+  try {
+    return await SecureStore.isAvailableAsync();
+  } catch (error) {
+    reportStorageError(error, { op: 'availability' });
+    return false;
+  }
+};
+
 const getItem = async (key) => {
+  const available = await isSecureStoreAvailable();
+  if (!available) return null;
+
   try {
     return await SecureStore.getItemAsync(key);
   } catch (error) {
@@ -23,6 +35,9 @@ const getItem = async (key) => {
 };
 
 const setItem = async (key, value) => {
+  const available = await isSecureStoreAvailable();
+  if (!available) return false;
+
   try {
     await SecureStore.setItemAsync(key, value);
     return true;
@@ -33,6 +48,9 @@ const setItem = async (key, value) => {
 };
 
 const removeItem = async (key) => {
+  const available = await isSecureStoreAvailable();
+  if (!available) return false;
+
   try {
     await SecureStore.deleteItemAsync(key);
     return true;

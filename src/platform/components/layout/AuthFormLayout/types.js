@@ -11,5 +11,12 @@ const SIZES = {
 
 const SIZE_KEYS = Object.values(SIZES);
 
-export { SIZES, SIZE_KEYS };
+const LAYOUTS = {
+  CENTERED: 'centered',
+  TWO_COLUMN: 'two-column',
+};
+
+const LAYOUT_KEYS = Object.values(LAYOUTS);
+
+export { SIZES, SIZE_KEYS, LAYOUTS, LAYOUT_KEYS };
 

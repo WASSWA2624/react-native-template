@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Slot, useRouter } from 'expo-router';
-import { useAuth, useI18n, usePrimaryNavigation, useShellBanners, useUiState } from '@hooks';
+import { useAuth, useI18n, usePrimaryNavigation, useUiState } from '@hooks';
 import { useAuthGuard } from '@navigation/guards';
 import { PatientFrame } from '@platform/layouts';
 import {
@@ -13,7 +13,6 @@ import {
   LanguageControls,
   LoadingOverlay,
   NoticeSurface,
-  ShellBanners,
   TabBar,
   ThemeControls,
 } from '@platform/components';
@@ -91,7 +90,6 @@ const PatientRouteLayoutAndroid = () => {
           )}
         />
       )}
-      banner={bannerSlot}
       overlay={overlaySlot}
       notices={<NoticeSurface testID="patient-notice-surface" />}
       accessibilityLabel={t('navigation.patientNavigation')}

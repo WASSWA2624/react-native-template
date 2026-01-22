@@ -38,6 +38,7 @@ const StyledAuthFormStatus = styled.View.withConfig({
   componentId: 'StyledAuthFormStatus',
 })`
   width: 100%;
+  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
 `;
 
 const StyledAuthFormActions = styled.View.withConfig({

@@ -6,6 +6,13 @@
 import { endpoints } from '@config/endpoints';
 import { apiClient } from '@services/api';
 
+const identifyApi = (payload) =>
+  apiClient({
+    url: endpoints.AUTH.IDENTIFY,
+    method: 'POST',
+    body: payload,
+  });
+
 const loginApi = (payload) =>
   apiClient({
     url: endpoints.AUTH.LOGIN,
@@ -82,6 +89,7 @@ const getCurrentUserApi = () =>
   });
 
 export {
+  identifyApi,
   loginApi,
   logoutApi,
   refreshApi,

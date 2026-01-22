@@ -10,6 +10,7 @@ const StyledForm = styled.View.withConfig({
   componentId: 'StyledForm',
 })`
   width: 100%;
+  margin-bottom: ${({ theme }) => theme.spacing.sm}px;
 `;
 
 const StyledActions = styled.View.withConfig({
@@ -17,6 +18,18 @@ const StyledActions = styled.View.withConfig({
   componentId: 'StyledActions',
 })`
   width: 100%;
+  margin-top: ${({ theme }) => theme.spacing.md}px;
+`;
+
+const StyledFooter = styled.View.withConfig({
+  displayName: 'StyledFooter',
+  componentId: 'StyledFooter',
+})`
+  width: 100%;
+  margin-top: ${({ theme }) => theme.spacing.sm}px;
+  padding-top: ${({ theme }) => theme.spacing.sm}px;
+  border-top-width: 1px;
+  border-top-color: ${({ theme }) => theme.colors.background.tertiary};
 `;
 
 const StyledLinkRow = styled.View.withConfig({
@@ -24,8 +37,20 @@ const StyledLinkRow = styled.View.withConfig({
   componentId: 'StyledLinkRow',
 })`
   width: 100%;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 
-export { StyledActions, StyledForm, StyledLinkRow };
+const StyledLinkSeparator = styled.Text.withConfig({
+  displayName: 'StyledLinkSeparator',
+  componentId: 'StyledLinkSeparator',
+})`
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
+  padding: 0 ${({ theme }) => theme.spacing.xs}px;
+`;
+
+export { StyledActions, StyledForm, StyledFooter, StyledLinkRow, StyledLinkSeparator };
 

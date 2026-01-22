@@ -77,6 +77,7 @@ const TextFieldIOS = ({
   accessibilityHint,
   testID,
   style,
+  secureTextEntry,
   ...rest
 }) => {
   const theme = useTheme();
@@ -122,7 +123,7 @@ const TextFieldIOS = ({
           placeholder={placeholder}
           placeholderTextColor={theme.colors.text.tertiary}
           editable={!disabled}
-          secureTextEntry={type === INPUT_TYPES.PASSWORD}
+          secureTextEntry={secureTextEntry !== undefined ? secureTextEntry : type === INPUT_TYPES.PASSWORD}
           keyboardType={
             type === INPUT_TYPES.EMAIL
               ? 'email-address'

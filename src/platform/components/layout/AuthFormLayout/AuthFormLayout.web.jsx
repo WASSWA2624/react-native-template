@@ -12,6 +12,14 @@ import {
   StyledAuthFormContainer,
   StyledAuthFormFooter,
   StyledAuthFormStatus,
+  StyledTwoColumnContainer,
+  StyledLeftPanel,
+  StyledRightPanel,
+  StyledWelcomeContent,
+  StyledFormContent,
+  StyledWelcomeTitle,
+  StyledWelcomeDescription,
+  StyledFormTitle,
 } from './AuthFormLayout.web.styles';
 import useAuthFormLayout from './useAuthFormLayout';
 import { SIZES } from './types';
@@ -28,6 +36,9 @@ const AuthFormLayoutWeb = ({
   footer,
   children,
   size = SIZES.MD,
+  layout: layoutVariant = 'centered',
+  welcomeTitle,
+  welcomeDescription,
   testID,
   accessibilityLabel,
   accessibilityHint,
@@ -37,9 +48,9 @@ const AuthFormLayoutWeb = ({
   const layout = useAuthFormLayout({ size });
 
   const header = title ? (
-    <Stack spacing="sm" align="center">
+    <Stack spacing="xs" align="center">
       <Text
-        variant="h1"
+        variant="h2"
         align="center"
         accessibilityRole="header"
         testID={titleTestID}
@@ -48,7 +59,7 @@ const AuthFormLayoutWeb = ({
       </Text>
       {description ? (
         <Text
-          variant="body"
+          variant="caption"
           align="center"
           testID={descriptionTestID}
         >
@@ -76,7 +87,7 @@ const AuthFormLayoutWeb = ({
   ) : null;
 
   const body = (
-    <Stack spacing="md">
+    <Stack spacing="sm">
       {shouldInlineSlots && header ? header : null}
       {status ? (
         <StyledAuthFormStatus>
@@ -88,6 +99,78 @@ const AuthFormLayoutWeb = ({
     </Stack>
   );
 
+  // Two-column layout
+  if (layoutVariant === 'two-column') {
+    const welcomeContent = (
+      <StyledWelcomeContent>
+        {welcomeTitle && (
+          <StyledWelcomeTitle>
+            <Text variant="h1" color="inherit">
+              {welcomeTitle}
+            </Text>
+          </StyledWelcomeTitle>
+        )}
+        {welcomeDescription && (
+          <StyledWelcomeDescription>
+            <Text variant="body">
+              {welcomeDescription}
+            </Text>
+          </StyledWelcomeDescription>
+        )}
+      </StyledWelcomeContent>
+    );
+
+    return (
+      <Screen
+        scroll={false}
+        padding="none"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        testID={testID}
+      >
+        <StyledAuthFormContainer $isTwoColumn>
+          <StyledTwoColumnContainer>
+            <StyledLeftPanel>
+              {welcomeContent}
+            </StyledLeftPanel>
+            <StyledRightPanel>
+              <StyledFormContent>
+                {header ? (
+                  <StyledFormTitle>
+                    <Text
+                      variant="h2"
+                      testID={titleTestID}
+                      accessibilityRole="header"
+                    >
+                      {title}
+                    </Text>
+                  </StyledFormTitle>
+                ) : null}
+                {status ? (
+                  <StyledAuthFormStatus>
+                    {status}
+                  </StyledAuthFormStatus>
+                ) : null}
+                {children}
+                {actions ? (
+                  <StyledAuthFormActions>
+                    {actions}
+                  </StyledAuthFormActions>
+                ) : null}
+                {footer ? (
+                  <StyledAuthFormFooter>
+                    {footer}
+                  </StyledAuthFormFooter>
+                ) : null}
+              </StyledFormContent>
+            </StyledRightPanel>
+          </StyledTwoColumnContainer>
+        </StyledAuthFormContainer>
+      </Screen>
+    );
+  }
+
+  // Centered layout (default, backward compatible)
   return (
     <Screen
       scroll

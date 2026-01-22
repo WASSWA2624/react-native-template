@@ -12,8 +12,27 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider as BaseThemeProvider } from '@theme';
 import { selectTheme } from '@store/selectors';
+
+// Global style reset to ensure full-width layouts work correctly
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  #root, [data-reactroot] {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+`;
 
 const ThemeProviderWrapper = ({ children }) => {
   const themeMode = useSelector(selectTheme);
@@ -25,6 +44,7 @@ const ThemeProviderWrapper = ({ children }) => {
 
   return (
     <BaseThemeProvider theme={themeMode}>
+      <GlobalStyle />
       {children}
     </BaseThemeProvider>
   );

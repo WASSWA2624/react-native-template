@@ -37,9 +37,9 @@ const AuthFormLayoutIOS = ({
   const layout = useAuthFormLayout({ size });
 
   const header = title ? (
-    <Stack spacing="sm" align="center">
+    <Stack spacing="xs" align="center">
       <Text
-        variant="h1"
+        variant="h2"
         align="center"
         accessibilityRole="header"
         testID={titleTestID}
@@ -48,7 +48,7 @@ const AuthFormLayoutIOS = ({
       </Text>
       {description ? (
         <Text
-          variant="body"
+          variant="caption"
           align="center"
           testID={descriptionTestID}
         >
@@ -76,7 +76,7 @@ const AuthFormLayoutIOS = ({
   ) : null;
 
   const body = (
-    <Stack spacing="md">
+    <Stack spacing="sm">
       {shouldInlineSlots && header ? header : null}
       {status ? (
         <StyledAuthFormStatus>

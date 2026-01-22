@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Slot, useRouter } from 'expo-router';
-import { useAuth, useI18n, usePrimaryNavigation, useShellBanners, useUiState } from '@hooks';
+import { useAuth, useI18n, usePrimaryNavigation, useUiState } from '@hooks';
 import { useAuthGuard } from '@navigation/guards';
 import { PatientFrame } from '@platform/layouts';
 import {
@@ -13,7 +13,6 @@ import {
   LanguageControls,
   LoadingOverlay,
   NoticeSurface,
-  ShellBanners,
   Sidebar,
   ThemeControls,
 } from '@platform/components';
@@ -30,8 +29,6 @@ const PatientRouteLayoutWeb = () => {
   const { isAuthenticated, logout } = useAuth();
   const { isLoading } = useUiState();
   const { patientItems, isItemVisible } = usePrimaryNavigation();
-  const banners = useShellBanners();
-  const bannerSlot = banners.length ? <ShellBanners banners={banners} testID="patient-shell-banners" /> : null;
   const overlaySlot = isLoading ? <LoadingOverlay visible testID="patient-loading-overlay" /> : null;
   const headerActions = isAuthenticated
     ? [
@@ -91,7 +88,6 @@ const PatientRouteLayoutWeb = () => {
           testID="patient-footer"
         />
       )}
-      banner={bannerSlot}
       overlay={overlaySlot}
       notices={<NoticeSurface testID="patient-notice-surface" />}
       accessibilityLabel={t('navigation.patientNavigation')}
