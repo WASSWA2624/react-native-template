@@ -26,6 +26,9 @@ const initialState = {
   lastUpdated: null,
 };
 
+const normalizeErrorCode = (payload) =>
+  (typeof payload === 'object' && payload?.code != null ? payload.code : payload) || 'UNKNOWN_ERROR';
+
 const login = createAsyncThunk('auth/login', async (payload, { rejectWithValue }) => {
   try {
     const user = await loginUseCase(payload);
@@ -202,7 +205,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
@@ -216,7 +219,7 @@ const authSlice = createSlice({
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -230,7 +233,7 @@ const authSlice = createSlice({
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(refreshSession.pending, (state) => {
         state.isLoading = true;
@@ -243,7 +246,7 @@ const authSlice = createSlice({
       })
       .addCase(refreshSession.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(loadCurrentUser.pending, (state) => {
         state.isLoading = true;
@@ -257,7 +260,7 @@ const authSlice = createSlice({
       })
       .addCase(loadCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(verifyEmail.pending, (state) => {
         state.isLoading = true;
@@ -269,7 +272,7 @@ const authSlice = createSlice({
       })
       .addCase(verifyEmail.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(verifyPhone.pending, (state) => {
         state.isLoading = true;
@@ -281,7 +284,7 @@ const authSlice = createSlice({
       })
       .addCase(verifyPhone.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(resendVerification.pending, (state) => {
         state.isLoading = true;
@@ -293,7 +296,7 @@ const authSlice = createSlice({
       })
       .addCase(resendVerification.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(forgotPassword.pending, (state) => {
         state.isLoading = true;
@@ -305,7 +308,7 @@ const authSlice = createSlice({
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;
@@ -317,7 +320,7 @@ const authSlice = createSlice({
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       })
       .addCase(changePassword.pending, (state) => {
         state.isLoading = true;
@@ -329,7 +332,7 @@ const authSlice = createSlice({
       })
       .addCase(changePassword.rejected, (state, action) => {
         state.isLoading = false;
-        state.errorCode = action.payload || 'UNKNOWN_ERROR';
+        state.errorCode = normalizeErrorCode(action.payload);
       });
   },
 });

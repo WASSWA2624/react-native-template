@@ -38,25 +38,24 @@ const useFacilitySelectionScreen = () => {
 
   const handleSubmit = useCallback(async () => {
     if (!canSubmit || !loginPayload) return false;
-    
+
     setIsLoading(true);
     setErrorMessage(null);
-    
+
     try {
-      // Complete login with selected facility
       await login({
         ...loginPayload,
         facility_id: selectedFacilityId,
       });
-      // Navigation will be handled by auth guard after successful login
+      router.replace('/home');
     } catch (error) {
       setErrorMessage(error?.message || t('auth.facilitySelection.error'));
     } finally {
       setIsLoading(false);
     }
-    
+
     return true;
-  }, [canSubmit, selectedFacilityId, loginPayload, login, t]);
+  }, [canSubmit, selectedFacilityId, loginPayload, login, router, t]);
 
   const handleGoBack = useCallback(() => {
     router.back();

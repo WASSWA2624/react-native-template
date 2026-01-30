@@ -90,14 +90,12 @@ const useTenantSelectionScreen = () => {
         return true;
       }
       
-      // Normal login - dispatch to Redux to update state
       await login({
         ...payload,
         password,
         tenant_id: selectedTenantId,
       });
-      
-      // Navigation handled by auth guard
+      router.replace('/home');
       return true;
     } catch (error) {
       setErrorMessage(error?.message || t('auth.tenantSelection.loginError'));
