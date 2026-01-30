@@ -31,6 +31,7 @@ export const StyledContainer = styled.main.withConfig({
   flex: 1;
   min-height: 0;
   min-width: 0;
+  overflow-x: hidden;
   background-color: ${({ theme }) => cl(theme, 'background.primary')};
 
   @media (min-width: ${({ theme }) => tablet(theme)}px) {
@@ -372,8 +373,10 @@ export const StyledContent = styled.div.withConfig({
 })`
   flex: 1;
   min-width: 0;
+  max-width: 100%;
   min-height: 0;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
   @media (min-width: ${({ theme }) => tablet(theme)}px) {
