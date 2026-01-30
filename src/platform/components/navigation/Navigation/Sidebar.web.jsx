@@ -19,6 +19,7 @@ import {
   StyledNavItem,
   StyledNavItemContent,
   StyledNavItemIcon,
+  StyledNavItemLabelGroup,
   StyledNavItemLabel,
   StyledNavItemBadge,
   StyledNavItemChildren,
@@ -69,6 +70,7 @@ const SidebarWeb = ({
         <StyledNavItem
           level={level}
           active={isActive}
+          $collapsed={collapsed}
           onPress={() => {
             if (hasChildren) {
               toggleSection(item.id);
@@ -79,25 +81,24 @@ const SidebarWeb = ({
           accessibilityRole="button"
           accessibilityLabel={item.label}
           accessibilityState={{ selected: isActive }}
+          title={collapsed ? item.label : undefined}
           testID={testID ? `${testID}-item-${item.id}` : undefined}
         >
           <StyledNavItemContent>
             {item.icon && <StyledNavItemIcon>{item.icon}</StyledNavItemIcon>}
-            {!collapsed && (
-              <>
-                <StyledNavItemLabel active={isActive}>{item.label}</StyledNavItemLabel>
-                {item.badge && (
-                  <StyledNavItemBadge>
-                    <Badge variant="primary" size="small">
-                      {item.badgeCount || ''}
-                    </Badge>
-                  </StyledNavItemBadge>
-                )}
-                {hasChildren && (
-                  <StyledExpandIcon expanded={isExpanded}>▼</StyledExpandIcon>
-                )}
-              </>
-            )}
+            <StyledNavItemLabelGroup $collapsed={collapsed}>
+              <StyledNavItemLabel active={isActive}>{item.label}</StyledNavItemLabel>
+              {item.badge && (
+                <StyledNavItemBadge>
+                  <Badge variant="primary" size="small">
+                    {item.badgeCount || ''}
+                  </Badge>
+                </StyledNavItemBadge>
+              )}
+              {hasChildren && (
+                <StyledExpandIcon expanded={isExpanded}>▼</StyledExpandIcon>
+              )}
+            </StyledNavItemLabelGroup>
           </StyledNavItemContent>
         </StyledNavItem>
         {hasChildren && isExpanded && !collapsed && (
@@ -131,7 +132,7 @@ const SidebarWeb = ({
       style={style}
       {...rest}
     >
-      <StyledSidebarContent>
+      <StyledSidebarContent $collapsed={collapsed}>
         {Object.entries(groupedItems).map(([groupName, groupItems]) => (
           <StyledNavSection key={groupName}>
             {!collapsed && groupName !== 'main' && (

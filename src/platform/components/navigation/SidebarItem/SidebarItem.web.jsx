@@ -58,7 +58,9 @@ const SidebarItemWeb = (props) => {
       onClick={handleClick}
       aria-label={label}
       aria-current={active ? 'page' : undefined}
+      title={collapsed ? label : undefined}
       $active={active}
+      $collapsed={collapsed}
     >
       <IconWrapper aria-hidden>
         <Icon glyph={glyph} size="sm" decorative />

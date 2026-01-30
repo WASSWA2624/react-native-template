@@ -1,28 +1,23 @@
-﻿/**
- * MAINLAYOUT Web Styles
+/**
+ * MainLayout Web Styles
  * Styled-components for Web platform
  * File: MainLayout.web.styles.jsx
  */
 import styled from 'styled-components';
 
-
-// Module-level cache to prevent recreation during HMR
-// This ensures styled components persist across hot module reloads
-// Use globalThis for cross-platform compatibility (Node, web, etc.)
-const globalObj = typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : {};
-const componentCache = (globalObj.__MAINLAYOUT_STYLES__ = globalObj.__MAINLAYOUT_STYLES__ || {});
-
-const StyledContainer = componentCache.StyledContainer || (componentCache.StyledContainer = styled.main.withConfig({
+const StyledContainer = styled.main.withConfig({
   displayName: 'StyledContainer',
+  componentId: 'StyledContainer',
 })`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background.primary};
-`);
+`;
 
-const StyledHeader = componentCache.StyledHeader || (componentCache.StyledHeader = styled.header.withConfig({
+const StyledHeader = styled.header.withConfig({
   displayName: 'StyledHeader',
+  componentId: 'StyledHeader',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.background.tertiary};
@@ -35,60 +30,70 @@ const StyledHeader = componentCache.StyledHeader || (componentCache.StyledHeader
   position: sticky;
   top: 0;
   z-index: 100;
-`);
+`;
 
-const StyledBody = componentCache.StyledBody || (componentCache.StyledBody = styled.div.withConfig({
+const StyledBody = styled.div.withConfig({
   displayName: 'StyledBody',
+  componentId: 'StyledBody',
 })`
   display: flex;
   flex-direction: row;
   flex: 1;
-`);
+`;
 
-const StyledSidebar = componentCache.StyledSidebar || (componentCache.StyledSidebar = styled.aside.withConfig({
+const StyledSidebar = styled.aside.withConfig({
   displayName: 'StyledSidebar',
+  componentId: 'StyledSidebar',
 })`
   display: none;
-  width: ${({ theme }) => theme.spacing.md * 15}px;
+  width: 200px;
+  min-width: 200px;
   background-color: ${({ theme }) => theme.colors.background.secondary};
   border-right: 1px solid ${({ theme }) => theme.colors.background.tertiary};
-  padding: ${({ theme }) => theme.spacing.md}px;
+  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
+  flex-direction: column;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}px) {
-    display: block;
+    display: flex;
   }
-`);
+`;
 
-const StyledContent = componentCache.StyledContent || (componentCache.StyledContent = styled.main.withConfig({
+const StyledContent = styled.main.withConfig({
   displayName: 'StyledContent',
+  componentId: 'StyledContent',
 })`
   flex: 1;
   padding: ${({ theme }) => theme.spacing.md}px;
-  max-width: ${({ theme, hasSidebar }) => (hasSidebar ? `calc(100% - ${theme.spacing.md * 15}px)` : `${theme.spacing.md * 75}px`)};
+  max-width: ${({ theme, hasSidebar }) => (hasSidebar ? 'calc(100% - 200px)' : `${theme.spacing.md * 75}px`)};
   margin: 0 auto;
   width: 100%;
-`);
+`;
 
-const StyledFooter = componentCache.StyledFooter || (componentCache.StyledFooter = styled.footer.withConfig({
+const StyledFooter = styled.footer.withConfig({
   displayName: 'StyledFooter',
+  componentId: 'StyledFooter',
 })`
   background-color: ${({ theme }) => theme.colors.background.secondary};
   border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};
   padding: ${({ theme }) => theme.spacing.md}px;
   margin-top: auto;
-`);
+`;
 
-const StyledBreadcrumbs = componentCache.StyledBreadcrumbs || (componentCache.StyledBreadcrumbs = styled.nav.withConfig({
+const StyledBreadcrumbs = styled.nav.withConfig({
   displayName: 'StyledBreadcrumbs',
+  componentId: 'StyledBreadcrumbs',
 })`
   padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.md}px;
   background-color: ${({ theme }) => theme.colors.background.secondary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.background.tertiary};
-`);
+`;
 
-const StyledSkipLink = componentCache.StyledSkipLink || (componentCache.StyledSkipLink = styled.a.withConfig({
+const StyledSkipLink = styled.a.withConfig({
   displayName: 'StyledSkipLink',
+  componentId: 'StyledSkipLink',
 })`
   position: absolute;
   top: ${({ theme }) => -theme.spacing.xl - theme.spacing.sm}px;
@@ -102,7 +107,7 @@ const StyledSkipLink = componentCache.StyledSkipLink || (componentCache.StyledSk
   &:focus {
     top: 0;
   }
-`);
+`;
 
 export {
   StyledContainer,

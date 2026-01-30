@@ -21,10 +21,12 @@ const StyledSidebar = styled(View).withConfig({
 const StyledSidebarContent = styled(View).withConfig({
   displayName: 'StyledSidebarContent',
   componentId: 'StyledSidebarContent',
+  shouldForwardProp: (prop) => prop !== '$collapsed',
 })`
   flex: 1;
   min-height: 0;
-  padding: ${({ theme }) => theme.spacing.md}px;
+  padding: ${({ theme, $collapsed }) =>
+    $collapsed ? '0' : `${theme.spacing.md}px`};
   gap: ${({ theme }) => theme.spacing.sm}px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -73,15 +75,15 @@ const StyledNavItem = styled(Pressable).withConfig({
   displayName: 'StyledNavItem',
   componentId: 'StyledNavItem',
 })`
-  padding: ${({ theme }) => theme.spacing.sm}px ${({ theme }) => theme.spacing.md}px;
+  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
   margin-bottom: ${({ theme }) => theme.spacing.xs}px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
   background-color: ${({ theme, active }) =>
     active ? theme.colors.background.secondary : 'transparent'};
   flex-direction: row;
   align-items: center;
-  min-height: 44px;
-  padding-left: ${({ theme, level }) => theme.spacing.md + level * theme.spacing.md}px;
+  min-height: 40px;
+  padding-left: ${({ theme, level }) => theme.spacing.sm + level * theme.spacing.sm}px;
+  transition: background-color 0.15s ease;
 
   &:hover {
     background-color: ${({ theme, active }) =>

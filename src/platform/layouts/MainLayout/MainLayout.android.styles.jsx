@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MainLayout Android Styles
  * Styled-components for Android platform
  * File: MainLayout.android.styles.jsx
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native';
 
 const StyledContainer = styled.View.withConfig({
   displayName: 'StyledContainer',
+  componentId: 'StyledContainer',
 })`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background.primary};
@@ -16,6 +17,7 @@ const StyledContainer = styled.View.withConfig({
 
 const StyledHeader = styled.View.withConfig({
   displayName: 'StyledHeader',
+  componentId: 'StyledHeader',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-bottom-width: 1px;
@@ -30,6 +32,7 @@ const StyledHeader = styled.View.withConfig({
 
 const StyledScrollView = styled(ScrollView).withConfig({
   displayName: 'StyledScrollView',
+  componentId: 'StyledScrollView',
 }).attrs({
   contentContainerStyle: {
     flexGrow: 1,
@@ -40,6 +43,7 @@ const StyledScrollView = styled(ScrollView).withConfig({
 
 const StyledContent = styled.View.withConfig({
   displayName: 'StyledContent',
+  componentId: 'StyledContent',
 })`
   flex: 1;
   padding: ${({ theme }) => theme.spacing.md}px;
@@ -47,6 +51,7 @@ const StyledContent = styled.View.withConfig({
 
 const StyledFooter = styled.View.withConfig({
   displayName: 'StyledFooter',
+  componentId: 'StyledFooter',
 })`
   background-color: ${({ theme }) => theme.colors.background.secondary};
   border-top-width: 1px;
@@ -57,6 +62,7 @@ const StyledFooter = styled.View.withConfig({
 
 const StyledBreadcrumbs = styled.View.withConfig({
   displayName: 'StyledBreadcrumbs',
+  componentId: 'StyledBreadcrumbs',
 })`
   padding-horizontal: ${({ theme }) => theme.spacing.md}px;
   padding-vertical: ${({ theme }) => theme.spacing.xs}px;

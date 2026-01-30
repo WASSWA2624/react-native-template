@@ -42,7 +42,7 @@ const SidebarWeb = ({
       style={style}
       {...rest}
     >
-      <StyledSidebarContent>
+      <StyledSidebarContent $collapsed={collapsed}>
         {topLevel.map((item) => {
           const href = item.href ?? item.path;
           const label = item.label ?? (item.id ? t(`navigation.items.main.${item.id}`) : '');

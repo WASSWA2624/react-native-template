@@ -6,7 +6,6 @@
 
 import React from 'react';
 import { useI18n } from '@hooks';
-import { useSidebarNavigation } from '@hooks';
 import {
   StyledContainer,
   StyledHeader,
@@ -17,16 +16,16 @@ import {
   StyledBreadcrumbs,
   StyledSkipLink,
 } from './MainLayout.web.styles';
-import SidebarItem from '@platform/components/navigation/SidebarItem';
 
 /**
- * MainLayout component for Web
+ * MainLayout component for Web.
+ * Slot-based: use platform components (GlobalHeader, Sidebar, Breadcrumbs, GlobalFooter) at call site.
  * @param {Object} props - MainLayout props
  * @param {React.ReactNode} props.children - Main content
- * @param {React.ReactNode} props.header - Header content
- * @param {React.ReactNode} props.footer - Footer content
- * @param {React.ReactNode} props.sidebar - Sidebar navigation (desktop only)
- * @param {React.ReactNode} props.breadcrumbs - Breadcrumbs navigation
+ * @param {React.ReactNode} props.header - Header slot (e.g. <GlobalHeader />)
+ * @param {React.ReactNode} props.footer - Footer slot (e.g. <GlobalFooter />)
+ * @param {React.ReactNode} props.sidebar - Sidebar slot (e.g. <Sidebar /> from @platform/components)
+ * @param {React.ReactNode} props.breadcrumbs - Breadcrumbs slot
  * @param {string} props.accessibilityLabel - Accessibility label
  * @param {string} props.testID - Test identifier
  * @param {string} props.className - Additional CSS class
@@ -35,14 +34,14 @@ const MainLayoutWeb = ({
   children,
   header,
   footer,
+  sidebar,
   breadcrumbs,
   accessibilityLabel,
   testID,
   className,
 }) => {
   const { t } = useI18n();
-  const { sidebarMenu, activeMenuId, navigateToMenu } = useSidebarNavigation();
-  const hasSidebar = sidebarMenu && sidebarMenu.length > 0;
+  const hasSidebar = Boolean(sidebar);
 
   return (
     <StyledContainer
@@ -67,16 +66,7 @@ const MainLayoutWeb = ({
       <StyledBody>
         {hasSidebar && (
           <StyledSidebar role="complementary" aria-label={t('navigation.sidebar.label')}>
-            {sidebarMenu.map((item) => (
-              <SidebarItem
-                key={item.id}
-                icon={item.icon}
-                label={t(`navigation.sidebar.${item.id}`)}
-                collapsed={false}
-                active={activeMenuId === item.id}
-                onClick={() => navigateToMenu(item.id)}
-              />
-            ))}
+            {sidebar}
           </StyledSidebar>
         )}
         <StyledContent id="main-content" hasSidebar={hasSidebar}>

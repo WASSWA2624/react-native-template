@@ -82,10 +82,11 @@ import {
   StyledFullscreenButton,
 } from './MainRouteLayout.web.styles';
 
-const SIDEBAR_MIN_WIDTH = 200;
 const SIDEBAR_MAX_WIDTH = 360;
 const SIDEBAR_DEFAULT_WIDTH = 260;
-const SIDEBAR_COLLAPSED_WIDTH = 64;
+const SIDEBAR_ICON_SIZE = 18;
+const SIDEBAR_COLLAPSED_WIDTH = SIDEBAR_ICON_SIZE + 8;
+const SIDEBAR_MIN_WIDTH = SIDEBAR_COLLAPSED_WIDTH + 10;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
