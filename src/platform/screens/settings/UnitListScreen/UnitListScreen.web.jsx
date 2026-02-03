@@ -27,6 +27,7 @@ const UnitListScreenWeb = () => {
     onRetry,
     onUnitPress,
     onDelete,
+    onAdd,
   } = useUnitListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const UnitListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="unit-list-title">
-          {t('unit.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="unit-list-title">
+            {t('unit.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('unit.list.addLabel')}
+              accessibilityHint={t('unit.list.addHint')}
+              testID="unit-list-add"
+            >
+              {t('unit.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('unit.list.accessibilityLabel')} data-testid="unit-list">
           {isLoading && <LoadingSpinner testID="unit-list-spinner" />}
           {!isLoading && hasError && (

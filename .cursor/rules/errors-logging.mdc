@@ -35,7 +35,7 @@ src/logging/
     ├── index.js                # Logging entry
     ├── logger.js               # Logger implementation
     └── levels.js               # Log levels
-````
+```
 ---
 
 ## Error Boundary Rules

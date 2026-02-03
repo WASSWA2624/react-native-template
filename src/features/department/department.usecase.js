@@ -21,18 +21,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listDepartments = async (params = {}) =>
   execute(async () => {
     const parsed = parseDepartmentListParams(params);
     const response = await departmentApi.list(parsed);
-    return normalizeDepartmentList(response.data);
+    const payload = getPayload(response);
+    return normalizeDepartmentList(Array.isArray(payload) ? payload : []);
   });
 
 const getDepartment = async (id) =>
   execute(async () => {
     const parsedId = parseDepartmentId(id);
     const response = await departmentApi.get(parsedId);
-    return normalizeDepartment(response.data);
+    return normalizeDepartment(getPayload(response));
   });
 
 const createDepartment = async (payload) =>
@@ -47,7 +51,7 @@ const createDepartment = async (payload) =>
       return normalizeDepartment(parsed);
     }
     const response = await departmentApi.create(parsed);
-    return normalizeDepartment(response.data);
+    return normalizeDepartment(getPayload(response));
   });
 
 const updateDepartment = async (id, payload) =>
@@ -63,7 +67,7 @@ const updateDepartment = async (id, payload) =>
       return normalizeDepartment({ id: parsedId, ...parsed });
     }
     const response = await departmentApi.update(parsedId, parsed);
-    return normalizeDepartment(response.data);
+    return normalizeDepartment(getPayload(response));
   });
 
 const deleteDepartment = async (id) =>
@@ -74,10 +78,10 @@ const deleteDepartment = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeDepartment({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await departmentApi.remove(parsedId);
-    return normalizeDepartment(response.data);
+    await departmentApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 const listDepartmentUnits = async (id) =>

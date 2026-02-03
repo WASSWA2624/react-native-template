@@ -31,27 +31,27 @@ const ApiKeyPermissionListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('pi-key-permission.list.emptyTitle')}
-      description={t('pi-key-permission.list.emptyMessage')}
-      testID="pi-key-permission-list-empty-state"
+      title={t('apiKeyPermission.list.emptyTitle')}
+      description={t('apiKeyPermission.list.emptyMessage')}
+      testID="api-key-permission-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="pi-key-permission-list-title">
-          {t('pi-key-permission.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="api-key-permission-list-title">
+          {t('apiKeyPermission.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('pi-key-permission.list.accessibilityLabel')} data-testid="pi-key-permission-list">
-          {isLoading && <LoadingSpinner testID="pi-key-permission-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('apiKeyPermission.list.accessibilityLabel')} data-testid="api-key-permission-list">
+          {isLoading && <LoadingSpinner testID="api-key-permission-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="pi-key-permission-list-error-state"
+                testID="api-key-permission-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const ApiKeyPermissionListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="pi-key-permission-list-offline-state"
+                testID="api-key-permission-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const ApiKeyPermissionListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('pi-key-permission.list.delete')}
-                          accessibilityHint={t('pi-key-permission.list.deleteHint')}
+                          accessibilityLabel={t('apiKeyPermission.list.delete')}
+                          accessibilityHint={t('apiKeyPermission.list.deleteHint')}
                           testID={`pi-key-permission-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('pi-key-permission.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('apiKeyPermission.list.itemLabel', { name: title })}
                       testID={`pi-key-permission-item-${item.id}`}
                     />
                   </li>

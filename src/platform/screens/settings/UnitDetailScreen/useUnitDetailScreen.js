@@ -45,6 +45,10 @@ const useUnitDetailScreen = () => {
     router.push('/settings/units');
   }, [router]);
 
+  const handleEdit = useCallback(() => {
+    if (id) router.push(`/settings/units/${id}/edit`);
+  }, [id, router]);
+
   const handleDelete = useCallback(async () => {
     if (!id) return;
     try {
@@ -64,6 +68,7 @@ const useUnitDetailScreen = () => {
     isOffline,
     onRetry: handleRetry,
     onBack: handleBack,
+    onEdit: handleEdit,
     onDelete: handleDelete,
   };
 };

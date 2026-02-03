@@ -72,6 +72,10 @@ const useAddressListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/addresses/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useAddressListScreen = () => {
     onRetry: handleRetry,
     onAddressPress: handleAddressPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

@@ -72,6 +72,10 @@ const useUnitListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/units/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useUnitListScreen = () => {
     onRetry: handleRetry,
     onUnitPress: handleUnitPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

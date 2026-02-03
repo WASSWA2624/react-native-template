@@ -72,6 +72,10 @@ const useRoomListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/rooms/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useRoomListScreen = () => {
     onRetry: handleRetry,
     onRoomPress: handleRoomPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

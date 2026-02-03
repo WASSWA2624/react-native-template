@@ -45,6 +45,10 @@ const useAddressDetailScreen = () => {
     router.push('/settings/addresses');
   }, [router]);
 
+  const handleEdit = useCallback(() => {
+    if (id) router.push(`/settings/addresses/${id}/edit`);
+  }, [id, router]);
+
   const handleDelete = useCallback(async () => {
     if (!id) return;
     try {
@@ -64,6 +68,7 @@ const useAddressDetailScreen = () => {
     isOffline,
     onRetry: handleRetry,
     onBack: handleBack,
+    onEdit: handleEdit,
     onDelete: handleDelete,
   };
 };

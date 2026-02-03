@@ -34,7 +34,7 @@ src/bootstrap/
     ├── init.store.js         # Redux store initialization
     ├── init.offline.js       # Offline & network initialization
     └── init.security.js      # Security initialization
-````
+```
 ---
 
 ## Bootstrap Entry Rules

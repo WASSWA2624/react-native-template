@@ -31,6 +31,7 @@ const BranchDetailScreenWeb = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useBranchDetailScreen();
 
@@ -176,6 +177,17 @@ const BranchDetailScreenWeb = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('branch.detail.edit')}
+                accessibilityHint={t('branch.detail.editHint')}
+                testID="branch-detail-edit"
+              >
+                {t('branch.detail.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

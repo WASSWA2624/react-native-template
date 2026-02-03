@@ -27,6 +27,7 @@ const ContactListScreenWeb = () => {
     onRetry,
     onContactPress,
     onDelete,
+    onAdd,
   } = useContactListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const ContactListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="contact-list-title">
-          {t('contact.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="contact-list-title">
+            {t('contact.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('contact.list.addLabel')}
+              accessibilityHint={t('contact.list.addHint')}
+              testID="contact-list-add"
+            >
+              {t('contact.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('contact.list.accessibilityLabel')} data-testid="contact-list">
           {isLoading && <LoadingSpinner testID="contact-list-spinner" />}
           {!isLoading && hasError && (

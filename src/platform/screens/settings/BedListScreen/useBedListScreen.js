@@ -72,6 +72,10 @@ const useBedListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/beds/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useBedListScreen = () => {
     onRetry: handleRetry,
     onBedPress: handleBedPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

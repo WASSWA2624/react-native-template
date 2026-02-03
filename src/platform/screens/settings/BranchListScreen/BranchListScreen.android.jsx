@@ -26,6 +26,7 @@ const BranchListScreenAndroid = () => {
     onRetry,
     onBranchPress,
     onDelete,
+    onAdd,
   } = useBranchListScreen();
 
   const emptyComponent = (
@@ -66,13 +67,26 @@ const BranchListScreenAndroid = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="branch-list-title"
-          >
-            {t('branch.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="branch-list-title"
+            >
+              {t('branch.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('branch.list.addLabel')}
+                accessibilityHint={t('branch.list.addHint')}
+                testID="branch-list-add"
+              >
+                {t('branch.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

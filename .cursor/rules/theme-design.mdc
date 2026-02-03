@@ -12,7 +12,7 @@ Goals:
 - Scalable, maintainable, and accessible styling system
 - Support **mobile, tablet, desktop, and large screens**
 - **Modern, clean, and intuitive design** that follows platform guidelines
-The app uses **styled-components** as the **only styling solution**. All other styling approaches (inline styles, StyleSheet API, CSS-in-JS alternatives) are **forbidden**. See `core-principles.mdc` for details.
+The app uses **styled-components** as the **primary styling system**. Inline styles are forbidden. `StyleSheet` may be used only in limited cases for native performance (see below) and must still be theme/token-driven. See `core-principles.mdc` for the global styling policy.
 ---
 
 ## Theme Ownership
@@ -31,8 +31,8 @@ It does **not**:
 ```txt
 src/theme/
     ├── index.js              # Theme provider & resolver
-    ├── types.js              # Theme typings / contracts
     ├── breakpoints.js        # Responsive breakpoints
+    ├── animations.js         # Motion tokens/helpers (reduced motion supported)
     ├── tokens/               # Design tokens
     │   ├── colors.js
     │   ├── spacing.js
@@ -40,8 +40,9 @@ src/theme/
     │   ├── radius.js
     │   └── shadows.js
     ├── light.theme.js        # Light theme definition
-    └── dark.theme.js         # Dark theme definition
-````
+    ├── dark.theme.js         # Dark theme definition
+    └── high-contrast.theme.js # Optional theme variant
+```
 ---
 
 ## Design Tokens Rules
@@ -126,9 +127,13 @@ Rules:
 
 ## Styled-Components Rules
 ### Mandatory Usage
-* **All UI styles must use styled-components**
+* **Styled-components is the default for UI styles**
 * Inline styles are forbidden
-* StyleSheet API is forbidden
+
+### Limited StyleSheet exception (native only)
+- `StyleSheet` may be used **only** inside `*.android.styles.jsx` / `*.ios.styles.jsx` for static style objects that are performance-critical.
+- `StyleSheet` styles must still be **theme/token-driven** (no hardcoded colors/spacing).
+- `StyleSheet` must not be used in `*.web.styles.jsx` or in component render files.
 
 ### Platform entrypoints (MANDATORY)
 Use the correct styled-components entrypoint per platform style file:
@@ -194,6 +199,27 @@ Rules:
 * Focus states must be theme-defined
 * Motion must be reducible via theme flags
 
+## Default Layout & Word-Like Look and Feel (Mandatory)
+
+The **default application layout** and **overall look and feel** follow a **Microsoft Word–like** document-style UI. Layout and components should feel professional, document-oriented, and familiar to productivity-app users.
+
+### Default Layout Structure
+The default layout (used for main app routes) must provide:
+- **Toolbar/Ribbon**: Top bar with placeholder slots for primary actions (file, edit, view, etc.). Use theme tokens for height, background, borders.
+- **Sidebar**: Optional collapsible sidebar (placeholder or nav) for secondary navigation. Use theme tokens.
+- **Main content area**: Primary region where route content renders (e.g. `<Slot />`). Clear boundaries, padding from theme.
+- **Status bar**: Bottom strip for status/context (placeholder). Use theme tokens.
+
+All regions are **placeholders** until app-specific features wire real content. Use semantic tokens (e.g. `surface`, `border`, `textSecondary`) so the layout works in light/dark/high-contrast.
+
+### Word-Like Aesthetic
+- **Document-style UI**: Clear typography hierarchy, readable body text, subtle borders and dividers.
+- **Toolbar/ribbon**: Horizontal control strip; grouped actions; consistent icon + label where applicable.
+- **Professional**: Restrained shadows, consistent spacing, no decorative clutter.
+- **Components**: Buttons, inputs, cards, and lists should align with this aesthetic (see `component-structure.mdc` for component-level Word-like guidance).
+
+---
+
 ## Modern Design Principles (Mandatory)
 
 ### 1. Clean & Minimal Design
@@ -254,7 +280,8 @@ Rules:
 ---
 ## Forbidden Patterns
 ❌ Hardcoded colors, spacing, font sizes
-❌ Inline styles or StyleSheet API
+❌ Inline styles
+❌ `StyleSheet` outside native `*.android.styles.jsx` / `*.ios.styles.jsx`
 ❌ Platform checks inside styles
 ❌ Importing tokens directly into UI
 ❌ Styling logic inside components

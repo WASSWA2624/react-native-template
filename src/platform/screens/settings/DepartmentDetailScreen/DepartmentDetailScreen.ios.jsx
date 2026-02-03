@@ -31,6 +31,7 @@ const DepartmentDetailScreenIOS = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useDepartmentDetailScreen();
 
@@ -184,6 +185,17 @@ const DepartmentDetailScreenIOS = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('department.detail.edit')}
+                accessibilityHint={t('department.detail.editHint')}
+                testID="department-detail-edit"
+              >
+                {t('department.detail.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

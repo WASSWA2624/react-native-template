@@ -2,6 +2,7 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
+    "confirmDelete": "Are you sure you want to delete this item?",
     "delete": "Delete",
     "edit": "Edit",
     "search": "Search",
@@ -633,52 +634,200 @@
   },
   "address": {
     "list": {
-      "loadError": "Unable to load addresses. Check your connection and try again."
+      "title": "Addresses",
+      "accessibilityLabel": "Addresses list",
+      "emptyTitle": "No addresses",
+      "emptyMessage": "You have no addresses.",
+      "loadError": "Unable to load addresses. Check your connection and try again.",
+      "delete": "Delete address",
+      "deleteHint": "Delete this address",
+      "itemLabel": "Address {{name}}",
+      "addLabel": "Add address",
+      "addHint": "Create a new address"
+    },
+    "detail": {
+      "title": "Address Details",
+      "idLabel": "Address ID",
+      "line1Label": "Line 1",
+      "cityLabel": "City",
+      "countryLabel": "Country",
+      "createdLabel": "Created",
+      "updatedLabel": "Updated",
+      "errorTitle": "Failed to load address",
+      "notFoundTitle": "Address not found",
+      "notFoundMessage": "This address may have been deleted.",
+      "backHint": "Return to addresses list",
+      "delete": "Delete address",
+      "deleteHint": "Delete this address",
+      "edit": "Edit address",
+      "editHint": "Edit this address"
+    },
+    "form": {
+      "createTitle": "Add Address",
+      "editTitle": "Edit Address",
+      "line1Label": "Line 1",
+      "line1Placeholder": "Street address",
+      "line1Hint": "Address line 1",
+      "cityLabel": "City",
+      "cityPlaceholder": "City",
+      "cityHint": "City",
+      "countryLabel": "Country",
+      "countryPlaceholder": "Country code",
+      "countryHint": "Country",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID",
+      "tenantIdHint": "Required when creating",
+      "submitCreate": "Create Address",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load address for editing"
     }
   },
   "user": {
     "list": {
-      "loadError": "Unable to load users. Check your connection and try again."
+      "title": "Users",
+      "accessibilityLabel": "Users list",
+      "emptyTitle": "No users",
+      "emptyMessage": "You have no users.",
+      "loadError": "Unable to load users. Check your connection and try again.",
+      "delete": "Delete user",
+      "deleteHint": "Delete this user",
+      "itemLabel": "User {{name}}"
+    },
+    "detail": {
+      "title": "User Details",
+      "idLabel": "User ID",
+      "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "statusLabel": "Status",
+      "createdLabel": "Created",
+      "updatedLabel": "Updated",
+      "errorTitle": "Failed to load user",
+      "notFoundTitle": "User not found",
+      "notFoundMessage": "This user may have been deleted.",
+      "backHint": "Return to users list",
+      "delete": "Delete user",
+      "deleteHint": "Delete this user",
+      "edit": "Edit user",
+      "editHint": "Edit this user"
     }
   },
   "role": {
     "list": {
-      "loadError": "Unable to load roles. Check your connection and try again."
+      "title": "Roles",
+      "accessibilityLabel": "Roles list",
+      "emptyTitle": "No roles",
+      "emptyMessage": "You have no roles.",
+      "loadError": "Unable to load roles. Check your connection and try again.",
+      "delete": "Delete role",
+      "deleteHint": "Delete this role",
+      "itemLabel": "Role {{name}}"
+    },
+    "detail": {
+      "title": "Role Details"
     }
   },
   "permission": {
     "list": {
-      "loadError": "Unable to load permissions. Check your connection and try again."
+      "title": "Permissions",
+      "accessibilityLabel": "Permissions list",
+      "emptyTitle": "No permissions",
+      "emptyMessage": "You have no permissions.",
+      "loadError": "Unable to load permissions. Check your connection and try again.",
+      "delete": "Delete permission",
+      "deleteHint": "Delete this permission",
+      "itemLabel": "Permission {{name}}"
+    },
+    "detail": {
+      "title": "Permission Details"
     }
   },
   "apiKey": {
     "list": {
-      "loadError": "Unable to load API keys. Check your connection and try again."
+      "title": "API Keys",
+      "accessibilityLabel": "API keys list",
+      "emptyTitle": "No API keys",
+      "emptyMessage": "You have no API keys.",
+      "loadError": "Unable to load API keys. Check your connection and try again.",
+      "delete": "Delete API key",
+      "deleteHint": "Delete this API key",
+      "itemLabel": "API key {{name}}"
+    },
+    "detail": {
+      "title": "API Key Details"
     }
   },
   "userProfile": {
     "list": {
-      "loadError": "Unable to load user profiles. Check your connection and try again."
+      "title": "User Profiles",
+      "accessibilityLabel": "User profiles list",
+      "emptyTitle": "No user profiles",
+      "emptyMessage": "You have no user profiles.",
+      "loadError": "Unable to load user profiles. Check your connection and try again.",
+      "delete": "Delete user profile",
+      "deleteHint": "Delete this user profile",
+      "itemLabel": "User profile {{name}}"
     }
   },
   "userMfa": {
     "list": {
-      "loadError": "Unable to load MFA settings. Check your connection and try again."
+      "title": "MFA Settings",
+      "accessibilityLabel": "MFA settings list",
+      "emptyTitle": "No MFA settings",
+      "emptyMessage": "You have no MFA settings.",
+      "loadError": "Unable to load MFA settings. Check your connection and try again.",
+      "delete": "Delete MFA setting",
+      "deleteHint": "Delete this MFA setting",
+      "itemLabel": "MFA setting {{name}}"
+    },
+    "detail": {
+      "title": "MFA Setting Details"
     }
   },
   "userRole": {
     "list": {
-      "loadError": "Unable to load user roles. Check your connection and try again."
+      "title": "User Roles",
+      "accessibilityLabel": "User roles list",
+      "emptyTitle": "No user roles",
+      "emptyMessage": "You have no user roles.",
+      "loadError": "Unable to load user roles. Check your connection and try again.",
+      "delete": "Delete user role",
+      "deleteHint": "Delete this user role",
+      "itemLabel": "User role {{name}}"
+    },
+    "detail": {
+      "title": "User Role Details"
     }
   },
   "apiKeyPermission": {
     "list": {
-      "loadError": "Unable to load API key permissions. Check your connection and try again."
+      "title": "API Key Permissions",
+      "accessibilityLabel": "API key permissions list",
+      "emptyTitle": "No API key permissions",
+      "emptyMessage": "You have no API key permissions.",
+      "loadError": "Unable to load API key permissions. Check your connection and try again.",
+      "delete": "Delete API key permission",
+      "deleteHint": "Delete this API key permission",
+      "itemLabel": "API key permission {{name}}"
+    },
+    "detail": {
+      "title": "API Key Permission Details"
     }
   },
   "rolePermission": {
     "list": {
-      "loadError": "Unable to load role permissions. Check your connection and try again."
+      "title": "Role Permissions",
+      "accessibilityLabel": "Role permissions list",
+      "emptyTitle": "No role permissions",
+      "emptyMessage": "You have no role permissions.",
+      "loadError": "Unable to load role permissions. Check your connection and try again.",
+      "delete": "Delete role permission",
+      "deleteHint": "Delete this role permission",
+      "itemLabel": "Role permission {{name}}"
+    },
+    "detail": {
+      "title": "Role Permission Details"
     }
   },
   "branch": {
@@ -690,7 +839,9 @@
       "loadError": "Unable to load branches. Check your connection and try again.",
       "delete": "Delete branch",
       "deleteHint": "Delete this branch",
-      "itemLabel": "Branch {{name}}"
+      "itemLabel": "Branch {{name}}",
+      "addLabel": "Add branch",
+      "addHint": "Create a new branch"
     },
     "detail": {
       "title": "Branch Details",
@@ -704,7 +855,26 @@
       "notFoundMessage": "This branch may have been deleted.",
       "backHint": "Return to branches list",
       "delete": "Delete branch",
-      "deleteHint": "Delete this branch"
+      "deleteHint": "Delete this branch",
+      "edit": "Edit branch",
+      "editHint": "Edit this branch"
+    },
+    "form": {
+      "createTitle": "Add Branch",
+      "editTitle": "Edit Branch",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter branch name",
+      "nameHint": "Display name for the branch",
+      "activeLabel": "Active",
+      "activeHint": "Whether the branch is active",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new branch)",
+      "tenantIdHint": "Required when creating a branch",
+      "submitCreate": "Create Branch",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load branch for editing"
     }
   },
   "department": {
@@ -717,7 +887,9 @@
       "typeLabel": "Type",
       "delete": "Delete department",
       "deleteHint": "Delete this department",
-      "itemLabel": "Department {{name}}"
+      "itemLabel": "Department {{name}}",
+      "addLabel": "Add department",
+      "addHint": "Create a new department"
     },
     "detail": {
       "title": "Department Details",
@@ -732,7 +904,29 @@
       "notFoundMessage": "This department may have been deleted.",
       "backHint": "Return to departments list",
       "delete": "Delete department",
-      "deleteHint": "Delete this department"
+      "deleteHint": "Delete this department",
+      "edit": "Edit department",
+      "editHint": "Edit this department"
+    },
+    "form": {
+      "createTitle": "Add Department",
+      "editTitle": "Edit Department",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter department name",
+      "nameHint": "Display name for the department",
+      "typeLabel": "Type",
+      "typePlaceholder": "Enter department type (e.g. CLINICAL, ADMIN)",
+      "typeHint": "Department type (e.g. CLINICAL, ADMIN)",
+      "activeLabel": "Active",
+      "activeHint": "Whether the department is active",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new department)",
+      "tenantIdHint": "Required when creating a department",
+      "submitCreate": "Create Department",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load department for editing"
     }
   },
   "unit": {
@@ -744,7 +938,9 @@
       "loadError": "Unable to load units. Check your connection and try again.",
       "delete": "Delete unit",
       "deleteHint": "Delete this unit",
-      "itemLabel": "Unit {{name}}"
+      "itemLabel": "Unit {{name}}",
+      "addLabel": "Add unit",
+      "addHint": "Create a new unit"
     },
     "detail": {
       "title": "Unit Details",
@@ -758,7 +954,26 @@
       "notFoundMessage": "This unit may have been deleted.",
       "backHint": "Return to units list",
       "delete": "Delete unit",
-      "deleteHint": "Delete this unit"
+      "deleteHint": "Delete this unit",
+      "edit": "Edit unit",
+      "editHint": "Edit this unit"
+    },
+    "form": {
+      "createTitle": "Add Unit",
+      "editTitle": "Edit Unit",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter unit name",
+      "nameHint": "Display name for the unit",
+      "activeLabel": "Active",
+      "activeHint": "Whether the unit is active",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new unit)",
+      "tenantIdHint": "Required when creating a unit",
+      "submitCreate": "Create Unit",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load unit for editing"
     }
   },
   "room": {
@@ -771,7 +986,9 @@
       "floorLabel": "Floor",
       "delete": "Delete room",
       "deleteHint": "Delete this room",
-      "itemLabel": "Room {{name}}"
+      "itemLabel": "Room {{name}}",
+      "addLabel": "Add room",
+      "addHint": "Create a new room"
     },
     "detail": {
       "title": "Room Details",
@@ -785,7 +1002,30 @@
       "notFoundMessage": "This room may have been deleted.",
       "backHint": "Return to rooms list",
       "delete": "Delete room",
-      "deleteHint": "Delete this room"
+      "deleteHint": "Delete this room",
+      "edit": "Edit room",
+      "editHint": "Edit this room"
+    },
+    "form": {
+      "createTitle": "Add Room",
+      "editTitle": "Edit Room",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter room name",
+      "nameHint": "Display name for the room",
+      "floorLabel": "Floor",
+      "floorPlaceholder": "Enter floor (optional)",
+      "floorHint": "Floor or level",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new room)",
+      "tenantIdHint": "Required when creating a room",
+      "facilityIdLabel": "Facility ID",
+      "facilityIdPlaceholder": "Enter facility UUID (required for new room)",
+      "facilityIdHint": "Required when creating a room",
+      "submitCreate": "Create Room",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load room for editing"
     }
   },
   "ward": {
@@ -798,7 +1038,9 @@
       "typeLabel": "Type",
       "delete": "Delete ward",
       "deleteHint": "Delete this ward",
-      "itemLabel": "Ward {{name}}"
+      "itemLabel": "Ward {{name}}",
+      "addLabel": "Add ward",
+      "addHint": "Create a new ward"
     },
     "detail": {
       "title": "Ward Details",
@@ -813,7 +1055,32 @@
       "notFoundMessage": "This ward may have been deleted.",
       "backHint": "Return to wards list",
       "delete": "Delete ward",
-      "deleteHint": "Delete this ward"
+      "deleteHint": "Delete this ward",
+      "edit": "Edit ward",
+      "editHint": "Edit this ward"
+    },
+    "form": {
+      "createTitle": "Add Ward",
+      "editTitle": "Edit Ward",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter ward name",
+      "nameHint": "Display name for the ward",
+      "typeLabel": "Ward type",
+      "typePlaceholder": "e.g. GENERAL, ICU, MATERNITY",
+      "typeHint": "Ward type",
+      "activeLabel": "Active",
+      "activeHint": "Whether the ward is active",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new ward)",
+      "tenantIdHint": "Required when creating a ward",
+      "facilityIdLabel": "Facility ID",
+      "facilityIdPlaceholder": "Enter facility UUID (required for new ward)",
+      "facilityIdHint": "Required when creating a ward",
+      "submitCreate": "Create Ward",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load ward for editing"
     }
   },
   "bed": {
@@ -826,7 +1093,9 @@
       "statusLabel": "Status",
       "delete": "Delete bed",
       "deleteHint": "Delete this bed",
-      "itemLabel": "Bed {{name}}"
+      "itemLabel": "Bed {{name}}",
+      "addLabel": "Add bed",
+      "addHint": "Create a new bed"
     },
     "detail": {
       "title": "Bed Details",
@@ -840,7 +1109,31 @@
       "notFoundMessage": "This bed may have been deleted.",
       "backHint": "Return to beds list",
       "delete": "Delete bed",
-      "deleteHint": "Delete this bed"
+      "deleteHint": "Delete this bed",
+      "edit": "Edit bed",
+      "editHint": "Edit this bed"
+    },
+    "form": {
+      "createTitle": "Add Bed",
+      "editTitle": "Edit Bed",
+      "labelLabel": "Label",
+      "labelPlaceholder": "Enter bed label",
+      "labelHint": "Bed label (e.g. A1, B2)",
+      "statusLabel": "Status",
+      "statusPlaceholder": "e.g. AVAILABLE, OCCUPIED",
+      "statusHint": "Bed status",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID (required for new bed)",
+      "tenantIdHint": "Required when creating a bed",
+      "facilityIdLabel": "Facility ID",
+      "facilityIdPlaceholder": "Enter facility UUID (required for new bed)",
+      "wardIdLabel": "Ward ID",
+      "wardIdPlaceholder": "Enter ward UUID (required for new bed)",
+      "submitCreate": "Create Bed",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load bed for editing"
     }
   },
   "contact": {
@@ -853,7 +1146,9 @@
       "typeLabel": "Type",
       "delete": "Delete contact",
       "deleteHint": "Delete this contact",
-      "itemLabel": "Contact {{name}}"
+      "itemLabel": "Contact {{name}}",
+      "addLabel": "Add contact",
+      "addHint": "Create a new contact"
     },
     "detail": {
       "title": "Contact Details",
@@ -868,7 +1163,29 @@
       "notFoundMessage": "This contact may have been deleted.",
       "backHint": "Return to contacts list",
       "delete": "Delete contact",
-      "deleteHint": "Delete this contact"
+      "deleteHint": "Delete this contact",
+      "edit": "Edit contact",
+      "editHint": "Edit this contact"
+    },
+    "form": {
+      "createTitle": "Add Contact",
+      "editTitle": "Edit Contact",
+      "valueLabel": "Value",
+      "valuePlaceholder": "Email, phone, etc.",
+      "valueHint": "Contact value",
+      "typeLabel": "Type",
+      "typePlaceholder": "e.g. EMAIL, PHONE",
+      "typeHint": "Contact type",
+      "primaryLabel": "Primary",
+      "primaryHint": "Primary contact",
+      "tenantIdLabel": "Tenant ID",
+      "tenantIdPlaceholder": "Enter tenant UUID",
+      "tenantIdHint": "Required when creating",
+      "submitCreate": "Create Contact",
+      "submitEdit": "Save Changes",
+      "cancel": "Cancel",
+      "cancelHint": "Return without saving",
+      "loadError": "Failed to load contact for editing"
     }
   },
   "facility": {

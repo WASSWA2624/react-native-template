@@ -30,8 +30,8 @@ const ApiKeyListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('pi-key.list.emptyTitle')}
-      description={t('pi-key.list.emptyMessage')}
+      title={t('apiKey.list.emptyTitle')}
+      description={t('apiKey.list.emptyMessage')}
       testID="pi-key-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const ApiKeyListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('pi-key.list.delete')}
-            accessibilityHint={t('pi-key.list.deleteHint')}
+            accessibilityLabel={t('apiKey.list.delete')}
+            accessibilityHint={t('apiKey.list.deleteHint')}
             testID={`pi-key-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('pi-key.list.itemLabel', {
+        accessibilityLabel={t('apiKey.list.itemLabel', {
           name: title,
         })}
         testID={`pi-key-item-${item.id}`}
@@ -70,7 +70,7 @@ const ApiKeyListScreenIos = () => {
           accessibilityRole="header"
           testID="pi-key-list-title"
         >
-          {t('pi-key.list.title')}
+          {t('apiKey.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const ApiKeyListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('pi-key.list.accessibilityLabel')}
+          accessibilityLabel={t('apiKey.list.accessibilityLabel')}
           testID="pi-key-list"
           emptyComponent={emptyComponent}
         >

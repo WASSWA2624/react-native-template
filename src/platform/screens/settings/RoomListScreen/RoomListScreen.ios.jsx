@@ -26,6 +26,7 @@ const RoomListScreenIOS = () => {
     onRetry,
     onRoomPress,
     onDelete,
+    onAdd,
   } = useRoomListScreen();
 
   const emptyComponent = (
@@ -68,13 +69,26 @@ const RoomListScreenIOS = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="room-list-title"
-          >
-            {t('room.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="room-list-title"
+            >
+              {t('room.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('room.list.addLabel')}
+                accessibilityHint={t('room.list.addHint')}
+                testID="room-list-add"
+              >
+                {t('room.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

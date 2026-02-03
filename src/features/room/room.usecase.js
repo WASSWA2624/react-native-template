@@ -17,18 +17,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listRooms = async (params = {}) =>
   execute(async () => {
     const parsed = parseRoomListParams(params);
     const response = await roomApi.list(parsed);
-    return normalizeRoomList(response.data);
+    const payload = getPayload(response);
+    return normalizeRoomList(Array.isArray(payload) ? payload : []);
   });
 
 const getRoom = async (id) =>
   execute(async () => {
     const parsedId = parseRoomId(id);
     const response = await roomApi.get(parsedId);
-    return normalizeRoom(response.data);
+    return normalizeRoom(getPayload(response));
   });
 
 const createRoom = async (payload) =>
@@ -43,7 +47,7 @@ const createRoom = async (payload) =>
       return normalizeRoom(parsed);
     }
     const response = await roomApi.create(parsed);
-    return normalizeRoom(response.data);
+    return normalizeRoom(getPayload(response));
   });
 
 const updateRoom = async (id, payload) =>
@@ -59,7 +63,7 @@ const updateRoom = async (id, payload) =>
       return normalizeRoom({ id: parsedId, ...parsed });
     }
     const response = await roomApi.update(parsedId, parsed);
-    return normalizeRoom(response.data);
+    return normalizeRoom(getPayload(response));
   });
 
 const deleteRoom = async (id) =>
@@ -70,10 +74,10 @@ const deleteRoom = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeRoom({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await roomApi.remove(parsedId);
-    return normalizeRoom(response.data);
+    await roomApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 export { listRooms, getRoom, createRoom, updateRoom, deleteRoom };

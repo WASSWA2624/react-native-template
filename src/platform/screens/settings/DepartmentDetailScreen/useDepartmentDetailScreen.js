@@ -45,6 +45,10 @@ const useDepartmentDetailScreen = () => {
     router.push('/settings/departments');
   }, [router]);
 
+  const handleEdit = useCallback(() => {
+    if (id) router.push(`/settings/departments/${id}/edit`);
+  }, [id, router]);
+
   const handleDelete = useCallback(async () => {
     if (!id) return;
     try {
@@ -64,6 +68,7 @@ const useDepartmentDetailScreen = () => {
     isOffline,
     onRetry: handleRetry,
     onBack: handleBack,
+    onEdit: handleEdit,
     onDelete: handleDelete,
   };
 };

@@ -34,7 +34,7 @@ src/hooks/
 src/utils/
     ├── index.js              # Utilities barrel
     └── util-name.js          # e.g. formatter.js, validator.js
-````
+```
 ---
 
 ## Hook Design Rules

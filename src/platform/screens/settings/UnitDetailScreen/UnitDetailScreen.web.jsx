@@ -31,6 +31,7 @@ const UnitDetailScreenWeb = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useUnitDetailScreen();
 
@@ -176,6 +177,17 @@ const UnitDetailScreenWeb = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('unit.detail.edit')}
+                accessibilityHint={t('unit.detail.editHint')}
+                testID="unit-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

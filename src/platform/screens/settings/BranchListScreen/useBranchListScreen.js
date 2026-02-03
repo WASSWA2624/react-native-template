@@ -72,6 +72,10 @@ const useBranchListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/branches/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useBranchListScreen = () => {
     onRetry: handleRetry,
     onBranchPress: handleBranchPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

@@ -17,18 +17,23 @@ const execute = async (work) => {
   }
 };
 
+/** Backend response-format.mdc: success body is { status, message, data, meta }. Unwrap payload. */
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listBranches = async (params = {}) =>
   execute(async () => {
     const parsed = parseBranchListParams(params);
     const response = await branchApi.list(parsed);
-    return normalizeBranchList(response.data);
+    const payload = getPayload(response);
+    return normalizeBranchList(Array.isArray(payload) ? payload : []);
   });
 
 const getBranch = async (id) =>
   execute(async () => {
     const parsedId = parseBranchId(id);
     const response = await branchApi.get(parsedId);
-    return normalizeBranch(response.data);
+    return normalizeBranch(getPayload(response));
   });
 
 const createBranch = async (payload) =>
@@ -43,7 +48,7 @@ const createBranch = async (payload) =>
       return normalizeBranch(parsed);
     }
     const response = await branchApi.create(parsed);
-    return normalizeBranch(response.data);
+    return normalizeBranch(getPayload(response));
   });
 
 const updateBranch = async (id, payload) =>
@@ -59,7 +64,7 @@ const updateBranch = async (id, payload) =>
       return normalizeBranch({ id: parsedId, ...parsed });
     }
     const response = await branchApi.update(parsedId, parsed);
-    return normalizeBranch(response.data);
+    return normalizeBranch(getPayload(response));
   });
 
 const deleteBranch = async (id) =>
@@ -70,10 +75,10 @@ const deleteBranch = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeBranch({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await branchApi.remove(parsedId);
-    return normalizeBranch(response.data);
+    await branchApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 export { listBranches, getBranch, createBranch, updateBranch, deleteBranch };

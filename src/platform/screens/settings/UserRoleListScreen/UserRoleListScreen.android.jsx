@@ -30,8 +30,8 @@ const UserRoleListScreenAndroid = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ser-role.list.emptyTitle')}
-      description={t('ser-role.list.emptyMessage')}
+      title={t('userRole.list.emptyTitle')}
+      description={t('userRole.list.emptyMessage')}
       testID="ser-role-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const UserRoleListScreenAndroid = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ser-role.list.delete')}
-            accessibilityHint={t('ser-role.list.deleteHint')}
+            accessibilityLabel={t('userRole.list.delete')}
+            accessibilityHint={t('userRole.list.deleteHint')}
             testID={`ser-role-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ser-role.list.itemLabel', {
+        accessibilityLabel={t('userRole.list.itemLabel', {
           name: title,
         })}
         testID={`ser-role-item-${item.id}`}
@@ -70,7 +70,7 @@ const UserRoleListScreenAndroid = () => {
           accessibilityRole="header"
           testID="ser-role-list-title"
         >
-          {t('ser-role.list.title')}
+          {t('userRole.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const UserRoleListScreenAndroid = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ser-role.list.accessibilityLabel')}
+          accessibilityLabel={t('userRole.list.accessibilityLabel')}
           testID="ser-role-list"
           emptyComponent={emptyComponent}
         >

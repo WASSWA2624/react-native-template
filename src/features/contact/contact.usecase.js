@@ -17,18 +17,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listContacts = async (params = {}) =>
   execute(async () => {
     const parsed = parseContactListParams(params);
     const response = await contactApi.list(parsed);
-    return normalizeContactList(response.data);
+    const payload = getPayload(response);
+    return normalizeContactList(Array.isArray(payload) ? payload : []);
   });
 
 const getContact = async (id) =>
   execute(async () => {
     const parsedId = parseContactId(id);
     const response = await contactApi.get(parsedId);
-    return normalizeContact(response.data);
+    return normalizeContact(getPayload(response));
   });
 
 const createContact = async (payload) =>
@@ -43,7 +47,7 @@ const createContact = async (payload) =>
       return normalizeContact(parsed);
     }
     const response = await contactApi.create(parsed);
-    return normalizeContact(response.data);
+    return normalizeContact(getPayload(response));
   });
 
 const updateContact = async (id, payload) =>
@@ -59,7 +63,7 @@ const updateContact = async (id, payload) =>
       return normalizeContact({ id: parsedId, ...parsed });
     }
     const response = await contactApi.update(parsedId, parsed);
-    return normalizeContact(response.data);
+    return normalizeContact(getPayload(response));
   });
 
 const deleteContact = async (id) =>
@@ -70,10 +74,10 @@ const deleteContact = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeContact({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await contactApi.remove(parsedId);
-    return normalizeContact(response.data);
+    await contactApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 export { listContacts, getContact, createContact, updateContact, deleteContact };

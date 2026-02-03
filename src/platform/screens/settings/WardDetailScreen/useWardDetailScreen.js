@@ -45,6 +45,10 @@ const useWardDetailScreen = () => {
     router.push('/settings/wards');
   }, [router]);
 
+  const handleEdit = useCallback(() => {
+    if (id) router.push(`/settings/wards/${id}/edit`);
+  }, [id, router]);
+
   const handleDelete = useCallback(async () => {
     if (!id) return;
     try {
@@ -64,6 +68,7 @@ const useWardDetailScreen = () => {
     isOffline,
     onRetry: handleRetry,
     onBack: handleBack,
+    onEdit: handleEdit,
     onDelete: handleDelete,
   };
 };

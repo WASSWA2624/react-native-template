@@ -31,6 +31,7 @@ const RoomDetailScreenIOS = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useRoomDetailScreen();
 
@@ -178,6 +179,17 @@ const RoomDetailScreenIOS = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('room.detail.edit')}
+                accessibilityHint={t('room.detail.editHint')}
+                testID="room-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

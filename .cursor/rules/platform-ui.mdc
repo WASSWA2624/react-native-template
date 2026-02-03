@@ -4,7 +4,7 @@ alwaysApply: true
 # Platform UI Layer Standards
 
 ## Purpose
-Define rules and best practices for the `src/platform` layer, including components, screens, and layouts for Android, iOS, and Web.
+Define rules and best practices for the `src/platform` layer, including components, screens, and layouts for Android, iOS, and Web. The default layout and app look and feel are **Word-like** (document-style UI, toolbar/ribbon, clear typography); see `theme-design.mdc`.
 
 ## Layer Principles
 1. **Presentation-only**: Layer boundary rules are defined in `project-structure.mdc`.

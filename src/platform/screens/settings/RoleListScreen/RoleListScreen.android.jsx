@@ -30,8 +30,8 @@ const RoleListScreenAndroid = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ole.list.emptyTitle')}
-      description={t('ole.list.emptyMessage')}
+      title={t('role.list.emptyTitle')}
+      description={t('role.list.emptyMessage')}
       testID="ole-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const RoleListScreenAndroid = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ole.list.delete')}
-            accessibilityHint={t('ole.list.deleteHint')}
+            accessibilityLabel={t('role.list.delete')}
+            accessibilityHint={t('role.list.deleteHint')}
             testID={`ole-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ole.list.itemLabel', {
+        accessibilityLabel={t('role.list.itemLabel', {
           name: title,
         })}
         testID={`ole-item-${item.id}`}
@@ -70,7 +70,7 @@ const RoleListScreenAndroid = () => {
           accessibilityRole="header"
           testID="ole-list-title"
         >
-          {t('ole.list.title')}
+          {t('role.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const RoleListScreenAndroid = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ole.list.accessibilityLabel')}
+          accessibilityLabel={t('role.list.accessibilityLabel')}
           testID="ole-list"
           emptyComponent={emptyComponent}
         >

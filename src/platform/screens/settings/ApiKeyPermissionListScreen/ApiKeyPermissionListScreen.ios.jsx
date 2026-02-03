@@ -30,8 +30,8 @@ const ApiKeyPermissionListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('pi-key-permission.list.emptyTitle')}
-      description={t('pi-key-permission.list.emptyMessage')}
+      title={t('apiKeyPermission.list.emptyTitle')}
+      description={t('apiKeyPermission.list.emptyMessage')}
       testID="pi-key-permission-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const ApiKeyPermissionListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('pi-key-permission.list.delete')}
-            accessibilityHint={t('pi-key-permission.list.deleteHint')}
+            accessibilityLabel={t('apiKeyPermission.list.delete')}
+            accessibilityHint={t('apiKeyPermission.list.deleteHint')}
             testID={`pi-key-permission-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('pi-key-permission.list.itemLabel', {
+        accessibilityLabel={t('apiKeyPermission.list.itemLabel', {
           name: title,
         })}
         testID={`pi-key-permission-item-${item.id}`}
@@ -70,7 +70,7 @@ const ApiKeyPermissionListScreenIos = () => {
           accessibilityRole="header"
           testID="pi-key-permission-list-title"
         >
-          {t('pi-key-permission.list.title')}
+          {t('apiKeyPermission.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const ApiKeyPermissionListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('pi-key-permission.list.accessibilityLabel')}
+          accessibilityLabel={t('apiKeyPermission.list.accessibilityLabel')}
           testID="pi-key-permission-list"
           emptyComponent={emptyComponent}
         >

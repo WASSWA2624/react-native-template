@@ -27,6 +27,7 @@ const DepartmentListScreenWeb = () => {
     onRetry,
     onDepartmentPress,
     onDelete,
+    onAdd,
   } = useDepartmentListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const DepartmentListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="department-list-title">
-          {t('department.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="department-list-title">
+            {t('department.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('department.list.addLabel')}
+              accessibilityHint={t('department.list.addHint')}
+              testID="department-list-add"
+            >
+              {t('department.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('department.list.accessibilityLabel')} data-testid="department-list">
           {isLoading && <LoadingSpinner testID="department-list-spinner" />}
           {!isLoading && hasError && (

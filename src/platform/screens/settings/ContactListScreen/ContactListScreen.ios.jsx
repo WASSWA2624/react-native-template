@@ -26,6 +26,7 @@ const ContactListScreenIOS = () => {
     onRetry,
     onContactPress,
     onDelete,
+    onAdd,
   } = useContactListScreen();
 
   const emptyComponent = (

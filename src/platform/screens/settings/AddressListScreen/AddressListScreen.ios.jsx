@@ -26,6 +26,7 @@ const AddressListScreenIOS = () => {
     onRetry,
     onAddressPress,
     onDelete,
+    onAdd,
   } = useAddressListScreen();
 
   const emptyComponent = (
@@ -70,13 +71,26 @@ const AddressListScreenIOS = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="address-list-title"
-          >
-            {t('address.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="address-list-title"
+            >
+              {t('address.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('address.list.addLabel')}
+                accessibilityHint={t('address.list.addHint')}
+                testID="address-list-add"
+              >
+                {t('address.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

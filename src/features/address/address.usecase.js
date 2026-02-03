@@ -17,18 +17,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listAddresses = async (params = {}) =>
   execute(async () => {
     const parsed = parseAddressListParams(params);
     const response = await addressApi.list(parsed);
-    return normalizeAddressList(response.data);
+    const payload = getPayload(response);
+    return normalizeAddressList(Array.isArray(payload) ? payload : []);
   });
 
 const getAddress = async (id) =>
   execute(async () => {
     const parsedId = parseAddressId(id);
     const response = await addressApi.get(parsedId);
-    return normalizeAddress(response.data);
+    return normalizeAddress(getPayload(response));
   });
 
 const createAddress = async (payload) =>
@@ -43,7 +47,7 @@ const createAddress = async (payload) =>
       return normalizeAddress(parsed);
     }
     const response = await addressApi.create(parsed);
-    return normalizeAddress(response.data);
+    return normalizeAddress(getPayload(response));
   });
 
 const updateAddress = async (id, payload) =>
@@ -59,7 +63,7 @@ const updateAddress = async (id, payload) =>
       return normalizeAddress({ id: parsedId, ...parsed });
     }
     const response = await addressApi.update(parsedId, parsed);
-    return normalizeAddress(response.data);
+    return normalizeAddress(getPayload(response));
   });
 
 const deleteAddress = async (id) =>
@@ -70,10 +74,10 @@ const deleteAddress = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeAddress({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await addressApi.remove(parsedId);
-    return normalizeAddress(response.data);
+    await addressApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 export { listAddresses, getAddress, createAddress, updateAddress, deleteAddress };

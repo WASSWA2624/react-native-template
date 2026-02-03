@@ -31,6 +31,7 @@ const BedDetailScreenWeb = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useBedDetailScreen();
 
@@ -178,6 +179,17 @@ const BedDetailScreenWeb = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('bed.detail.edit')}
+                accessibilityHint={t('bed.detail.editHint')}
+                testID="bed-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

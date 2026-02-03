@@ -35,7 +35,7 @@ src/offline/
     ├── sync.manager.js           # Sync orchestration engine
     ├── network.listener.js       # Network connectivity observer
     └── hydration.js              # State rehydration logic
-````
+```
 Related folders:
 ```txt
 src/workers/                  # Background execution

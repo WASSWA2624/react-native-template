@@ -26,6 +26,7 @@ const BedListScreenAndroid = () => {
     onRetry,
     onBedPress,
     onDelete,
+    onAdd,
   } = useBedListScreen();
 
   const emptyComponent = (
@@ -68,13 +69,26 @@ const BedListScreenAndroid = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="bed-list-title"
-          >
-            {t('bed.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="bed-list-title"
+            >
+              {t('bed.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('bed.list.addLabel')}
+                accessibilityHint={t('bed.list.addHint')}
+                testID="bed-list-add"
+              >
+                {t('bed.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

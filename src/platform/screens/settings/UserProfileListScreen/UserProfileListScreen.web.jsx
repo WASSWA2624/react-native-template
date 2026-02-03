@@ -31,27 +31,27 @@ const UserProfileListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ser-profile.list.emptyTitle')}
-      description={t('ser-profile.list.emptyMessage')}
-      testID="ser-profile-list-empty-state"
+      title={t('userProfile.list.emptyTitle')}
+      description={t('userProfile.list.emptyMessage')}
+      testID="user-profile-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="ser-profile-list-title">
-          {t('ser-profile.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="user-profile-list-title">
+          {t('userProfile.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('ser-profile.list.accessibilityLabel')} data-testid="ser-profile-list">
-          {isLoading && <LoadingSpinner testID="ser-profile-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('userProfile.list.accessibilityLabel')} data-testid="user-profile-list">
+          {isLoading && <LoadingSpinner testID="user-profile-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ser-profile-list-error-state"
+                testID="user-profile-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const UserProfileListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ser-profile-list-offline-state"
+                testID="user-profile-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const UserProfileListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('ser-profile.list.delete')}
-                          accessibilityHint={t('ser-profile.list.deleteHint')}
+                          accessibilityLabel={t('userProfile.list.delete')}
+                          accessibilityHint={t('userProfile.list.deleteHint')}
                           testID={`ser-profile-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('ser-profile.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('userProfile.list.itemLabel', { name: title })}
                       testID={`ser-profile-item-${item.id}`}
                     />
                   </li>

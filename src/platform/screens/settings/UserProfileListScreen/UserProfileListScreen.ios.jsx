@@ -30,8 +30,8 @@ const UserProfileListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ser-profile.list.emptyTitle')}
-      description={t('ser-profile.list.emptyMessage')}
+      title={t('userProfile.list.emptyTitle')}
+      description={t('userProfile.list.emptyMessage')}
       testID="ser-profile-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const UserProfileListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ser-profile.list.delete')}
-            accessibilityHint={t('ser-profile.list.deleteHint')}
+            accessibilityLabel={t('userProfile.list.delete')}
+            accessibilityHint={t('userProfile.list.deleteHint')}
             testID={`ser-profile-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ser-profile.list.itemLabel', {
+        accessibilityLabel={t('userProfile.list.itemLabel', {
           name: title,
         })}
         testID={`ser-profile-item-${item.id}`}
@@ -70,7 +70,7 @@ const UserProfileListScreenIos = () => {
           accessibilityRole="header"
           testID="ser-profile-list-title"
         >
-          {t('ser-profile.list.title')}
+          {t('userProfile.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const UserProfileListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ser-profile.list.accessibilityLabel')}
+          accessibilityLabel={t('userProfile.list.accessibilityLabel')}
           testID="ser-profile-list"
           emptyComponent={emptyComponent}
         >

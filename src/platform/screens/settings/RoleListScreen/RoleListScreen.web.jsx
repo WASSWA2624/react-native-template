@@ -31,27 +31,27 @@ const RoleListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ole.list.emptyTitle')}
-      description={t('ole.list.emptyMessage')}
-      testID="ole-list-empty-state"
+      title={t('role.list.emptyTitle')}
+      description={t('role.list.emptyMessage')}
+      testID="role-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="ole-list-title">
-          {t('ole.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="role-list-title">
+          {t('role.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('ole.list.accessibilityLabel')} data-testid="ole-list">
-          {isLoading && <LoadingSpinner testID="ole-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('role.list.accessibilityLabel')} data-testid="role-list">
+          {isLoading && <LoadingSpinner testID="role-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ole-list-error-state"
+                testID="role-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const RoleListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ole-list-offline-state"
+                testID="role-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const RoleListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('ole.list.delete')}
-                          accessibilityHint={t('ole.list.deleteHint')}
+                          accessibilityLabel={t('role.list.delete')}
+                          accessibilityHint={t('role.list.deleteHint')}
                           testID={`ole-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('ole.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('role.list.itemLabel', { name: title })}
                       testID={`ole-item-${item.id}`}
                     />
                   </li>

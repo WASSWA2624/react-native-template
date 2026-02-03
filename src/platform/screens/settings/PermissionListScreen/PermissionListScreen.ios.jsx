@@ -30,8 +30,8 @@ const PermissionListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ermission.list.emptyTitle')}
-      description={t('ermission.list.emptyMessage')}
+      title={t('permission.list.emptyTitle')}
+      description={t('permission.list.emptyMessage')}
       testID="ermission-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const PermissionListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ermission.list.delete')}
-            accessibilityHint={t('ermission.list.deleteHint')}
+            accessibilityLabel={t('permission.list.delete')}
+            accessibilityHint={t('permission.list.deleteHint')}
             testID={`ermission-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ermission.list.itemLabel', {
+        accessibilityLabel={t('permission.list.itemLabel', {
           name: title,
         })}
         testID={`ermission-item-${item.id}`}
@@ -70,7 +70,7 @@ const PermissionListScreenIos = () => {
           accessibilityRole="header"
           testID="ermission-list-title"
         >
-          {t('ermission.list.title')}
+          {t('permission.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const PermissionListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ermission.list.accessibilityLabel')}
+          accessibilityLabel={t('permission.list.accessibilityLabel')}
           testID="ermission-list"
           emptyComponent={emptyComponent}
         >

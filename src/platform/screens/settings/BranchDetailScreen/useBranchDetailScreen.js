@@ -45,6 +45,10 @@ const useBranchDetailScreen = () => {
     router.push('/settings/branches');
   }, [router]);
 
+  const handleEdit = useCallback(() => {
+    if (id) router.push(`/settings/branches/${id}/edit`);
+  }, [id, router]);
+
   const handleDelete = useCallback(async () => {
     if (!id) return;
     try {
@@ -64,6 +68,7 @@ const useBranchDetailScreen = () => {
     isOffline,
     onRetry: handleRetry,
     onBack: handleBack,
+    onEdit: handleEdit,
     onDelete: handleDelete,
   };
 };

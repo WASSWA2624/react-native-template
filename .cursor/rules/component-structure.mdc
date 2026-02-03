@@ -7,6 +7,8 @@ alwaysApply: true
 Define the exact folder/file conventions for all UI components, screens, and layouts in the `src/platform` layer.
 For platform UI layer responsibilities, imports, and resilience rules, see `platform-ui.mdc`.
 
+**Look and feel**: Components and screens should align with the **Word-like** default layout and aesthetic (document-style UI, toolbar/ribbon, clear typography, subtle borders). See `theme-design.mdc` for default layout structure and Word-like aesthetic rules.
+
 ## Folder Structure per Component/Screen/Layout
 
 **MANDATORY**: Related UIs must be grouped in category folders. Structure:
@@ -53,6 +55,7 @@ platform/
 3. **Styles**:  
    - Styles go in platform-specific `.styles.jsx` files.  
    - Use only theme tokens; import matching platform styles in UI files.  
+   - `StyleSheet` may be used **only** inside `*.android.styles.jsx` / `*.ios.styles.jsx` for static, performance-critical styles; it must remain theme/token-driven and must not appear in component render files or web styles.  
    - **Styled-components must:**  
      - Be defined as module-level `const` in `.styles.jsx` files only (never inside components, hooks, or functions).  
      - Always use `.withConfig({ displayName: 'StyledComponent', componentId: 'StyledComponent' })`, matching the constant name.  

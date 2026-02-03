@@ -31,6 +31,7 @@ const WardDetailScreenAndroid = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useWardDetailScreen();
 
@@ -184,6 +185,17 @@ const WardDetailScreenAndroid = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('ward.detail.edit')}
+                accessibilityHint={t('ward.detail.editHint')}
+                testID="ward-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

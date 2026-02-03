@@ -31,6 +31,7 @@ const AddressDetailScreenAndroid = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useAddressDetailScreen();
 
@@ -218,6 +219,17 @@ const AddressDetailScreenAndroid = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('address.detail.edit')}
+                accessibilityHint={t('address.detail.editHint')}
+                testID="address-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}

@@ -17,18 +17,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listBeds = async (params = {}) =>
   execute(async () => {
     const parsed = parseBedListParams(params);
     const response = await bedApi.list(parsed);
-    return normalizeBedList(response.data);
+    const payload = getPayload(response);
+    return normalizeBedList(Array.isArray(payload) ? payload : []);
   });
 
 const getBed = async (id) =>
   execute(async () => {
     const parsedId = parseBedId(id);
     const response = await bedApi.get(parsedId);
-    return normalizeBed(response.data);
+    return normalizeBed(getPayload(response));
   });
 
 const createBed = async (payload) =>
@@ -43,7 +47,7 @@ const createBed = async (payload) =>
       return normalizeBed(parsed);
     }
     const response = await bedApi.create(parsed);
-    return normalizeBed(response.data);
+    return normalizeBed(getPayload(response));
   });
 
 const updateBed = async (id, payload) =>
@@ -59,7 +63,7 @@ const updateBed = async (id, payload) =>
       return normalizeBed({ id: parsedId, ...parsed });
     }
     const response = await bedApi.update(parsedId, parsed);
-    return normalizeBed(response.data);
+    return normalizeBed(getPayload(response));
   });
 
 const deleteBed = async (id) =>
@@ -70,10 +74,10 @@ const deleteBed = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeBed({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await bedApi.remove(parsedId);
-    return normalizeBed(response.data);
+    await bedApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 export { listBeds, getBed, createBed, updateBed, deleteBed };

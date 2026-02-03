@@ -31,27 +31,27 @@ const ApiKeyListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('pi-key.list.emptyTitle')}
-      description={t('pi-key.list.emptyMessage')}
-      testID="pi-key-list-empty-state"
+      title={t('apiKey.list.emptyTitle')}
+      description={t('apiKey.list.emptyMessage')}
+      testID="api-key-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="pi-key-list-title">
-          {t('pi-key.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="api-key-list-title">
+          {t('apiKey.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('pi-key.list.accessibilityLabel')} data-testid="pi-key-list">
-          {isLoading && <LoadingSpinner testID="pi-key-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('apiKey.list.accessibilityLabel')} data-testid="api-key-list">
+          {isLoading && <LoadingSpinner testID="api-key-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="pi-key-list-error-state"
+                testID="api-key-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const ApiKeyListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="pi-key-list-offline-state"
+                testID="api-key-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const ApiKeyListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('pi-key.list.delete')}
-                          accessibilityHint={t('pi-key.list.deleteHint')}
+                          accessibilityLabel={t('apiKey.list.delete')}
+                          accessibilityHint={t('apiKey.list.deleteHint')}
                           testID={`pi-key-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('pi-key.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('apiKey.list.itemLabel', { name: title })}
                       testID={`pi-key-item-${item.id}`}
                     />
                   </li>

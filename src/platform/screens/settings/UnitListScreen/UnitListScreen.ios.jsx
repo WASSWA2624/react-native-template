@@ -26,6 +26,7 @@ const UnitListScreenIOS = () => {
     onRetry,
     onUnitPress,
     onDelete,
+    onAdd,
   } = useUnitListScreen();
 
   const emptyComponent = (
@@ -66,13 +67,26 @@ const UnitListScreenIOS = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="unit-list-title"
-          >
-            {t('unit.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="unit-list-title"
+            >
+              {t('unit.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('unit.list.addLabel')}
+                accessibilityHint={t('unit.list.addHint')}
+                testID="unit-list-add"
+              >
+                {t('unit.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

@@ -26,6 +26,7 @@ const WardListScreenIOS = () => {
     onRetry,
     onWardPress,
     onDelete,
+    onAdd,
   } = useWardListScreen();
 
   const emptyComponent = (
@@ -68,13 +69,26 @@ const WardListScreenIOS = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="ward-list-title"
-          >
-            {t('ward.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="ward-list-title"
+            >
+              {t('ward.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('ward.list.addLabel')}
+                accessibilityHint={t('ward.list.addHint')}
+                testID="ward-list-add"
+              >
+                {t('ward.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

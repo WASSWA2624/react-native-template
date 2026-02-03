@@ -26,6 +26,7 @@ const DepartmentListScreenAndroid = () => {
     onRetry,
     onDepartmentPress,
     onDelete,
+    onAdd,
   } = useDepartmentListScreen();
 
   const emptyComponent = (
@@ -68,13 +69,26 @@ const DepartmentListScreenAndroid = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <StyledContainer>
         <StyledContent>
-          <Text
-            variant="h1"
-            accessibilityRole="header"
-            testID="department-list-title"
-          >
-            {t('department.list.title')}
-          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <Text
+              variant="h1"
+              accessibilityRole="header"
+              testID="department-list-title"
+            >
+              {t('department.list.title')}
+            </Text>
+            {onAdd && (
+              <Button
+                variant="primary"
+                onPress={onAdd}
+                accessibilityLabel={t('department.list.addLabel')}
+                accessibilityHint={t('department.list.addHint')}
+                testID="department-list-add"
+              >
+                {t('department.list.addLabel')}
+              </Button>
+            )}
+          </View>
           <ListScaffold
             isLoading={isLoading}
             isEmpty={!isLoading && !hasError && !isOffline && items.length === 0}

@@ -31,27 +31,27 @@ const RolePermissionListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ole-permission.list.emptyTitle')}
-      description={t('ole-permission.list.emptyMessage')}
-      testID="ole-permission-list-empty-state"
+      title={t('rolePermission.list.emptyTitle')}
+      description={t('rolePermission.list.emptyMessage')}
+      testID="role-permission-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="ole-permission-list-title">
-          {t('ole-permission.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="role-permission-list-title">
+          {t('rolePermission.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('ole-permission.list.accessibilityLabel')} data-testid="ole-permission-list">
-          {isLoading && <LoadingSpinner testID="ole-permission-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('rolePermission.list.accessibilityLabel')} data-testid="role-permission-list">
+          {isLoading && <LoadingSpinner testID="role-permission-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ole-permission-list-error-state"
+                testID="role-permission-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const RolePermissionListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ole-permission-list-offline-state"
+                testID="role-permission-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const RolePermissionListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('ole-permission.list.delete')}
-                          accessibilityHint={t('ole-permission.list.deleteHint')}
+                          accessibilityLabel={t('rolePermission.list.delete')}
+                          accessibilityHint={t('rolePermission.list.deleteHint')}
                           testID={`ole-permission-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('ole-permission.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('rolePermission.list.itemLabel', { name: title })}
                       testID={`ole-permission-item-${item.id}`}
                     />
                   </li>

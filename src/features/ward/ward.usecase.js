@@ -17,18 +17,22 @@ const execute = async (work) => {
   }
 };
 
+const getPayload = (response) =>
+  (response?.data?.data !== undefined ? response.data.data : response?.data);
+
 const listWards = async (params = {}) =>
   execute(async () => {
     const parsed = parseWardListParams(params);
     const response = await wardApi.list(parsed);
-    return normalizeWardList(response.data);
+    const payload = getPayload(response);
+    return normalizeWardList(Array.isArray(payload) ? payload : []);
   });
 
 const getWard = async (id) =>
   execute(async () => {
     const parsedId = parseWardId(id);
     const response = await wardApi.get(parsedId);
-    return normalizeWard(response.data);
+    return normalizeWard(getPayload(response));
   });
 
 const createWard = async (payload) =>
@@ -43,7 +47,7 @@ const createWard = async (payload) =>
       return normalizeWard(parsed);
     }
     const response = await wardApi.create(parsed);
-    return normalizeWard(response.data);
+    return normalizeWard(getPayload(response));
   });
 
 const updateWard = async (id, payload) =>
@@ -59,7 +63,7 @@ const updateWard = async (id, payload) =>
       return normalizeWard({ id: parsedId, ...parsed });
     }
     const response = await wardApi.update(parsedId, parsed);
-    return normalizeWard(response.data);
+    return normalizeWard(getPayload(response));
   });
 
 const deleteWard = async (id) =>
@@ -70,17 +74,18 @@ const deleteWard = async (id) =>
       method: 'DELETE',
     });
     if (queued) {
-      return normalizeWard({ id: parsedId });
+      return { id: parsedId };
     }
-    const response = await wardApi.remove(parsedId);
-    return normalizeWard(response.data);
+    await wardApi.remove(parsedId);
+    return { id: parsedId };
   });
 
 const listWardBeds = async (id) =>
   execute(async () => {
     const parsedId = parseWardId(id);
     const response = await getWardBedsApi(parsedId);
-    return normalizeWardList(response.data);
+    const payload = getPayload(response);
+    return normalizeWardList(Array.isArray(payload) ? payload : []);
   });
 
 export { listWards, getWard, createWard, updateWard, deleteWard, listWardBeds };

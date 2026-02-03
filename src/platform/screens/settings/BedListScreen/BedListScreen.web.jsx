@@ -27,6 +27,7 @@ const BedListScreenWeb = () => {
     onRetry,
     onBedPress,
     onDelete,
+    onAdd,
   } = useBedListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const BedListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="bed-list-title">
-          {t('bed.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="bed-list-title">
+            {t('bed.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('bed.list.addLabel')}
+              accessibilityHint={t('bed.list.addHint')}
+              testID="bed-list-add"
+            >
+              {t('bed.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('bed.list.accessibilityLabel')} data-testid="bed-list">
           {isLoading && <LoadingSpinner testID="bed-list-spinner" />}
           {!isLoading && hasError && (

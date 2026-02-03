@@ -27,6 +27,7 @@ const AddressListScreenWeb = () => {
     onRetry,
     onAddressPress,
     onDelete,
+    onAdd,
   } = useAddressListScreen();
 
   const emptyComponent = (
@@ -40,13 +41,26 @@ const AddressListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text
-          variant="h1"
-          accessibilityRole="header"
-          testID="address-list-title"
-        >
-          {t('address.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text
+            variant="h1"
+            accessibilityRole="header"
+            testID="address-list-title"
+          >
+            {t('address.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('address.list.addLabel')}
+              accessibilityHint={t('address.list.addHint')}
+              testID="address-list-add"
+            >
+              {t('address.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('address.list.accessibilityLabel')} data-testid="address-list">
           {isLoading && (
             <LoadingSpinner testID="address-list-spinner" />

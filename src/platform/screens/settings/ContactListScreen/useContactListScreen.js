@@ -72,6 +72,10 @@ const useContactListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/contacts/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useContactListScreen = () => {
     onRetry: handleRetry,
     onContactPress: handleContactPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

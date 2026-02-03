@@ -27,6 +27,7 @@ const RoomListScreenWeb = () => {
     onRetry,
     onRoomPress,
     onDelete,
+    onAdd,
   } = useRoomListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const RoomListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="room-list-title">
-          {t('room.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="room-list-title">
+            {t('room.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('room.list.addLabel')}
+              accessibilityHint={t('room.list.addHint')}
+              testID="room-list-add"
+            >
+              {t('room.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('room.list.accessibilityLabel')} data-testid="room-list">
           {isLoading && <LoadingSpinner testID="room-list-spinner" />}
           {!isLoading && hasError && (

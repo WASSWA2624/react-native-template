@@ -72,6 +72,10 @@ const useDepartmentListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/departments/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useDepartmentListScreen = () => {
     onRetry: handleRetry,
     onDepartmentPress: handleDepartmentPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

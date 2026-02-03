@@ -27,6 +27,7 @@ const WardListScreenWeb = () => {
     onRetry,
     onWardPress,
     onDelete,
+    onAdd,
   } = useWardListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const WardListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="ward-list-title">
-          {t('ward.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="ward-list-title">
+            {t('ward.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('ward.list.addLabel')}
+              accessibilityHint={t('ward.list.addHint')}
+              testID="ward-list-add"
+            >
+              {t('ward.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('ward.list.accessibilityLabel')} data-testid="ward-list">
           {isLoading && <LoadingSpinner testID="ward-list-spinner" />}
           {!isLoading && hasError && (

@@ -27,6 +27,7 @@ const BranchListScreenWeb = () => {
     onRetry,
     onBranchPress,
     onDelete,
+    onAdd,
   } = useBranchListScreen();
 
   const emptyComponent = (
@@ -40,9 +41,22 @@ const BranchListScreenWeb = () => {
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="branch-list-title">
-          {t('branch.list.title')}
-        </Text>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <Text variant="h1" accessibilityRole="header" testID="branch-list-title">
+            {t('branch.list.title')}
+          </Text>
+          {onAdd && (
+            <Button
+              variant="primary"
+              onPress={onAdd}
+              accessibilityLabel={t('branch.list.addLabel')}
+              accessibilityHint={t('branch.list.addHint')}
+              testID="branch-list-add"
+            >
+              {t('branch.list.addLabel')}
+            </Button>
+          )}
+        </div>
         <StyledListBody role="region" aria-label={t('branch.list.accessibilityLabel')} data-testid="branch-list">
           {isLoading && <LoadingSpinner testID="branch-list-spinner" />}
           {!isLoading && hasError && (

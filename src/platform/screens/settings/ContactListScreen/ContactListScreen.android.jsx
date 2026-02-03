@@ -26,6 +26,7 @@ const ContactListScreenAndroid = () => {
     onRetry,
     onContactPress,
     onDelete,
+    onAdd,
   } = useContactListScreen();
 
   const emptyComponent = (

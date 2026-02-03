@@ -30,8 +30,8 @@ const UserMfaListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ser-mfa.list.emptyTitle')}
-      description={t('ser-mfa.list.emptyMessage')}
+      title={t('userMfa.list.emptyTitle')}
+      description={t('userMfa.list.emptyMessage')}
       testID="ser-mfa-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const UserMfaListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ser-mfa.list.delete')}
-            accessibilityHint={t('ser-mfa.list.deleteHint')}
+            accessibilityLabel={t('userMfa.list.delete')}
+            accessibilityHint={t('userMfa.list.deleteHint')}
             testID={`ser-mfa-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ser-mfa.list.itemLabel', {
+        accessibilityLabel={t('userMfa.list.itemLabel', {
           name: title,
         })}
         testID={`ser-mfa-item-${item.id}`}
@@ -70,7 +70,7 @@ const UserMfaListScreenIos = () => {
           accessibilityRole="header"
           testID="ser-mfa-list-title"
         >
-          {t('ser-mfa.list.title')}
+          {t('userMfa.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const UserMfaListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ser-mfa.list.accessibilityLabel')}
+          accessibilityLabel={t('userMfa.list.accessibilityLabel')}
           testID="ser-mfa-list"
           emptyComponent={emptyComponent}
         >

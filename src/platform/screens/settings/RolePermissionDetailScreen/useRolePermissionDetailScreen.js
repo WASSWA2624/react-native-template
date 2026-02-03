@@ -5,7 +5,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useI18n, useNetwork, useRolePermission } = '@hooks';
+import { useI18n, useNetwork, useRolePermission } from '@hooks';
 
 const resolveErrorMessage = (t, errorCode) => {
   if (!errorCode) return null;

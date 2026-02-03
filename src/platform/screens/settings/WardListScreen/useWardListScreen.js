@@ -72,6 +72,10 @@ const useWardListScreen = () => {
     [remove, fetchList]
   );
 
+  const handleAdd = useCallback(() => {
+    router.push('/settings/wards/create');
+  }, [router]);
+
   return {
     items,
     isLoading,
@@ -81,6 +85,7 @@ const useWardListScreen = () => {
     onRetry: handleRetry,
     onWardPress: handleWardPress,
     onDelete: handleDelete,
+    onAdd: handleAdd,
   };
 };
 

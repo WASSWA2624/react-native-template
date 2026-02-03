@@ -31,27 +31,27 @@ const PermissionListScreenWeb = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ermission.list.emptyTitle')}
-      description={t('ermission.list.emptyMessage')}
-      testID="ermission-list-empty-state"
+      title={t('permission.list.emptyTitle')}
+      description={t('permission.list.emptyMessage')}
+      testID="permission-list-empty-state"
     />
   );
 
   return (
     <StyledContainer>
       <StyledContent>
-        <Text variant="h1" accessibilityRole="header" testID="ermission-list-title">
-          {t('ermission.list.title')}
+        <Text variant="h1" accessibilityRole="header" testID="permission-list-title">
+          {t('permission.list.title')}
         </Text>
-        <StyledListBody role="region" aria-label={t('ermission.list.accessibilityLabel')} data-testid="ermission-list">
-          {isLoading && <LoadingSpinner testID="ermission-list-spinner" />}
+        <StyledListBody role="region" aria-label={t('permission.list.accessibilityLabel')} data-testid="permission-list">
+          {isLoading && <LoadingSpinner testID="permission-list-spinner" />}
           {!isLoading && hasError && (
             <>
               <ErrorState
                 title={t('listScaffold.errorState.title')}
                 description={errorMessage}
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ermission-list-error-state"
+                testID="permission-list-error-state"
               />
               {emptyComponent}
             </>
@@ -60,7 +60,7 @@ const PermissionListScreenWeb = () => {
             <>
               <OfflineState
                 action={onRetry ? <button type="button" onClick={onRetry} aria-label={t('common.retry')}>{t('common.retry')}</button> : undefined}
-                testID="ermission-list-offline-state"
+                testID="permission-list-offline-state"
               />
               {emptyComponent}
             </>
@@ -80,14 +80,14 @@ const PermissionListScreenWeb = () => {
                           variant="ghost"
                           size="small"
                           onPress={(e) => onDelete(item.id, e)}
-                          accessibilityLabel={t('ermission.list.delete')}
-                          accessibilityHint={t('ermission.list.deleteHint')}
+                          accessibilityLabel={t('permission.list.delete')}
+                          accessibilityHint={t('permission.list.deleteHint')}
                           testID={`ermission-delete-${item.id}`}
                         >
                           {t('common.remove')}
                         </Button>
                       }
-                      accessibilityLabel={t('ermission.list.itemLabel', { name: title })}
+                      accessibilityLabel={t('permission.list.itemLabel', { name: title })}
                       testID={`ermission-item-${item.id}`}
                     />
                   </li>

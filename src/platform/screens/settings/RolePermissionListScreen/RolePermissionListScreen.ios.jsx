@@ -30,8 +30,8 @@ const RolePermissionListScreenIos = () => {
 
   const emptyComponent = (
     <EmptyState
-      title={t('ole-permission.list.emptyTitle')}
-      description={t('ole-permission.list.emptyMessage')}
+      title={t('rolePermission.list.emptyTitle')}
+      description={t('rolePermission.list.emptyMessage')}
       testID="ole-permission-list-empty-state"
     />
   );
@@ -47,14 +47,14 @@ const RolePermissionListScreenIos = () => {
             variant="ghost"
             size="small"
             onPress={(e) => onDelete(item.id, e)}
-            accessibilityLabel={t('ole-permission.list.delete')}
-            accessibilityHint={t('ole-permission.list.deleteHint')}
+            accessibilityLabel={t('rolePermission.list.delete')}
+            accessibilityHint={t('rolePermission.list.deleteHint')}
             testID={`ole-permission-delete-${item.id}`}
           >
             {t('common.remove')}
           </Button>
         }
-        accessibilityLabel={t('ole-permission.list.itemLabel', {
+        accessibilityLabel={t('rolePermission.list.itemLabel', {
           name: title,
         })}
         testID={`ole-permission-item-${item.id}`}
@@ -70,7 +70,7 @@ const RolePermissionListScreenIos = () => {
           accessibilityRole="header"
           testID="ole-permission-list-title"
         >
-          {t('ole-permission.list.title')}
+          {t('rolePermission.list.title')}
         </Text>
         <ListScaffold
           isLoading={isLoading}
@@ -79,7 +79,7 @@ const RolePermissionListScreenIos = () => {
           error={errorMessage}
           isOffline={isOffline}
           onRetry={onRetry}
-          accessibilityLabel={t('ole-permission.list.accessibilityLabel')}
+          accessibilityLabel={t('rolePermission.list.accessibilityLabel')}
           testID="ole-permission-list"
           emptyComponent={emptyComponent}
         >

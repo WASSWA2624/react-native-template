@@ -31,6 +31,7 @@ const ContactDetailScreenWeb = () => {
     isOffline,
     onRetry,
     onBack,
+    onEdit,
     onDelete,
   } = useContactDetailScreen();
 
@@ -184,6 +185,17 @@ const ContactDetailScreenWeb = () => {
             >
               {t('common.back')}
             </Button>
+            {onEdit && (
+              <Button
+                variant="secondary"
+                onPress={onEdit}
+                accessibilityLabel={t('contact.detail.edit')}
+                accessibilityHint={t('contact.detail.editHint')}
+                testID="contact-detail-edit"
+              >
+                {t('common.edit')}
+              </Button>
+            )}
             <Button
               variant="primary"
               onPress={onDelete}
