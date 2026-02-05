@@ -35,10 +35,10 @@ Finalize the HMS application after core and advanced features are complete. Each
 - Step 13.2.4: Build contextual help screens and search
 - Step 13.2.5: Add help tests (feature + hook + screens + a11y)
 
-### Localization
-- Step 13.3.1: Generate non-`en` locale files from finalized keys
-- Step 13.3.2: Validate missing keys and placeholder usage
-- Step 13.3.3: Verify locale metadata is surfaced in UI
+### Localization (preparation for Phase 14)
+- Step 13.3.1: Finalize list of i18n keys used across the app; ensure keys are stable and follow dot notation (per `i18n.mdc`).
+- Step 13.3.2: Validate that default locale (e.g. `en`) has all keys; document any placeholders. **Full implementation of all locale files and translations is Phase 14 (Locales — last phase).**
+- Step 13.3.3: Verify locale metadata is surfaced in UI (language selector, persistence).
 
 ### Compliance, Security, and Offline Audits
 - Step 13.4.1: Audit RBAC and route guard coverage
@@ -53,4 +53,6 @@ Finalize the HMS application after core and advanced features are complete. Each
 - Step 13.5.4: Final documentation updates
 - Step 13.5.5: Release readiness checklist sign-off
 
-**Exit Criteria**: All tests pass, localization is complete, audits are clean, and readiness checklist is signed off.
+**Exit Criteria**: All tests pass, localization prep is complete, audits are clean, and readiness checklist is signed off.
+
+**Next Phase**: `P014_locales.md` (Locales — implementation of all locale files and translation completeness; **last phase**)

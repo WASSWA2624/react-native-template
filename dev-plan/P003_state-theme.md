@@ -264,61 +264,7 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
 
 ---
 
-### Step 3.8: Create High Contrast Theme
-**Goal**: Create high-contrast theme definition (WCAG AAA)
-
-**Actions**:
-1. Create `src/theme/high-contrast.theme.js`:
-   ```javascript
-   /**
-    * High Contrast Theme
-    * WCAG AAA compliance
-    */
-   import colors from './tokens/colors';
-   import spacing from './tokens/spacing';
-   import typography from './tokens/typography';
-   import radius from './tokens/radius';
-   import shadows from './tokens/shadows';
-   
-   const highContrastColors = {
-     primary: '#0000FF',
-     secondary: '#000080',
-     success: '#008000',
-     warning: '#FF8C00',
-     error: '#FF0000',
-     background: {
-       primary: '#FFFFFF',
-       secondary: '#FFFFFF',
-       tertiary: '#F0F0F0',
-     },
-     text: {
-       primary: '#000000',
-       secondary: '#000000',
-       tertiary: '#000000',
-     },
-   };
-   
-   export default {
-     colors: highContrastColors,
-     spacing,
-     typography,
-     radius,
-     shadows,
-     mode: 'high-contrast',
-   };
-   ```
-
-**Tests**: Create `src/__tests__/theme/high-contrast.theme.test.js`
-- Test high-contrast theme structure
-- Test color overrides
-- Test WCAG AAA compliance
-- Test all token imports
-
-**Rule Reference**: `.cursor/rules/theme-design.mdc`, `.cursor/rules/accessibility.mdc`
-
----
-
-### Step 3.9: Create Responsive Breakpoints
+### Step 3.8: Create Responsive Breakpoints
 **Goal**: Create responsive breakpoint definitions
 
 **Actions**:
@@ -345,7 +291,7 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
 
 ---
 
-### Step 3.10: Create Animation Tokens
+### Step 3.9: Create Animation Tokens
 **Goal**: Create animation token definitions
 
 **Actions**:
@@ -379,30 +325,22 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
 
 ---
 
-### Step 3.11: Create Theme Provider
-**Goal**: Create theme provider and resolver
+### Step 3.10: Create Theme Provider
+**Goal**: Create theme provider and resolver. **Only two themes: light and dark** (per `.cursor/rules/theme-design.mdc`).
 
 **Actions**:
 1. Create `src/theme/index.js`:
    ```javascript
    /**
-    * Theme Provider & Resolver
+    * Theme Provider & Resolver (light and dark only)
     */
    import React from 'react';
    import { ThemeProvider } from 'styled-components/native';
    import lightTheme from './light.theme';
    import darkTheme from './dark.theme';
-   import highContrastTheme from './high-contrast.theme';
    
    const getTheme = (mode = 'light') => {
-     switch (mode) {
-       case 'dark':
-         return darkTheme;
-       case 'high-contrast':
-         return highContrastTheme;
-       default:
-         return lightTheme;
-     }
+     return mode === 'dark' ? darkTheme : lightTheme;
    };
    
    const ThemeProviderWrapper = ({ children, theme = 'light' }) => {
@@ -417,7 +355,6 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
      ThemeProvider: ThemeProviderWrapper,
      lightTheme,
      darkTheme,
-     highContrastTheme,
      getTheme,
    };
    ```
@@ -435,7 +372,7 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
 
 ---
 
-### Step 3.12: Create Redux Store
+### Step 3.11: Create Redux Store
 **Goal**: Redux Toolkit store setup
 
 **Actions**:
@@ -449,7 +386,7 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
    import { getDeviceLocale } from '@i18n';
    
    const initialState = {
-     theme: 'light', // 'light', 'dark', 'high-contrast'
+     theme: 'light', // 'light' or 'dark' only (per theme-design.mdc)
      locale: getDeviceLocale(),
      isLoading: false,
    };
@@ -582,7 +519,7 @@ Build Redux store and theme system. Follows rules in `.cursor/rules/`.
 
 ## Completion Criteria
 - ✅ Theme tokens complete (colors, spacing, typography, radius, shadows, animations)
-- ✅ Light, dark, and high-contrast themes defined
+- ✅ Light and dark themes defined (only two themes per theme-design.mdc)
 - ✅ Responsive breakpoints defined (320px, 768px, 1024px, 1440px)
 - ✅ Theme provider created
 - ✅ Redux store configured

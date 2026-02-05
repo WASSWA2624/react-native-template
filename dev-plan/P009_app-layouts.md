@@ -1,79 +1,147 @@
-# Phase 9: Base Layouts & Global UI (App Shell Expansion)
+# Phase 9: App Layouts (All Platforms, All Screen Sizes, Microsoft Fluent)
 
 ## Purpose
-Create the shared UI shell used by all HMS screens: layouts, headers, footers, primary navigation, theme controls, language selection, and other global UI controls. These components must be fully wired into the relevant layouts so that the application runs end-to-end without errors. All global UI elements should be seamlessly integrated within their respective route group layouts, functioning correctly and without introducing any runtime failures.
-
-## Rule References
-- `.cursor/rules/app-router.mdc` (Route groups and layout placement)
-- `.cursor/rules/platform-ui.mdc` (Screen/layout structure)
-- `.cursor/rules/component-structure.mdc` (Component organization)
-- `.cursor/rules/theme-design.mdc` (Theme tokens and switching)
-- `.cursor/rules/i18n.mdc` (Language selection and translations)
-- `.cursor/rules/accessibility.mdc` (A11y requirements)
-- `.cursor/rules/testing.mdc` (UI testing requirements)
+Implement **app layouts and global UI shell** for all route groups. Layouts and all UI in this phase must be implemented for **all platforms** (Android, iOS, Web), **all screen sizes** (mobile, tablet, desktop, large per `src/theme/breakpoints.js`), and must follow **Microsoft Fluent / Microsoft 365 look and feel** per `.cursor/rules/theme-design.mdc`. Every step is atomic, chronological, and follows `.cursor/rules/`.
 
 ## Prerequisites
-- Phase 7 completed (app shell + route groups)
-- Phase 8 completed (minimal runnable app)
+- Phase 8 completed (debug resources)
+- Phase 7 completed (app shell, route groups)
+- Theme: light/dark only (Phase 3)
 
-## Scope
-- App-level layouts for `(auth)`, `(main)`, `(patient)` groups, with all UI shell components actually imported and rendered in the corresponding `_layout.jsx` files in a functional, non-broken form
-- Global header, footer, and navigation structures must be present and rendered by the layouts
-- Theme mode controls (light/dark/high-contrast) must be implemented, connected to app state, and functional in real usage
-- Language selection controls must be present, hooked to i18n, and switch languages without errors
-- All shared UI shell behaviors (navigation state, titles, breadcrumbs, banners) should update/rerender safely with no runtime problems
+## Rule References
+- `.cursor/rules/app-router.mdc` (route groups, layout placement)
+- `.cursor/rules/platform-ui.mdc` (platform separation, resilience)
+- `.cursor/rules/component-structure.mdc` (grouping, barrel, platform files)
+- `.cursor/rules/theme-design.mdc` (Microsoft Fluent, tokens, light/dark only)
+- `.cursor/rules/accessibility.mdc` (a11y, touch targets)
+- `.cursor/rules/testing.mdc` (coverage, platform-specific tests)
+- `.cursor/rules/i18n.mdc` (100% i18n for UI text)
 
-## Definition of Done
-- All layout components are created and actually used in the route group `_layout.jsx` files; navigation, header, footer, etc. must be rendered in the live app
-- Header/footer/navigation components are reusable, theme-aware, and error-free as part of app skeleton
-- Theme and language controls work, update UI on interaction, and persist preferences with no crashes or bugs
-- All UI text renders via i18n, with no untranslated or hardcoded values, and language changes are reflected live
-- The UI is accessible (per rules) and all integrated layouts pass basic and navigation interaction tests with no errors on render
+## Layout and Component Requirements (Mandatory)
+- **Platforms**: Every layout and global UI component must have `.android.jsx`, `.ios.jsx`, `.web.jsx` (and matching `.styles.jsx`) per `component-structure.mdc`.
+- **Screen sizes**: Use theme breakpoints (mobile, tablet, desktop, large); responsive behavior at each breakpoint; no magic numbers.
+- **Look and feel**: Microsoft Fluent / Microsoft 365 (Fluent blue primary, neutrals, Segoe UI–style typography, 2–4px radius, light elevation). All tokens from theme; no hardcoded colors/spacing.
+- **Theme**: Light and dark only; theme controls in shell must switch only between light and dark.
 
-## Steps (Atomic, with Wiring and Error-Free Guarantee)
+## Steps (Atomic, Chronological)
 
-### Step 9.1.1: Define and wire base layout primitives
-- Create layout primitives (`AppFrame`, `AuthFrame`, `PatientFrame`)
-- Expose clear slot conventions for header, footer, content, overlays
-- Import these primitives into the appropriate `_layout.jsx` files and verify they compose correctly without runtime errors
+### Step 9.1: Base Layout Primitives (All Platforms, All Sizes)
+**Goal**: Create layout frame components (e.g. AppFrame, AuthFrame, MainFrame) with slot conventions (header, footer, content). One component per platform file; styles in platform `.styles.jsx`; Fluent look and feel.
 
-### Step 9.1.2: Integrate global header(s)
-- Implement header component(s) with title, context actions, and (optionally) breadcrumbs
-- Slot header(s) into all relevant layouts and ensure error-free integration
-- Provide role-aware action injection via props or context (no ad-hoc or feature-dependent imports)
-- Implement safe-area, focus management, and a11y roles/labels as needed
+**Actions**:
+1. Create layout category folder under `src/platform/layouts/` (e.g. `frames/`). Per `component-structure.mdc`, each layout component in its own folder with `.android.jsx`, `.ios.jsx`, `.web.jsx`, matching `.styles.jsx`, hook, `types.js`, `index.js`.
+2. Implement frames to be responsive: use theme breakpoints and spacing tokens; test at mobile, tablet, desktop, large.
+3. Use only theme tokens; Microsoft Fluent styling (subtle radius, light shadows/borders).
+4. Export from platform layouts barrel; wire into route group `_layout.jsx` files (import from `@platform/layouts`).
 
-### Step 9.1.3: Integrate global footer(s)
-- Build footer component(s) for status, legal, and quick actions
-- Integrate and render footers in all route-group layouts (auth/main/patient), ensuring no mounting errors or typos
+**Verification**: Frames render on Android, iOS, Web; responsive at all breakpoints; pass a11y and theme checks. Tests per `testing.mdc`.
 
-### Step 9.1.4: Add primary navigation shell and ensure live wiring
-- Create platform-appropriate navigation (drawer/tab/rail, etc.) for main/patient
-- Integrate navigation components into the layouts, pass guards/roles from real app state
-- All navigation must be live (routes reachable, overlays working, errors handled)
+**Rule Reference**: `component-structure.mdc`, `theme-design.mdc`, `platform-ui.mdc`
 
-### Step 9.1.5: Theme controls integration
-- Render UI controls for theme (light/dark/high-contrast) in the UI shell
-- Wire controls to theme state and persist preference
-- Changing theme updates UI with no rendering or hydration errors
+---
 
-### Step 9.1.6: Language selection controls integration
-- Render language selector UI clearly accessible (header/settings)
-- Wire to i18n context and persist selection
-- Language switching updates all UI and does not cause runtime errors
+### Step 9.2: Global Header (All Platforms, All Sizes)
+**Goal**: Header component(s) with title, actions, optional breadcrumbs. Platform-separated; responsive; Fluent styling; safe area and a11y.
 
-### Step 9.1.7: Integrate global banners and shell utilities
-- Implement offline/online banner, maintenance banner, and loading overlay
-- Add toast/notice surface for global messages
-- All banners/utilities are mounted and unmounted safely across all layout variants
+**Actions**:
+1. Create header in `src/platform/components/` under a category folder (e.g. `navigation/`). Full platform file set and barrel.
+2. Implement for all screen sizes (e.g. compact on mobile, full on desktop); use breakpoints and tokens.
+3. Integrate into layout slots in all relevant route group layouts; ensure no runtime errors.
 
-### Step 9.1.8: Online/offline and network quality alerts
-- Add hook/util to detect online/offline, debounce events to avoid unwanted re-renders
-- Render live banner in shell if offline/low quality (never expose sensitive info)
-- Use available Network Info APIs as a best effort; always ensure fallback to the safest method
-- Write integration tests that verify detection, alert UI, and error-free switching
+**Verification**: Header renders on all platforms and sizes; theme and i18n applied; tests per `testing.mdc`.
 
-## Testing Requirements
-- All layout and shell components: render, compose, and pass accessibility checks without throwing errors
-- Header/footer/navigation tested for loading, empty state, and role changes (no unhandled branches)
-- Theme and language toggles: tested for correct persistence and dynamic UI updates, with zero runtime warnings or crashes
+**Rule Reference**: `component-structure.mdc`, `theme-design.mdc`, `accessibility.mdc`
+
+---
+
+### Step 9.3: Global Footer (All Platforms, All Sizes)
+**Goal**: Footer component(s) for status, legal, quick actions. Platform-separated; responsive; Fluent styling.
+
+**Actions**:
+1. Create footer in `src/platform/components/` (category folder). Full platform set and barrel.
+2. Integrate into layout slots for auth, main, and any other route groups. Verify no mounting errors.
+
+**Verification**: Footer renders on all platforms and sizes; tests per `testing.mdc`.
+
+**Rule Reference**: `component-structure.mdc`, `theme-design.mdc`
+
+---
+
+### Step 9.4: Primary Navigation Shell (All Platforms, All Sizes)
+**Goal**: Navigation (drawer/tab/rail as appropriate) for main (and patient) route groups. Platform-appropriate patterns; Fluent look and feel; wired to real layouts.
+
+**Actions**:
+1. Implement navigation components per `component-structure.mdc` (platform separation, category folder).
+2. Responsive behavior: e.g. bottom tabs on mobile, rail or top nav on desktop; use breakpoints.
+3. Wire into route group layouts; guards/roles from app state; all routes reachable, no runtime errors.
+
+**Verification**: Navigation works on all platforms and sizes; tests per `testing.mdc`.
+
+**Rule Reference**: `app-router.mdc`, `platform-ui.mdc`, `theme-design.mdc`
+
+---
+
+### Step 9.5: Theme Controls (Light/Dark Only)
+**Goal**: UI controls to switch between light and dark theme; wired to theme state; persist preference. No high-contrast or other theme variants.
+
+**Actions**:
+1. Add theme toggle/selector to shell (e.g. header or settings). Only two options: light, dark.
+2. Wire to Redux (or theme provider) and persistence; changing theme updates UI without errors.
+3. Per `theme-design.mdc`: only light and dark themes exist.
+
+**Verification**: Theme switch works; preference persists; no hydration/render errors.
+
+**Rule Reference**: `theme-design.mdc`, `bootstrap-config.mdc`
+
+---
+
+### Step 9.6: Language Selection Controls
+**Goal**: Language selector in shell; wired to i18n; persist selection; all UI text via i18n.
+
+**Actions**:
+1. Add language selector to shell; wire to i18n context and persistence.
+2. Ensure all layout/shell text uses i18n keys (no hardcoded strings).
+3. Switching language updates UI without runtime errors.
+
+**Verification**: Language switch works; persistence works; tests per `i18n.mdc` and `testing.mdc`.
+
+**Rule Reference**: `i18n.mdc`, `accessibility.mdc`
+
+---
+
+### Step 9.7: Global Banners and Utilities (All Platforms, All Sizes)
+**Goal**: Offline/online banner, maintenance banner, loading overlay, toast/notice surface. Platform-separated where applicable; responsive; Fluent styling.
+
+**Actions**:
+1. Implement banner/overlay/toast components per `component-structure.mdc` (e.g. under `feedback/` or `states/`).
+2. Integrate into layouts; mount/unmount safely across route groups.
+3. Use theme tokens and Fluent look and feel; a11y per `accessibility.mdc`.
+
+**Verification**: Banners and utilities work on all platforms and sizes; no unhandled errors.
+
+**Rule Reference**: `platform-ui.mdc`, `theme-design.mdc`, `errors-logging.mdc`
+
+---
+
+### Step 9.8: Responsive and Fluent Verification
+**Goal**: Confirm all layouts and global UI work at every breakpoint and on every platform with Microsoft Fluent look and feel.
+
+**Actions**:
+1. Test each layout and global component at mobile (320px+), tablet (768px+), desktop (1024px+), large (1440px+).
+2. Test on Android, iOS, Web (or simulators).
+3. Verify tokens and styling match Fluent (primary blue, neutrals, typography, radius, elevation).
+4. Run full test suite; fix any failures; ensure 100% coverage for new code per `testing.mdc`.
+
+**Verification**: Checklist passed for platforms and breakpoints; tests green; Fluent compliance confirmed.
+
+**Rule Reference**: `theme-design.mdc`, `performance.mdc`, `testing.mdc`
+
+---
+
+## Completion Criteria
+- All layout and global UI components implemented for **all platforms** (Android, iOS, Web) and **all screen sizes** (mobile, tablet, desktop, large).
+- **Microsoft Fluent / Microsoft 365** look and feel applied (theme tokens, no hardcoded visuals).
+- Theme controls: **light and dark only**.
+- All steps executed in order; tests passing; rule compliance verified.
+
+**Next Phase**: `P010_core-features.md`

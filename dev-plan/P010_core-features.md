@@ -14,7 +14,9 @@ Implement the HMS core modules aligned with `hms-backend/write-up.md` and `hms-b
 - `.cursor/rules/offline-sync.mdc`
 
 ## Prerequisites
-- Phase 7 completed (app shell exists)
+- Phase 9 completed (app layouts)
+- Phase 8 completed (debug resources)
+- Phase 7 completed (app shell)
 - `@services/api` client exists (Phase 2)
 - Errors layer exists (Phase 1)
 - Shared utilities exist (URL helpers, pagination, error normalization)

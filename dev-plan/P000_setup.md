@@ -331,6 +331,7 @@ Initialize the Expo React Native project with correct structure, dependencies, a
                '@logging': './src/logging',
                '@bootstrap': './src/bootstrap',
                '@navigation': './src/navigation',
+               '@debug': './src/debug',
              },
            },
          ],
@@ -340,12 +341,27 @@ Initialize the Expo React Native project with correct structure, dependencies, a
    ```
 
 **Verification**:
-- `babel.config.js` exists
-- Aliases configured correctly
+- `babel.config.js` exists; aliases include `@debug` (`.cursor/rules/coding-conventions.mdc`)
 
 ---
 
-### Step 0.16: Configure Metro Bundler
+### Step 0.16: Create Debug Folder Structure and npm Scripts
+**Goal**: Set up debug resources per `.cursor/rules/debug.mdc` (log capture, scripts; dev-only).
+
+**Actions**:
+1. Create at project root: `debug/` with `.gitkeep` and `README.md` (log file reference and commands). Ensure `.gitignore` includes `debug/*.log`.
+2. Create `scripts/debug/` for ESM scripts (`.mjs`). Scripts write to root `debug/` (expo, android, ios, web log files per `debug.mdc`).
+3. Add to `package.json` scripts: `debug:expo`, `debug:android`, `debug:ios`, `debug:web`, `debug:all` (see `.cursor/rules/debug.mdc`).
+4. Create `src/debug/` for in-app debug code (web console logger implemented in Phase 8).
+
+**Verification**:
+- `debug/`, `scripts/debug/`, `src/debug/` exist; npm run debug:* scripts defined.
+
+**Rule Reference**: `.cursor/rules/debug.mdc`, `.cursor/rules/project-structure.mdc`
+
+---
+
+### Step 0.17: Configure Metro Bundler
 **Goal**: Configure Metro for optimal bundling
 
 **Actions**:
@@ -364,7 +380,7 @@ Initialize the Expo React Native project with correct structure, dependencies, a
 
 ---
 
-### Step 0.17: Configure ESLint & Prettier
+### Step 0.19: Configure ESLint & Prettier
 **Goal**: Set up linting and formatting
 
 **Actions**:
@@ -434,7 +450,7 @@ Initialize the Expo React Native project with correct structure, dependencies, a
 
 ---
 
-### Step 0.18: Configure Jest
+### Step 0.20: Configure Jest
 **Goal**: Set up testing framework
 
 **Actions**:
@@ -474,7 +490,7 @@ Initialize the Expo React Native project with correct structure, dependencies, a
 
 ---
 
-### Step 0.19: Create .gitignore
+### Step 0.21: Create .gitignore
 **Goal**: Exclude unnecessary files from version control
 
 **Actions**:
@@ -503,8 +519,9 @@ Initialize the Expo React Native project with correct structure, dependencies, a
    .DS_Store
    Thumbs.db
 
-   # Logs
+   # Logs (debug/*.log per .cursor/rules/debug.mdc)
    *.log
+   debug/*.log
    npm-debug.log*
 
    # Testing
@@ -518,7 +535,7 @@ Initialize the Expo React Native project with correct structure, dependencies, a
 
 ---
 
-### Step 0.20: Verify Setup
+### Step 0.22: Verify Setup
 **Goal**: Ensure project is ready for development
 
 **Actions**:

@@ -1,9 +1,9 @@
 # Phase 7: App Shell (App Router + Guards + Navigation Skeleton)
 
 ## Purpose
-Wire the **app shell** infrastructure: providers, app bootstrap, routing groups, guards, and navigation skeleton. This phase establishes the foundational infrastructure that will support app-specific routes and screens created in Phase 8.
+Wire the **app shell** infrastructure: providers, app bootstrap, routing groups, guards, and navigation skeleton. This phase establishes the foundational infrastructure that will support app-specific routes and screens created in Phase 10 and Phase 11.
 
-**Note**: This phase does **not** create app-specific routes or screens (e.g., login, home). Those will be implemented in Phase 8 (Minimal Runnable App) and Phase 10 (Screens & Routes). This phase focuses solely on reusable infrastructure.
+**Note**: This phase does **not** create app-specific routes or screens (e.g., landing, login, home). Those are implemented in Phase 10 (Core Features) and Phase 11 (Screens & Routes). This phase focuses solely on reusable infrastructure.
 
 ## Rule References
 - `.cursor/rules/app-router.mdc`
@@ -298,10 +298,10 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - Export `useAuthGuard` hook per `hooks-utils.mdc`:
   - Checks if user is authenticated (via Redux selector or hook per `hooks-utils.mdc`)
   - Redirects to login route if unauthenticated (using `router.replace()` from `expo-router`)
-  - Accepts optional redirect path parameter (defaults to `/login` as placeholder; actual route path will be determined in Phase 8)
+  - Accepts optional redirect path parameter (defaults to `/login` as placeholder; actual route path will be determined in Phase 10/11)
   - Returns auth state (authenticated boolean, user data if available)
 - Hook should be idempotent and safe to call multiple times
-- **Note**: Redirect paths should match the actual routes created in Phase 8 (Minimal Runnable App)
+- **Note**: Redirect paths should match the actual routes created in Phase 10/11
 
 **Expected Outcome**:
 - Auth guard hook exists and can redirect unauthenticated users
@@ -334,11 +334,11 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - Export `useRoleGuard` hook per `hooks-utils.mdc`:
   - Accepts required role(s) as parameter
   - Checks if user has required role (via Redux selector or hook per `hooks-utils.mdc`)
-  - Accepts optional redirect path parameter for access denied (defaults to `/home` as placeholder; actual route path will be determined in Phase 8)
+  - Accepts optional redirect path parameter for access denied (defaults to `/home` as placeholder; actual route path will be determined in Phase 10/11)
   - Redirects to safe route if access denied per `security.mdc`
   - Exposes error code via state/return value
   - Returns access state (hasAccess boolean, error code if denied)
-- **Note**: Redirect paths should match the actual routes created in Phase 8 (Minimal Runnable App)
+- **Note**: Redirect paths should match the actual routes created in Phase 10/11
 
 **Expected Outcome**:
 - Role guard hook exists and can restrict access based on user roles
@@ -369,7 +369,7 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - In `src/app/(auth)/_layout.jsx`:
   - Import `useAuthGuard` from `@navigation/guards` per `coding-conventions.mdc`
   - Call the hook per `app-router.mdc`
-  - If authenticated, redirect to home route (redirect path should match the actual home route created in Phase 8)
+  - If authenticated, redirect to home route (redirect path should match the actual home route created in Phase 10/11)
 
 **Expected Outcome**:
 - Authenticated users cannot access login/register routes (redirected to home)
@@ -398,7 +398,7 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - In `src/app/(main)/_layout.jsx`:
   - Import `useAuthGuard` from `@navigation/guards` per `coding-conventions.mdc`
   - Call the hook at the top of the component per `app-router.mdc`
-  - If unauthenticated, user will be redirected to login route (redirect path should match the actual login route created in Phase 8 or Phase 10)
+  - If unauthenticated, user will be redirected to login route (redirect path should match the actual login route created in Phase 10 or Phase 11)
 
 **Expected Outcome**:
 - Unauthenticated users cannot access main routes (redirected to login)
@@ -424,14 +424,14 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - Import aliases: `coding-conventions.mdc` (use `@navigation` alias)
 
 **Actions**:
-- Identify routes that need role protection (can be minimal for now; actual routes created in Phase 8 and Phase 10)
+- Identify routes that need role protection (can be minimal for now; actual routes created in Phase 10 and Phase 11)
 - In route group layouts per `app-router.mdc`:
   - Import `useRoleGuard` from `@navigation/guards` per `coding-conventions.mdc`
   - Call guard with required role parameters
   - Guard will handle redirects automatically
 
 **Expected Outcome**:
-- Routes with role requirements are protected (when routes exist in Phase 8 and Phase 10)
+- Routes with role requirements are protected (when routes exist in Phase 10 and Phase 11)
 
 **Tests (mandatory - per `testing.mdc`)**:
 - Create `src/__tests__/navigation/guards/integration.test.js` per `testing.mdc` (mirror source structure)
@@ -491,11 +491,11 @@ Wire the **app shell** infrastructure: providers, app bootstrap, routing groups,
 - See `.cursor/rules/app-router.mdc` for complete requirements
 
 **Navigation Paths**:
-When navigating/linking (after routes are created in Phase 8 and Phase 10), **omit group segments** per `app-router.mdc` (do not include `/(auth)` or `/(main)` in user-facing paths):
+When navigating/linking (after routes are created in Phase 10 and Phase 11), **omit group segments** per `app-router.mdc` (do not include `/(auth)` or `/(main)` in user-facing paths):
 - ✅ Correct: `router.push('/login')` or `<Link href="/home" />`
 - ❌ Incorrect: `router.push('/(auth)/login')` or `<Link href="/(main)/home" />`
 
-**Note**: Actual routes (login, home, index, not-found, etc.) will be created in Phase 8 (Minimal Runnable App) and Phase 10 (Screens & Routes). This phase only establishes the infrastructure (route groups, layouts, guards) that will support those routes.
+**Note**: Actual routes (landing, login, home, index, not-found, etc.) are created in Phase 10 (Core Features) and Phase 11 (Screens & Routes). This phase only establishes the infrastructure (route groups, layouts, guards) that will support those routes.
 
 ---
 
@@ -511,12 +511,12 @@ When navigating/linking (after routes are created in Phase 8 and Phase 10), **om
 - ✅ Bootstrap runs in correct order and failures are handled safely (per `bootstrap-config.mdc`: security → store → theme → offline)
 - ✅ Auth and main route groups exist with layouts (per `app-router.mdc`)
 - ✅ Guards implemented (auth, role) with configurable redirect paths (per `hooks-utils.mdc`, `security.mdc`)
-- ✅ Guards wired in route layouts (redirect paths are placeholders until routes exist in Phase 8) (per `app-router.mdc`)
+- ✅ Guards wired in route layouts (redirect paths are placeholders until routes exist in Phase 10/11) (per `app-router.mdc`)
 - ✅ Navigation skeleton renders in main layout (per `platform-ui.mdc`, `accessibility.mdc`)
 - ✅ **All steps have passing tests with required coverage** (per `testing.mdc`: 100% coverage mandatory overall, all branches tested)
 - ✅ **All tests verify behavior, not implementation details** (per `testing.mdc`)
 - ✅ **All external dependencies mocked in tests** (per `testing.mdc`: no real network, storage, navigation in tests)
-- ⏳ **Routes and screens will be implemented in Phase 8 (Minimal Runnable App) and Phase 10 (Screens & Routes)** (not part of this phase)
+- ⏳ **Routes and screens are implemented in Phase 10 (Core Features) and Phase 11 (Screens & Routes)** (not part of this phase)
 
-**Next Phase**: `P008_minimal-app.md`
+**Next Phase**: `P008_debug-resources.md`
 
