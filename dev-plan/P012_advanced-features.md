@@ -58,4 +58,9 @@ Every advanced feature must follow the feature template structure defined in `.c
 - Step 12.7.2: Predictive and trend analytics views
 - Step 12.7.3: Custom report templates for leadership
 
+### Nurses Time-table Generator (Write-up §5.17, §12.2.2, §20.3)
+- Step 12.8.1: Roster generation UI (rules, constraints, shift types, workload balancing)
+- Step 12.8.2: Publish roster, notifications to nurses, export/print shift rosters
+- Step 12.8.3: Manual overrides, swap requests, and audit visibility for roster changes
+
 **Testing**: Maintain the same test rigor as Phase 10. Focus on error paths, permissions, and feature gating (modules/subscriptions).

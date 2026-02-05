@@ -45,6 +45,7 @@ Finalize the HMS application after core and advanced features are complete. Each
 - Step 13.4.2: Verify audit log visibility and access rules
 - Step 13.4.3: Validate offline flows for critical operations
 - Step 13.4.4: Run threat and privacy review per write-up requirements
+- Step 13.4.5: Verify accessibility per write-up Ch 14 (WCAG 2.1, high-contrast, font sizing, screen reader, keyboard navigation) per `.cursor/rules/accessibility.mdc`
 
 ### Performance and Release Readiness
 - Step 13.5.1: Performance profiling and UI responsiveness checks

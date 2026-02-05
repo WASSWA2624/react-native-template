@@ -163,7 +163,7 @@ src/app/
 - **11.S.70** Billing (main) — `(main)/billing`
 - **11.S.71** Billing tabs: invoice, payment, refund, pricing, coverage, claim, pre-auth, adjustment — `(main)/billing/*` (one step per tab)
 - **11.S.72** HR (main) — `(main)/hr`
-- **11.S.73** HR tabs: staff, assignment, leave, shift, payroll — `(main)/hr/*` (one step per tab)
+- **11.S.73** HR tabs: staff, assignment, leave, shift, nurse-timetable, payroll — `(main)/hr/*` (one step per tab; nurse-timetable = Nurses Time-table Generator per write-up §5.17)
 - **11.S.74** Housekeeping (main) — `(main)/housekeeping`
 - **11.S.75** Housekeeping tabs: task, schedule, maintenance, asset, service-log — `(main)/housekeeping/*` (one step per tab)
 - **11.S.76** Reports (main) — `(main)/reports`
