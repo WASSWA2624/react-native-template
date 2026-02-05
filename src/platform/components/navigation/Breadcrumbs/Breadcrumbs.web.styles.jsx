@@ -1,14 +1,14 @@
 /**
  * Breadcrumbs Web Styles
- * Styled-components for Web platform
+ * Semantic HTML only (theme-design.mdc, component-structure.mdc)
  * File: Breadcrumbs.web.styles.jsx
  */
-import styled from 'styled-components';
-import { View, Text, Pressable } from 'react-native';
+import styled, { css } from 'styled-components';
 
-const StyledBreadcrumbs = styled(View).withConfig({
-  displayName: 'StyledBreadcrumbs',
-  componentId: 'StyledBreadcrumbs',
+const navConfig = { displayName: 'StyledBreadcrumbs', componentId: 'StyledBreadcrumbs' };
+const StyledBreadcrumbs = styled.nav.withConfig({
+  ...navConfig,
+  shouldForwardProp: (prop) => prop !== 'testID',
 })`
   display: flex;
   flex-direction: row;
@@ -24,7 +24,7 @@ const StyledBreadcrumbs = styled(View).withConfig({
   }
 `;
 
-const StyledBreadcrumbItem = styled(View).withConfig({
+const StyledBreadcrumbItem = styled.span.withConfig({
   displayName: 'StyledBreadcrumbItem',
   componentId: 'StyledBreadcrumbItem',
 })`
@@ -38,9 +38,9 @@ const StyledBreadcrumbItem = styled(View).withConfig({
   & > *:last-child {
     font-family: ${({ theme }) => theme.typography.fontFamily.regular};
     font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
-    font-weight: ${({ isLast }) => (isLast ? 600 : 400)};
+    font-weight: ${({ $isLast }) => ($isLast ? 600 : 400)};
     line-height: ${({ theme }) => theme.typography.fontSize.sm * theme.typography.lineHeight.normal}px;
-    color: ${({ isLast, theme }) => (isLast ? theme.colors.text.primary : theme.colors.text.secondary)};
+    color: ${({ $isLast, theme }) => ($isLast ? theme.colors.text.primary : theme.colors.text.secondary)};
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
@@ -56,7 +56,7 @@ const StyledBreadcrumbItem = styled(View).withConfig({
   }
 `;
 
-const StyledSeparator = styled(Text).withConfig({
+const StyledSeparator = styled.span.withConfig({
   displayName: 'StyledSeparator',
   componentId: 'StyledSeparator',
 })`
@@ -72,10 +72,7 @@ const StyledSeparator = styled(Text).withConfig({
   }
 `;
 
-const StyledLink = styled(Pressable).withConfig({
-  displayName: 'StyledLink',
-  componentId: 'StyledLink',
-})`
+const linkButtonStyles = css`
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs}px;
@@ -86,6 +83,10 @@ const StyledLink = styled(Pressable).withConfig({
   white-space: nowrap;
   max-width: 200px;
   min-width: 0;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  text-decoration: none;
 
   & > *:last-child {
     font-family: ${({ theme }) => theme.typography.fontFamily.regular};
@@ -93,7 +94,6 @@ const StyledLink = styled(Pressable).withConfig({
     font-weight: 400;
     line-height: ${({ theme }) => theme.typography.fontSize.sm * theme.typography.lineHeight.normal}px;
     color: ${({ theme }) => theme.colors.primary};
-    text-decoration: none;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
@@ -128,7 +128,23 @@ const StyledLink = styled(Pressable).withConfig({
   }
 `;
 
-const StyledBreadcrumbIcon = styled(View).withConfig({
+const StyledBreadcrumbLink = styled.a.withConfig({
+  displayName: 'StyledBreadcrumbLink',
+  componentId: 'StyledBreadcrumbLink',
+  shouldForwardProp: (prop) => prop !== 'testID',
+})`
+  ${linkButtonStyles}
+`;
+
+const StyledBreadcrumbButton = styled.button.withConfig({
+  displayName: 'StyledBreadcrumbButton',
+  componentId: 'StyledBreadcrumbButton',
+  shouldForwardProp: (prop) => prop !== 'testID',
+})`
+  ${linkButtonStyles}
+`;
+
+const StyledBreadcrumbIcon = styled.span.withConfig({
   displayName: 'StyledBreadcrumbIcon',
   componentId: 'StyledBreadcrumbIcon',
 })`
@@ -139,7 +155,7 @@ const StyledBreadcrumbIcon = styled(View).withConfig({
   opacity: 0.7;
 `;
 
-const StyledBreadcrumbEllipsis = styled(Text).withConfig({
+const StyledBreadcrumbEllipsis = styled.span.withConfig({
   displayName: 'StyledBreadcrumbEllipsis',
   componentId: 'StyledBreadcrumbEllipsis',
 })`
@@ -159,7 +175,8 @@ export {
   StyledBreadcrumbs,
   StyledBreadcrumbItem,
   StyledSeparator,
-  StyledLink,
+  StyledBreadcrumbLink,
+  StyledBreadcrumbButton,
   StyledBreadcrumbIcon,
   StyledBreadcrumbEllipsis,
 };

@@ -5,7 +5,6 @@
  */
 import React from 'react';
 import { useRouter } from 'expo-router';
-import Text from '@platform/components/display/Text';
 import Badge from '@platform/components/display/Badge';
 import { useI18n } from '@hooks';
 import useTabBar from './useTabBar';
@@ -39,10 +38,6 @@ const TabBarWeb = ({
   style,
   ...rest
 }) => {
-  // #region agent log
-  globalThis.__tabBarWebRenderCount = (globalThis.__tabBarWebRenderCount || 0) + 1;
-  fetch('http://127.0.0.1:7249/ingest/0ca3e34c-db2d-4973-878f-b50eb78eba91',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'pre-fix',hypothesisId:'A',location:'TabBar.web.jsx:42',message:'TabBar web render',data:{renderCount:globalThis.__tabBarWebRenderCount,styleInitCount:globalThis.__tabBarWebStylesInitCount || 0,itemCount:items.length},timestamp:Date.now()})}).catch(()=>{});
-  // #endregion
   const { t } = useI18n();
   const router = useRouter();
   const {
@@ -75,9 +70,9 @@ const TabBarWeb = ({
 
   return (
     <StyledTabBar
-      accessibilityRole="tablist"
-      accessibilityLabel={accessibilityLabel || t('navigation.tabBar.title')}
-      testID={testID}
+      role="tablist"
+      aria-label={accessibilityLabel || t('navigation.tabBar.title')}
+      data-testid={testID}
       className={className}
       style={style}
       {...rest}
@@ -88,12 +83,13 @@ const TabBarWeb = ({
           return (
             <StyledTabItem
               key={item.id}
+              type="button"
               active={isActive}
-              onPress={() => handlePress(item)}
-              accessibilityRole="tab"
-              accessibilityLabel={item.label}
-              accessibilityState={{ selected: isActive }}
-              testID={testID ? `${testID}-tab-${item.id}` : undefined}
+              onClick={() => handlePress(item)}
+              role="tab"
+              aria-label={item.label}
+              aria-selected={isActive}
+              data-testid={testID ? `${testID}-tab-${item.id}` : undefined}
             >
               <StyledTabItemIcon active={isActive}>{item.icon || '○'}</StyledTabItemIcon>
               <StyledTabItemLabel active={isActive}>{item.label}</StyledTabItemLabel>

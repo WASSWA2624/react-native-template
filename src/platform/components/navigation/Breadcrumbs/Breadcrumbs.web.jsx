@@ -14,7 +14,8 @@ import {
   StyledBreadcrumbs,
   StyledBreadcrumbItem,
   StyledSeparator,
-  StyledLink,
+  StyledBreadcrumbLink,
+  StyledBreadcrumbButton,
   StyledBreadcrumbIcon,
   StyledBreadcrumbEllipsis,
 } from './Breadcrumbs.web.styles';
@@ -101,9 +102,10 @@ const BreadcrumbsWeb = ({
 
   return (
     <StyledBreadcrumbs
-      accessibilityRole="navigation"
-      accessibilityLabel={accessibilityLabel || t('navigation.breadcrumbs.title')}
+      role="navigation"
+      aria-label={accessibilityLabel || t('navigation.breadcrumbs.title')}
       testID={testID}
+      data-testid={testID}
       className={className}
       style={style}
       {...rest}
@@ -112,6 +114,12 @@ const BreadcrumbsWeb = ({
         const isLast = index === displayItems.length - 1;
         const isEllipsis = item.isEllipsis;
         const hasLink = !isLast && !isEllipsis && (item.href || item.onPress || onItemPress);
+        const isAnchor = hasLink && item.href;
+
+        const handleClick = (e) => {
+          e.preventDefault();
+          handleItemPress(item, index);
+        };
 
         return (
           <React.Fragment key={index}>
@@ -120,14 +128,14 @@ const BreadcrumbsWeb = ({
               <StyledBreadcrumbEllipsis aria-hidden="true">
                 {item.label}
               </StyledBreadcrumbEllipsis>
-            ) : hasLink ? (
-              <StyledLink
+            ) : hasLink ? isAnchor ? (
+              <StyledBreadcrumbLink
                 href={item.href}
-                onPress={() => handleItemPress(item, index)}
+                onClick={handleClick}
                 onKeyDown={(event) => handleItemKeyDown(event, item, index)}
-                accessibilityRole="link"
-                accessibilityLabel={item.label}
+                aria-label={item.label}
                 testID={testID ? `${testID}-item-${index}` : undefined}
+                data-testid={testID ? `${testID}-item-${index}` : undefined}
               >
                 {item.icon && (
                   <StyledBreadcrumbIcon>
@@ -137,12 +145,30 @@ const BreadcrumbsWeb = ({
                 <Text numberOfLines={1} ellipsizeMode="tail">
                   {item.label}
                 </Text>
-              </StyledLink>
+              </StyledBreadcrumbLink>
+            ) : (
+              <StyledBreadcrumbButton
+                type="button"
+                onClick={handleClick}
+                onKeyDown={(event) => handleItemKeyDown(event, item, index)}
+                aria-label={item.label}
+                testID={testID ? `${testID}-item-${index}` : undefined}
+                data-testid={testID ? `${testID}-item-${index}` : undefined}
+              >
+                {item.icon && (
+                  <StyledBreadcrumbIcon>
+                    <Icon glyph={item.icon} size="xs" decorative />
+                  </StyledBreadcrumbIcon>
+                )}
+                <Text numberOfLines={1} ellipsizeMode="tail">
+                  {item.label}
+                </Text>
+              </StyledBreadcrumbButton>
             ) : (
               <StyledBreadcrumbItem
-                isLast={isLast}
-                accessibilityRole="text"
-                accessibilityLabel={item.label}
+                $isLast={isLast}
+                role="text"
+                aria-label={item.label}
               >
                 {item.icon && (
                   <StyledBreadcrumbIcon>

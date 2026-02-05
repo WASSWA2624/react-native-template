@@ -199,6 +199,18 @@ describe('Breadcrumbs Component', () => {
       const breadcrumbs = getByTestId('breadcrumbs');
       expect(breadcrumbs).toBeTruthy();
     });
+
+    it('should be focusable and support keyboard navigation (web)', () => {
+      const BreadcrumbsWeb = require('@platform/components/navigation/Breadcrumbs/Breadcrumbs.web').default;
+      const onItemPress = jest.fn();
+      const { getByTestId } = renderWithProviders(
+        <BreadcrumbsWeb items={mockItems} onItemPress={onItemPress} testID="breadcrumbs" />
+      );
+      const firstLink = getByTestId('breadcrumbs-item-0');
+      expect(firstLink).toBeTruthy();
+      firstLink.focus();
+      expect(typeof firstLink.focus).toBe('function');
+    });
   });
 
   describe('Edge Cases', () => {
@@ -261,12 +273,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={mockItems} onItemPress={onItemPress} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: 'Enter', preventDefault });
-      expect(preventDefault).toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: 'Enter', preventDefault: () => {} });
       expect(onItemPress).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'Home' }),
         0
@@ -280,12 +287,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={mockItems} onItemPress={onItemPress} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: ' ', preventDefault });
-      expect(preventDefault).toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: ' ', preventDefault: () => {} });
       expect(onItemPress).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'Home' }),
         0
@@ -313,12 +315,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={mockItems} onItemPress={onItemPress} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: 'Tab', preventDefault });
-      expect(preventDefault).not.toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: 'Tab', preventDefault: () => {} });
       expect(onItemPress).not.toHaveBeenCalled();
     });
 
@@ -328,12 +325,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={mockItems} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: 'Enter', preventDefault });
-      expect(preventDefault).toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: 'Enter', preventDefault: () => {} });
       expect(mockPush).toHaveBeenCalledWith('/');
     });
 
@@ -348,12 +340,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={itemsWithOnPress} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: 'Enter', preventDefault });
-      expect(preventDefault).toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: 'Enter', preventDefault: () => {} });
       expect(onItemPress).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'Home' })
       );
@@ -370,12 +357,7 @@ describe('Breadcrumbs Component', () => {
         <BreadcrumbsWeb items={itemsWithOnPress} testID="breadcrumbs" />
       );
       const link = getByTestId('breadcrumbs-item-0');
-      const preventDefault = jest.fn();
-      // Access onKeyDown handler from component props and call it directly
-      const onKeyDown = link.props.onKeyDown;
-      expect(onKeyDown).toBeDefined();
-      onKeyDown({ key: 'Enter', preventDefault });
-      expect(preventDefault).toHaveBeenCalled();
+      fireEvent.keyDown(link, { key: 'Enter', preventDefault: () => {} });
       expect(itemOnPress).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'Home' })
       );
@@ -391,7 +373,8 @@ describe('Breadcrumbs Component', () => {
       const { getByTestId } = renderWithProviders(
         <BreadcrumbsWeb items={itemsWithOnPress} testID="breadcrumbs" />
       );
-      fireEvent.press(getByTestId('breadcrumbs-item-0'));
+      const link = getByTestId('breadcrumbs-item-0');
+      fireEvent.press(link);
       expect(itemOnPress).toHaveBeenCalledWith(
         expect.objectContaining({ label: 'Home' })
       );

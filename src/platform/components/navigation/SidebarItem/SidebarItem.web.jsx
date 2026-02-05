@@ -23,25 +23,34 @@ const SidebarItemWeb = (props) => {
   const router = useRouter();
   const { path, label, icon, collapsed, active, onClick } = normalize(props);
   const glyph = getMenuIconGlyph(icon);
+  const testID = props.testID ?? (props.item?.id ? `sidebar-item-${props.item.id}` : undefined);
   const handleClick = (e) => {
     e?.preventDefault?.();
     if (onClick) onClick();
     else if (path) router.push(path);
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick(e);
+    }
+  };
   return (
     <Row
       href={path || '#'}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       aria-label={label}
       aria-current={active ? 'page' : undefined}
       title={collapsed ? label : undefined}
       $active={active}
       $collapsed={collapsed}
+      data-testid={testID}
     >
-      <IconWrapper aria-hidden>
+      <IconWrapper aria-hidden="true">
         <Icon glyph={glyph} size="sm" decorative />
       </IconWrapper>
-      <Label collapsed={collapsed} $active={active}>
+      <Label $collapsed={collapsed} $active={active}>
         {label}
       </Label>
     </Row>

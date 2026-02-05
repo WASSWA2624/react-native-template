@@ -52,6 +52,7 @@ const StyledTabItem = styled(Pressable).withConfig({
   min-height: ${({ theme }) => theme.spacing.xxl + theme.spacing.sm}px;
   min-width: ${({ theme }) => theme.spacing.xxl + theme.spacing.sm}px;
   position: relative;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
 `;
 
 const StyledTabItemIcon = styled(Text).withConfig({

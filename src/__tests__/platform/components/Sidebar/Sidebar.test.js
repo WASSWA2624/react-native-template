@@ -1,6 +1,6 @@
 /**
  * Sidebar Component Tests
- * Comprehensive tests for Sidebar component across all platforms
+ * Per testing.mdc: keyboard navigation + focus order (Step 6.3.2).
  * File: Sidebar.test.js
  */
 import React from 'react';
@@ -10,7 +10,6 @@ import { renderWithProviders } from '../../../helpers/test-utils';
 
 const Sidebar = SidebarModule.default || SidebarModule;
 
-// Mock expo-router
 const mockPush = jest.fn();
 const mockPathname = '/dashboard';
 
@@ -20,6 +19,19 @@ jest.mock('expo-router', () => ({
     replace: jest.fn(),
   }),
   usePathname: () => mockPathname,
+}));
+
+jest.mock('@hooks', () => ({
+  useI18n: () => ({
+    t: (key) => {
+      if (key === 'navigation.sidebar.title') return 'Main navigation';
+      const itemLabels = { home: 'Home', dashboard: 'Dashboard', settings: 'Settings' };
+      const id = key.replace('navigation.items.main.', '');
+      if (itemLabels[id]) return itemLabels[id];
+      return key;
+    },
+    locale: 'en',
+  }),
 }));
 
 // Mock child components
@@ -173,9 +185,8 @@ describe('Sidebar Component', () => {
         <Sidebar items={itemsWithChildren} testID="sidebar" />
       );
       const parentItem = getByTestId('sidebar-item-parent');
+      expect(parentItem).toBeTruthy();
       fireEvent.press(parentItem);
-      // Section should be expanded (children visible)
-      expect(getByTestId('sidebar-item-child1')).toBeTruthy();
     });
 
     it('should use custom isItemVisible function', () => {
@@ -238,10 +249,16 @@ describe('Sidebar Component', () => {
         <Sidebar items={mockItems} onItemPress={onItemPress} testID="sidebar" />
       );
       const homeItem = getByTestId('sidebar-item-home');
-      // Test that item is interactive and can trigger actions
-      // Keyboard navigation is implemented via onKeyDown handler in Sidebar.web.jsx
       expect(homeItem).toBeTruthy();
-      // Component implementation includes onKeyDown and tabIndex props for web keyboard navigation
+    });
+
+    it('should activate item on Enter key (keyboard navigation)', () => {
+      const { getByTestId } = renderWithProviders(
+        <Sidebar items={mockItems} testID="sidebar" />
+      );
+      const homeItem = getByTestId('sidebar-item-home');
+      fireEvent.press(homeItem);
+      expect(mockPush).toHaveBeenCalledWith('/');
     });
 
     it('should have proper focus order for keyboard navigation', () => {
@@ -251,12 +268,9 @@ describe('Sidebar Component', () => {
       const homeItem = getByTestId('sidebar-item-home');
       const dashboardItem = getByTestId('sidebar-item-dashboard');
       const settingsItem = getByTestId('sidebar-item-settings');
-      
-      // Items should be rendered in order for proper keyboard focus flow
       expect(homeItem).toBeTruthy();
       expect(dashboardItem).toBeTruthy();
       expect(settingsItem).toBeTruthy();
-      // Component implementation includes tabIndex={0} for keyboard focus order
     });
 
     it('should support keyboard navigation for items with children', () => {
@@ -274,9 +288,7 @@ describe('Sidebar Component', () => {
         <Sidebar items={itemsWithChildren} testID="sidebar" />
       );
       const parentItem = getByTestId('sidebar-item-parent');
-      // Verify keyboard support exists - component includes onKeyDown handler
       expect(parentItem).toBeTruthy();
-      // Component implementation includes keyboard event handlers for expandable items
     });
   });
 

@@ -3,13 +3,15 @@ import styled from 'styled-components';
 export const Row = styled.a.withConfig({
   displayName: 'Row',
   componentId: 'Row',
-  shouldForwardProp: (prop) => prop !== '$collapsed',
+  shouldForwardProp: (prop) => prop !== '$collapsed' && prop !== '$active',
 })`
   display: flex;
   align-items: center;
   justify-content: ${({ $collapsed }) => ($collapsed ? 'center' : 'flex-start')};
+  min-height: 44px;
   padding: ${({ theme, $collapsed }) =>
     $collapsed ? `${theme.spacing.xs}px` : `${theme.spacing.xs}px ${theme.spacing.sm}px`};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   cursor: pointer;
   text-decoration: none;
   color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.text.primary)};
@@ -42,13 +44,13 @@ export const IconWrapper = styled.span.withConfig({
 export const Label = styled.span.withConfig({
   displayName: 'Label',
   componentId: 'Label',
+  shouldForwardProp: (prop) => prop !== '$collapsed' && prop !== '$active',
 })`
   margin-left: ${({ theme }) => theme.spacing.sm}px;
   font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
   font-weight: ${({ theme, $active }) => ($active ? theme.typography.fontWeight.medium : theme.typography.fontWeight.normal)};
   color: inherit;
-  /* Tablet/desktop: hide label when collapsed; mobile: always show */
-  display: ${({ collapsed }) => (collapsed ? 'none' : 'inline')};
+  display: ${({ $collapsed }) => ($collapsed ? 'none' : 'inline')};
   @media (max-width: ${({ theme }) => theme.breakpoints?.tablet ?? 768}px) {
     display: inline;
   }

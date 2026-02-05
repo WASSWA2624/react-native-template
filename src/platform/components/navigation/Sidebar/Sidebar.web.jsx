@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { usePathname } from 'expo-router';
+import React, { useMemo, useCallback } from 'react';
+import { usePathname, useRouter } from 'expo-router';
 import { useI18n } from '@hooks';
 import {
   StyledSidebar,
@@ -23,6 +23,8 @@ const SidebarWeb = ({
   items = SIDE_MENU_ITEMS,
   itemsI18nPrefix = 'navigation.items.main',
   collapsed = false,
+  onItemPress,
+  isItemVisible,
   accessibilityLabel,
   testID,
   className,
@@ -31,7 +33,12 @@ const SidebarWeb = ({
 }) => {
   const { t } = useI18n();
   const pathname = usePathname();
-  const topLevel = useMemo(() => (Array.isArray(items) ? items : []), [items]);
+  const router = useRouter();
+  const topLevel = useMemo(() => (Array.isArray(items) ? items : []).filter((item) => (isItemVisible ? isItemVisible(item) : true)), [items, isItemVisible]);
+  const handleItemClick = useCallback((item, href) => {
+    if (onItemPress) onItemPress(item);
+    else if (href) router.push(href);
+  }, [onItemPress, router]);
 
   return (
     <StyledSidebar
@@ -47,8 +54,8 @@ const SidebarWeb = ({
         {topLevel.map((item) => {
           const href = item.href ?? item.path;
           const i18nKey = item.id ? `${itemsI18nPrefix}.${item.id}` : '';
-const translated = i18nKey ? t(i18nKey) : '';
-const label = (translated && translated !== i18nKey) ? translated : (item.label ?? '');
+          const translated = i18nKey ? t(i18nKey) : '';
+          const label = (translated && translated !== i18nKey) ? translated : (item.label ?? '');
           const active = isItemActive(pathname, href);
           return (
             <SidebarItem
@@ -56,6 +63,9 @@ const label = (translated && translated !== i18nKey) ? translated : (item.label 
               item={{ ...item, href, label, path: href }}
               collapsed={collapsed}
               active={active}
+              testID={testID ? `sidebar-item-${item.id}` : undefined}
+              onClick={() => handleItemClick(item, href)}
+              onPress={() => handleItemClick(item, href)}
             />
           );
         })}

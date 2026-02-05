@@ -10,9 +10,9 @@ export const Row = styled(TouchableOpacity).withConfig({
   padding: 12px 14px;
 `;
 
-export const Icon = styled(View).withConfig({
-  displayName: 'Icon',
-  componentId: 'Icon',
+export const IconBox = styled(View).withConfig({
+  displayName: 'IconBox',
+  componentId: 'SidebarItem_IconBox',
 })`
   width: 20px;
   height: 20px;
