@@ -1,6 +1,6 @@
 /**
  * Development-only: intercept console.log/warn/error on web and send to debug log receiver.
- * Persists to debug/web-debug.log when scripts/web-log-receiver.cjs is running.
+ * Persists to debug/web-debug.log when scripts/debug/web-log-receiver.mjs is running.
  * No-op on native and in production; safe to import from root layout.
  */
 const LOG_RECEIVER_URL =
