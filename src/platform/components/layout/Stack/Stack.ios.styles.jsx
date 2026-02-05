@@ -5,9 +5,11 @@
 
 import styled from 'styled-components/native';
 
+const LAYOUT_PROPS = ['direction', 'spacing', 'align', 'justify', 'wrap'];
 const StyledStack = styled.View.withConfig({
   displayName: 'StyledStack',
   componentId: 'StyledStack',
+  shouldForwardProp: (prop) => !LAYOUT_PROPS.includes(prop),
 })`
   flex-direction: ${({ direction }) => (direction === 'horizontal' ? 'row' : 'column')};
   align-items: ${({ align }) => align || 'flex-start'};

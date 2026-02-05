@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BUTTON iOS Styles
  * Styled-components for iOS platform
  * File: Button.ios.styles.jsx
@@ -58,7 +58,7 @@ const StyledButton = componentCache.StyledButton || (componentCache.StyledButton
     };
     return padding[size] || padding.medium;
   }}px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ variant, state, theme }) => {
     if (state === 'disabled') {
       return variant === 'text' ? 'transparent' : theme.colors.background.tertiary;

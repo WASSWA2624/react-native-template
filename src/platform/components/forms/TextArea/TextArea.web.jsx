@@ -79,7 +79,7 @@ const TextAreaWeb = ({
           {required && <StyledRequiredIndicator aria-hidden="true"> *</StyledRequiredIndicator>}
         </StyledLabel>
       )}
-      <StyledInputContainer validationState={finalValidationState} isFocused={isFocused}>
+      <StyledInputContainer $validationState={finalValidationState} $isFocused={isFocused}>
         <StyledInput
           id={inputId}
           value={internalValue}
@@ -102,7 +102,7 @@ const TextAreaWeb = ({
       </StyledInputContainer>
       {displayHelperText && (
         <StyledHelperText
-          validationState={finalValidationState}
+          $validationState={finalValidationState}
           id={helperId}
         >
           {displayHelperText}

@@ -5,6 +5,8 @@
  */
 
 import React from 'react';
+import { useI18n } from '@hooks';
+import { useCheckbox } from './useCheckbox';
 import {
   StyledCheckbox,
   StyledCheckboxInput,
@@ -42,6 +44,18 @@ const CheckboxWeb = ({
   name,
   ...rest
 }) => {
+  const { t } = useI18n();
+  const { computedAccessibilityLabel, handleChange } = useCheckbox({
+    checked,
+    onChange,
+    disabled,
+    label,
+    value,
+    accessibilityLabel,
+  });
+
+  const finalAccessibilityLabel = computedAccessibilityLabel || t('common.checkbox');
+
   const reactId = typeof React.useId === 'function' ? React.useId() : undefined;
   const inputId =
     id ||
@@ -49,21 +63,6 @@ const CheckboxWeb = ({
     (typeof name === 'string' && name.length > 0 ? `checkbox-${name}` : undefined) ||
     (typeof value === 'string' && value.length > 0 ? `checkbox-${value}` : undefined) ||
     (reactId ? `checkbox-${reactId}` : undefined);
-
-  const computedA11yLabel =
-    accessibilityLabel ||
-    label ||
-    (typeof value === 'string' ? value : undefined) ||
-    (typeof testID === 'string' ? testID : undefined);
-
-  const handleChange = (event) => {
-    if (disabled || !onChange) return;
-    const nextChecked =
-      event && event.target && typeof event.target.checked === 'boolean'
-        ? event.target.checked
-        : !checked;
-    onChange(nextChecked, value);
-  };
 
   return (
     <StyledCheckbox
@@ -78,7 +77,7 @@ const CheckboxWeb = ({
         type="checkbox"
         checked={checked}
         disabled={disabled}
-        aria-label={computedA11yLabel}
+        aria-label={finalAccessibilityLabel}
         aria-description={accessibilityHint}
         onChange={handleChange}
         data-testid={testID}

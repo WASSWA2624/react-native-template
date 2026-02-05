@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Divider Web Styles
  * Styled-components for Web platform
  * File: Divider.web.styles.jsx
@@ -12,17 +12,20 @@ const StyledDivider = styled.hr.withConfig({
 })`
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   border: none;
-  margin: 0;
-  ${({ orientation }) => {
+  flex-shrink: 0;
+  ${({ theme, orientation }) => {
+    const spacing = theme.spacing?.sm ?? 8;
     if (orientation === 'vertical') {
       return `
         width: 1px;
         height: 100%;
+        margin: 0 ${spacing}px;
       `;
     }
     return `
       width: 100%;
       height: 1px;
+      margin: ${spacing}px 0;
     `;
   }}
 `;

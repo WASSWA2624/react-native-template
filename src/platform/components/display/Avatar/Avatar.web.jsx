@@ -46,10 +46,11 @@ const AvatarWeb = ({
   return (
     <StyledAvatar
       size={resolvedSize}
+      $showInitials={!hasImage}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      testID={testID}
+      data-testid={testID}
       className={className}
       style={style}
       {...rest}
@@ -62,7 +63,11 @@ const AvatarWeb = ({
           data-testid={testID ? `${testID}-image` : undefined}
         />
       ) : (
-        <StyledAvatarText data-testid={testID ? `${testID}-initials` : undefined} size={resolvedSize}>
+        <StyledAvatarText
+          $showInitials
+          data-testid={testID ? `${testID}-initials` : undefined}
+          size={resolvedSize}
+        >
           {initials}
         </StyledAvatarText>
       )}

@@ -5,8 +5,8 @@
 
 export default {
   fontFamily: {
-    regular: 'System',
-    bold: 'System',
+    regular: "'Segoe UI', System, -apple-system, sans-serif",
+    bold: "'Segoe UI', System, -apple-system, sans-serif",
   },
   fontSize: {
     xs: 12,

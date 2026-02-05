@@ -1,4 +1,4 @@
-﻿/**
+/**
  * TextField Android Styles
  * Styled-components for Android platform
  * File: TextField.android.styles.jsx
@@ -38,7 +38,7 @@ const StyledInputContainer = styled.View.withConfig({
   flex-direction: row;
   align-items: center;
   border-width: 1px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-color: ${({ validationState, isFocused, theme }) => {
     if (validationState === 'error') return theme.colors.error;

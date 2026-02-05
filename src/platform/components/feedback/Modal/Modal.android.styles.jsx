@@ -1,9 +1,10 @@
-﻿/**
+/**
  * Modal Android Styles
  * Styled-components for Android platform
  * File: Modal.android.styles.jsx
  */
 
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
 const StyledBackdrop = styled.View.withConfig({
@@ -21,7 +22,7 @@ const StyledModalContainer = styled.View.withConfig({
   componentId: 'StyledModalContainer',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-radius: ${({ theme, size }) => (size === 'fullscreen' ? 0 : theme.radius.lg)}px;
+  border-radius: ${({ theme, size }) => (size === 'fullscreen' ? 0 : theme.radius.sm)}px;
   width: ${({ size }) => {
     const widths = {
       small: '80%',
@@ -45,8 +46,10 @@ const StyledCloseButton = styled.Pressable.withConfig({
   top: ${({ theme }) => theme.spacing.md}px;
   right: ${({ theme }) => theme.spacing.md}px;
   z-index: 10;
-  width: ${({ theme }) => theme.spacing.xl}px;
-  height: ${({ theme }) => theme.spacing.xl}px;
+  min-width: 44px;
+  min-height: 44px;
+  width: ${({ theme }) => theme.spacing.xxl}px;
+  height: ${({ theme }) => theme.spacing.xxl}px;
   align-items: center;
   justify-content: center;
   border-radius: ${({ theme }) => theme.radius.full}px;
@@ -79,6 +82,10 @@ const StyledScrollViewContent = styled.View.withConfig({
   padding: ${({ theme }) => theme.spacing.md}px;
 `;
 
-export { StyledBackdrop, StyledModalContainer, StyledCloseButton, StyledCloseButtonText, StyledKeyboardAvoidingView, StyledScrollViewContent };
+const scrollContentContainerStyle = StyleSheet.create({
+  content: { flexGrow: 1 },
+}).content;
+
+export { StyledBackdrop, StyledModalContainer, StyledCloseButton, StyledCloseButtonText, StyledKeyboardAvoidingView, StyledScrollViewContent, scrollContentContainerStyle };
 
 

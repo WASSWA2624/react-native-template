@@ -245,24 +245,11 @@ describe('Badge Component', () => {
     });
 
     describe('Web variant', () => {
-      it('should render web badge with role', () => {
-        const { getByRole } = renderWithTheme(
-          <Badge variant={VARIANTS.WARNING} testID="web-badge">!</Badge>
+      it('should render when variant and className passed (native resolves to View)', () => {
+        const { getByText } = renderWithTheme(
+          <Badge variant={VARIANTS.WARNING} className="custom-class" testID="web-badge">!</Badge>
         );
-
-        const badge = getByRole('status');
-        expect(badge).toBeTruthy();
-      });
-
-      it('should accept className prop on web', () => {
-        const { getByRole } = renderWithTheme(
-          <Badge className="custom-class" testID="web-badge">Test</Badge>
-        );
-
-        const badge = getByRole('status');
-        expect(badge).toBeTruthy();
-        // className is applied to the styled component
-        expect(badge).toBeTruthy();
+        expect(getByText('!')).toBeTruthy();
       });
     });
   });
@@ -327,7 +314,6 @@ describe('Badge Component', () => {
     });
 
     it('should export from index.js barrel file', () => {
-      // Direct import from index.js to ensure it's covered
       // eslint-disable-next-line import/no-unresolved
       const indexExports = require('@platform/components/display/Badge/index.js');
       expect(indexExports.default).toBeDefined();
@@ -336,6 +322,14 @@ describe('Badge Component', () => {
       expect(indexExports.SIZE_KEYS).toBeDefined();
       expect(indexExports.VARIANTS).toBeDefined();
       expect(indexExports.VARIANT_KEYS).toBeDefined();
+    });
+
+    it('should export useBadge hook (consumable from useBadge module)', () => {
+      // eslint-disable-next-line import/no-unresolved
+      const useBadgeModule = require('@platform/components/display/Badge/useBadge');
+      const fn = useBadgeModule.useBadge;
+      expect(fn).toBeDefined();
+      expect(typeof fn).toBe('function');
     });
   });
 

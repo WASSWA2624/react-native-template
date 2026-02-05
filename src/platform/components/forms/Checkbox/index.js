@@ -5,4 +5,5 @@
  */
 
 export { default } from './Checkbox';
+export { useCheckbox } from './useCheckbox';
 

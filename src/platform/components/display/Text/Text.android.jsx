@@ -13,7 +13,8 @@ import React from 'react';
 // 4. Styles (relative import - platform-specific)
 import { StyledText } from './Text.android.styles';
 
-// 5. Component-specific hook (relative import) - N/A for Text
+// 5. Component-specific hook (relative import)
+import { getAccessibilityRole } from './useText';
 
 // 6. Types and constants (relative import)
 import { VARIANTS } from './types';
@@ -43,19 +44,14 @@ const TextAndroid = ({
   style,
   ...rest
 }) => {
-  // Map variant to accessibility role if not provided
-  const getAccessibilityRole = () => {
-    if (accessibilityRole) return accessibilityRole;
-    if (variant === 'h1' || variant === 'h2' || variant === 'h3') return 'header';
-    return 'text';
-  };
+  const resolvedRole = getAccessibilityRole(variant, accessibilityRole);
 
   return (
     <StyledText
       variant={variant}
       color={color}
       align={align}
-      accessibilityRole={getAccessibilityRole()}
+      accessibilityRole={resolvedRole}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       testID={testID}

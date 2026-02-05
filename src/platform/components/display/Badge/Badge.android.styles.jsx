@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Badge Android Styles
  * Styled-components for Android platform
  * File: Badge.android.styles.jsx
@@ -8,6 +8,7 @@ import styled from 'styled-components/native';
 
 const StyledBadge = styled.View.withConfig({
   displayName: 'StyledBadge',
+  componentId: 'StyledBadge',
 })`
   align-items: center;
   justify-content: center;
@@ -41,6 +42,7 @@ const StyledBadge = styled.View.withConfig({
 
 const StyledBadgeText = styled.Text.withConfig({
   displayName: 'StyledBadgeText',
+  componentId: 'StyledBadgeText',
 })`
   font-family: ${({ theme }) => theme.typography.fontFamily.regular};
   font-size: ${({ size, theme }) => {

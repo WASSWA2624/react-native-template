@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Button Web Styles
  * Styled-components for Web platform
  * File: Button.web.styles.jsx
@@ -53,7 +53,7 @@ const StyledButton = styled.button.withConfig({
     };
     return padding[size] || padding.medium;
   }}px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   border-width: ${({ variant }) => (variant === 'outline' ? 1 : 0)}px;
   border-style: solid;
   background-color: ${({ variant, state, theme }) => {

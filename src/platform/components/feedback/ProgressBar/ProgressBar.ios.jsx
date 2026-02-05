@@ -15,15 +15,15 @@ import { useI18n } from '@hooks';
  * @param {number} props.value - Progress value (0-100)
  * @param {string} props.variant - ProgressBar variant (primary, success, warning, error)
  * @param {string} props.accessibilityLabel - Accessibility label
+ * @param {string} [props.accessibilityHint] - Accessibility hint
  * @param {string} props.testID - Test identifier
- * @param {Object} props.style - Additional styles
  */
 const ProgressBarIOS = ({
   value = 0,
   variant,
   accessibilityLabel,
+  accessibilityHint,
   testID,
-  style,
   ...rest
 }) => {
   const progressBar = useProgressBar({ value, variant });
@@ -35,8 +35,8 @@ const ProgressBarIOS = ({
       accessibilityRole="progressbar"
       accessibilityValue={{ min: 0, max: 100, now: progressBar.value }}
       accessibilityLabel={defaultAccessibilityLabel}
+      accessibilityHint={accessibilityHint}
       testID={testID}
-      style={style}
       {...rest}
     >
       <StyledProgressBarTrack>

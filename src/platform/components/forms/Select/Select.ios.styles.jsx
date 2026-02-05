@@ -92,7 +92,7 @@ const StyledOverlay = styled.Pressable.withConfig({
   componentId: 'StyledOverlay',
 })`
   flex: 1;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: ${({ theme }) => theme.colors.overlay?.backdrop || 'rgba(0, 0, 0, 0.45)'};
   justify-content: center;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.lg}px;

@@ -17,7 +17,7 @@ export { default as Button, useButton, VARIANTS as ButtonVariants, SIZES as Butt
 export { default as TextField } from './forms/TextField';
 export { default as TextArea } from './forms/TextArea';
 export { default as PasswordField, usePasswordField } from './forms/PasswordField';
-export { default as Checkbox } from './forms/Checkbox';
+export { default as Checkbox, useCheckbox } from './forms/Checkbox';
 export { default as Radio } from './forms/Radio';
 export { default as Switch } from './forms/Switch';
 export { default as Select } from './forms/Select';

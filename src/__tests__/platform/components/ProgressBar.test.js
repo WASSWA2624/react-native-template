@@ -38,27 +38,32 @@ const renderWithTheme = (component) => {
   return render(<ThemeProvider theme={lightTheme}>{component}</ThemeProvider>);
 };
 
+// Platform-agnostic: web uses aria-valuenow, native uses accessibilityValue.now
+const getProgressValue = (node) => node.props['aria-valuenow'] ?? node.props.accessibilityValue?.now;
+const getProgressRole = (node) => node.props.role ?? node.props.accessibilityRole;
+const getTestID = (node) => node.props['data-testid'] ?? node.props.testID;
+
 describe('ProgressBar Component', () => {
   describe('Value', () => {
     it('should render with 0% by default', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 0%');
       expect(progressBar).toBeTruthy();
-      expect(progressBar.props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(progressBar)).toBe(0);
     });
 
     it('should render with specified value', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={50} testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 50%');
-      expect(progressBar.props['aria-valuenow']).toBe(50);
+      expect(getProgressValue(progressBar)).toBe(50);
     });
 
     it('should clamp value to 0-100 range', () => {
       const { getByLabelText: getByLabelTextNegative } = renderWithTheme(<ProgressBar value={-10} testID="progressbar" />);
-      expect(getByLabelTextNegative('Progress: 0%').props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(getByLabelTextNegative('Progress: 0%'))).toBe(0);
 
       const { getByLabelText: getByLabelTextOver } = renderWithTheme(<ProgressBar value={150} testID="progressbar" />);
-      expect(getByLabelTextOver('Progress: 100%').props['aria-valuenow']).toBe(100);
+      expect(getProgressValue(getByLabelTextOver('Progress: 100%'))).toBe(100);
     });
   });
 
@@ -94,15 +99,17 @@ describe('ProgressBar Component', () => {
     it('should have progressbar role', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={50} testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 50%');
-      expect(progressBar.props.role).toBe('progressbar');
+      expect(getProgressRole(progressBar)).toBe('progressbar');
     });
 
     it('should have correct accessibility value range', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={75} testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 75%');
-      expect(progressBar.props['aria-valuemin']).toBe(0);
-      expect(progressBar.props['aria-valuemax']).toBe(100);
-      expect(progressBar.props['aria-valuenow']).toBe(75);
+      const min = progressBar.props['aria-valuemin'] ?? progressBar.props.accessibilityValue?.min;
+      const max = progressBar.props['aria-valuemax'] ?? progressBar.props.accessibilityValue?.max;
+      expect(min).toBe(0);
+      expect(max).toBe(100);
+      expect(getProgressValue(progressBar)).toBe(75);
     });
 
     it('should use custom accessibility label', () => {
@@ -115,6 +122,22 @@ describe('ProgressBar Component', () => {
     it('should use default accessibility label when not provided', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={42} />);
       expect(getByLabelText('Progress: 42%')).toBeTruthy();
+    });
+
+    it('should pass accessibilityHint on native', () => {
+      const { getByLabelText } = renderWithTheme(
+        <ProgressBarAndroid value={50} accessibilityHint="Upload in progress" testID="progressbar" />
+      );
+      const progressBar = getByLabelText('Progress: 50%');
+      expect(progressBar.props.accessibilityHint).toBe('Upload in progress');
+    });
+
+    it('should pass accessibilityHint as title on web', () => {
+      const { getByLabelText } = renderWithTheme(
+        <ProgressBarWeb value={50} accessibilityHint="Upload in progress" testID="progressbar" />
+      );
+      const progressBar = getByLabelText('Progress: 50%');
+      expect(progressBar.props.title).toBe('Upload in progress');
     });
 
     it('should use i18n translation for default accessibility label', () => {
@@ -130,8 +153,7 @@ describe('ProgressBar Component', () => {
       );
       const progressBar = getByLabelText('Progress: 50%');
       expect(progressBar).toBeTruthy();
-      // On web, testID becomes data-testid
-      expect(progressBar.props['data-testid']).toBe('test-progressbar');
+      expect(getTestID(progressBar)).toBe('test-progressbar');
     });
   });
 
@@ -271,26 +293,26 @@ describe('ProgressBar Component', () => {
     it('should handle non-numeric value', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value="invalid" testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 0%');
-      expect(progressBar.props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(progressBar)).toBe(0);
     });
 
     it('should handle null value', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={null} testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 0%');
-      expect(progressBar.props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(progressBar)).toBe(0);
     });
 
     it('should handle undefined value', () => {
       const { getByLabelText } = renderWithTheme(<ProgressBar value={undefined} testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 0%');
-      expect(progressBar.props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(progressBar)).toBe(0);
     });
 
     it('should handle missing value prop (defaults to 0)', () => {
       // Test default parameter branch - when value prop is completely omitted
       const { getByLabelText } = renderWithTheme(<ProgressBar testID="progressbar" />);
       const progressBar = getByLabelText('Progress: 0%');
-      expect(progressBar.props['aria-valuenow']).toBe(0);
+      expect(getProgressValue(progressBar)).toBe(0);
     });
 
     it('should handle useProgressBar hook with completely omitted value parameter', () => {

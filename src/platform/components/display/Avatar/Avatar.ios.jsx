@@ -40,6 +40,7 @@ const AvatarIOS = ({
   return (
     <StyledAvatar
       size={resolvedSize}
+      $showInitials={!hasImage}
       accessibilityRole="image"
       accessibilityLabel={label}
       accessibilityElementsHidden={!label}
@@ -57,7 +58,11 @@ const AvatarIOS = ({
           testID={testID ? `${testID}-image` : undefined}
         />
       ) : (
-        <StyledAvatarText size={resolvedSize} testID={testID ? `${testID}-initials` : undefined}>
+        <StyledAvatarText
+          $showInitials
+          size={resolvedSize}
+          testID={testID ? `${testID}-initials` : undefined}
+        >
           {initials}
         </StyledAvatarText>
       )}

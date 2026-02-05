@@ -19,16 +19,15 @@ const renderWithTheme = (component) => {
 describe('Divider Component', () => {
   describe('Platform-agnostic tests (via index)', () => {
     it('should render default export from index', () => {
-      // Test that index.js exports the web component as default
-      const { UNSAFE_getByType } = renderWithTheme(<Divider accessibilityLabel="Divider" />);
-      const divider = UNSAFE_getByType(DividerWeb);
-      expect(divider).toBeTruthy();
+      const { getByTestId } = renderWithTheme(
+        <Divider testID="divider-default" accessibilityLabel="Divider" />
+      );
+      expect(getByTestId('divider-default')).toBeTruthy();
     });
 
     it('should have separator accessibility role', () => {
       const { getByLabelText } = renderWithTheme(<Divider accessibilityLabel="Divider" />);
       const divider = getByLabelText('Divider');
-      // Component has separator role (verified via component implementation)
       expect(divider).toBeTruthy();
     });
 
@@ -40,19 +39,25 @@ describe('Divider Component', () => {
     });
 
     it('should default to horizontal orientation', () => {
-      const { UNSAFE_getByType } = renderWithTheme(<Divider accessibilityLabel="Divider" />);
-      const divider = UNSAFE_getByType(DividerWeb);
-      // Component uses default horizontal orientation
+      const { getByTestId } = renderWithTheme(
+        <Divider testID="divider-h-default" accessibilityLabel="Divider" />
+      );
+      const divider = getByTestId('divider-h-default');
       expect(divider).toBeTruthy();
+      expect(divider.props.orientation).toBe(ORIENTATIONS.HORIZONTAL);
     });
 
     it('should support vertical orientation', () => {
-      const { UNSAFE_getByType } = renderWithTheme(
-        <Divider accessibilityLabel="Divider" orientation={ORIENTATIONS.VERTICAL} />
+      const { getByTestId } = renderWithTheme(
+        <Divider
+          testID="divider-v-default"
+          accessibilityLabel="Divider"
+          orientation={ORIENTATIONS.VERTICAL}
+        />
       );
-      const divider = UNSAFE_getByType(DividerWeb);
-      // Component accepts vertical orientation prop
+      const divider = getByTestId('divider-v-default');
       expect(divider).toBeTruthy();
+      expect(divider.props.orientation).toBe(ORIENTATIONS.VERTICAL);
     });
 
     it('should export ORIENTATIONS constant', () => {
@@ -245,39 +250,35 @@ describe('Divider Component', () => {
 
   describe('Edge cases and variants', () => {
     it('should handle undefined orientation gracefully', () => {
-      const { UNSAFE_getByType } = renderWithTheme(
-        <Divider accessibilityLabel="Divider" orientation={undefined} />
+      const { getByTestId } = renderWithTheme(
+        <Divider testID="divider-undefined" accessibilityLabel="Divider" orientation={undefined} />
       );
-      const divider = UNSAFE_getByType(DividerWeb);
-      // Component should render even with undefined orientation (defaults to horizontal)
+      const divider = getByTestId('divider-undefined');
       expect(divider).toBeTruthy();
+      expect(divider.props.orientation).toBe(ORIENTATIONS.HORIZONTAL);
     });
 
     it('should handle missing accessibility label', () => {
-      const { UNSAFE_getByType } = renderWithTheme(<Divider />);
-      const divider = UNSAFE_getByType(DividerWeb);
-      expect(divider).toBeTruthy();
-      // Component should still render without accessibility label
+      const { getByTestId } = renderWithTheme(<Divider testID="divider-no-label" />);
+      expect(getByTestId('divider-no-label')).toBeTruthy();
     });
 
     it('should handle empty string orientation', () => {
-      const { UNSAFE_getByType } = renderWithTheme(
-        <Divider accessibilityLabel="Divider" orientation="" />
+      const { getByTestId } = renderWithTheme(
+        <Divider testID="divider-empty-orient" accessibilityLabel="Divider" orientation="" />
       );
-      const divider = UNSAFE_getByType(DividerWeb);
-      expect(divider).toBeTruthy();
-      // Component should handle empty string
+      expect(getByTestId('divider-empty-orient')).toBeTruthy();
     });
   });
 
   describe('Index exports', () => {
     it('should export default component from index', () => {
-      // Test that the index.js default export works
       const DefaultDivider = require('@platform/components/layout/Divider').default;
       expect(DefaultDivider).toBeDefined();
-      const { UNSAFE_getByType } = renderWithTheme(<DefaultDivider accessibilityLabel="Index divider" />);
-      const divider = UNSAFE_getByType(DividerWeb);
-      expect(divider).toBeTruthy();
+      const { getByTestId } = renderWithTheme(
+        <DefaultDivider testID="index-divider" accessibilityLabel="Index divider" />
+      );
+      expect(getByTestId('index-divider')).toBeTruthy();
     });
 
     it('should export ORIENTATIONS from index', () => {

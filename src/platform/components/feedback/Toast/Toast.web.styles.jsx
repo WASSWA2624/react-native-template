@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Toast Web Styles
  * Styled-components for Web platform
  * File: Toast.web.styles.jsx
@@ -71,7 +71,7 @@ const StyledToast = styled.div.withConfig({
   padding-right: ${({ theme }) => theme.spacing.lg}px;
   padding-top: ${({ theme }) => theme.spacing.md}px;
   padding-bottom: ${({ theme }) => theme.spacing.md}px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ variant, theme }) => {
     const colors = {
       success: theme.colors.success,

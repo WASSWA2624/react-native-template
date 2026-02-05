@@ -9,6 +9,9 @@ import React from 'react';
 // 4. Styles (relative import - platform-specific)
 import { StyledText } from './Text.web.styles';
 
+// 5. Component-specific hook (relative import)
+import { getAccessibilityRole } from './useText';
+
 // 6. Types and constants (relative import)
 import { VARIANTS } from './types';
 
@@ -51,19 +54,15 @@ const TextWeb = ({
           ? 'h3'
           : 'span';
 
-  // Map RN-like roles to web roles (when provided/needed).
+  const resolvedRole = getAccessibilityRole(variant, accessibilityRole);
+  const hasExplicitRole = typeof accessibilityRole === 'string' && accessibilityRole.length > 0;
   const resolveRole = () => {
-    if (typeof accessibilityRole === 'string' && accessibilityRole.length > 0) {
-      if (accessibilityRole === 'header') return 'heading';
-      if (accessibilityRole === 'text') return undefined;
-      return accessibilityRole;
-    }
-    if (isHeading) return undefined; // use semantic heading tags
-    return undefined;
+    if (!hasExplicitRole) return undefined;
+    if (accessibilityRole === 'header') return 'heading';
+    if (accessibilityRole === 'text') return undefined;
+    return accessibilityRole;
   };
-
-  // For React Native testing compatibility, also pass accessibilityRole
-  const accessibilityRoleProp = accessibilityRole || (isHeading ? 'header' : 'text');
+  const accessibilityRoleProp = resolvedRole;
 
   return (
     <StyledText

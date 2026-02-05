@@ -513,6 +513,13 @@ describe('Image Component', () => {
       expect(Array.isArray(indexModule.RESIZE_MODE_KEYS)).toBe(true);
       expect(indexModule.RESIZE_MODE_KEYS.length).toBe(5);
     });
+
+    it('should export useImage hook from index.js', () => {
+      // eslint-disable-next-line global-require
+      const indexModule = require('../../../platform/components/display/Image/index');
+      expect(indexModule.useImage).toBeDefined();
+      expect(typeof indexModule.useImage).toBe('function');
+    });
   });
 });
 

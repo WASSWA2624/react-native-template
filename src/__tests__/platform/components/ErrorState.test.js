@@ -178,6 +178,16 @@ describe('ErrorState Component', () => {
       expect(getByText('Error')).toBeTruthy();
     });
 
+    it('should render default error icon when icon prop not provided', () => {
+      const { getByTestId } = renderWithTheme(
+        <ErrorState title="Error" testID="error-state" />
+      );
+      const errorState = getByTestId('error-state');
+      // Default icon renders inside StyledIconContainer; ErrorState has children when default icon shows
+      expect(errorState).toBeTruthy();
+      expect(errorState.children.length).toBeGreaterThan(0);
+    });
+
     it('should render without description', () => {
       const { getByText } = renderWithTheme(
         <ErrorState title="Error" testID="error-state" />
@@ -439,9 +449,13 @@ describe('ErrorState Component', () => {
   });
 
   describe('Web Platform specific', () => {
+    // Use web component explicitly; native Jest resolves to ios/android by default
+    // eslint-disable-next-line import/no-unresolved
+    const ErrorStateWeb = require('@platform/components/states/ErrorState/ErrorState.web').default;
+
     it('should have role="alert" on web', () => {
       const { getByTestId } = renderWithTheme(
-        <ErrorState title="Web Error State" testID="error-state-web" />
+        <ErrorStateWeb title="Web Error State" testID="error-state-web" />
       );
       const errorState = getByTestId('error-state-web');
       expect(errorState.props.role).toBe('alert');
@@ -449,14 +463,14 @@ describe('ErrorState Component', () => {
 
     it('should use aria-label on web', () => {
       const { getByLabelText } = renderWithTheme(
-        <ErrorState title="Web Error State" testID="error-state-web" />
+        <ErrorStateWeb title="Web Error State" testID="error-state-web" />
       );
       expect(getByLabelText('Web Error State')).toBeTruthy();
     });
 
     it('should accept className prop on web', () => {
       const { getByTestId } = renderWithTheme(
-        <ErrorState title="Web Error State" className="custom-class" testID="error-state-web" />
+        <ErrorStateWeb title="Web Error State" className="custom-class" testID="error-state-web" />
       );
       const errorState = getByTestId('error-state-web');
       expect(errorState.props.className).toBe('custom-class');

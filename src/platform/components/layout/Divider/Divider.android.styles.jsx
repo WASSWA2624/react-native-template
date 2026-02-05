@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Divider Android Styles
  * Styled-components for Android platform
  * File: Divider.android.styles.jsx
@@ -11,16 +11,20 @@ const StyledDivider = styled.View.withConfig({
   componentId: 'StyledDivider',
 })`
   background-color: ${({ theme }) => theme.colors.background.tertiary};
-  ${({ orientation }) => {
+  flex-shrink: 0;
+  ${({ theme, orientation }) => {
+    const spacing = theme.spacing?.sm ?? 8;
     if (orientation === 'vertical') {
       return `
         width: 1px;
         height: 100%;
+        margin-horizontal: ${spacing}px;
       `;
     }
     return `
       width: 100%;
       height: 1px;
+      margin-vertical: ${spacing}px;
     `;
   }}
 `;

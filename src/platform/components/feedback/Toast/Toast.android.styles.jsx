@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Toast Android Styles
  * Styled-components for Android platform
  * File: Toast.android.styles.jsx
@@ -26,7 +26,7 @@ const StyledToast = styled.View.withConfig({
   align-items: center;
   padding-horizontal: ${({ theme }) => theme.spacing.lg}px;
   padding-vertical: ${({ theme }) => theme.spacing.md}px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ variant, theme }) => {
     const colors = {
       success: theme.colors.success,

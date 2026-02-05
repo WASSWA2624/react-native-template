@@ -5,5 +5,6 @@
  */
 
 export { default } from './Stack';
-export * from './types';
+export { default as useStack } from './useStack';
+export { ALIGN, DIRECTIONS, JUSTIFY, SPACING } from './types';
 

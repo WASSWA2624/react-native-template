@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Snackbar Web Styles
  * Styled-components for Web platform
  * File: Snackbar.web.styles.jsx
@@ -33,7 +33,10 @@ const StyledSnackbar = styled.div.withConfig({
     };
     return colors[variant] || colors.info;
   }};
-  box-shadow: ${({ theme }) => theme.shadows?.md || '0 4px 12px rgba(0, 0, 0, 0.15)'};
+  box-shadow: ${({ theme }) =>
+    theme.shadows?.md
+      ? `${theme.shadows.md.shadowOffset.width}px ${theme.shadows.md.shadowOffset.height}px ${theme.shadows.md.shadowRadius}px rgba(0, 0, 0, ${theme.shadows.md.shadowOpacity})`
+      : 'none'};
   min-width: ${({ theme }) => theme.spacing.xxl * 4}px;
   max-width: ${({ theme }) => theme.spacing.xxl * 12}px;
   margin: 0 auto;

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ProgressBar iOS Styles
  * Styled-components for iOS platform
  * File: ProgressBar.ios.styles.jsx
@@ -18,7 +18,7 @@ const StyledProgressBarTrack = styled.View.withConfig({
   componentId: 'StyledProgressBarTrack',
 })`
   width: 100%;
-  height: ${({ theme }) => theme.spacing.xs * 2}px;
+  height: ${({ theme }) => theme.spacing.xs}px;
   border-radius: ${({ theme }) => theme.radius.full}px;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   overflow: hidden;

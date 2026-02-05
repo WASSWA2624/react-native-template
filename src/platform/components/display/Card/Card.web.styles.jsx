@@ -8,9 +8,10 @@ import styled from 'styled-components';
 
 const StyledCard = styled.article.withConfig({
   displayName: 'StyledCard',
+  componentId: 'StyledCard',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   overflow: hidden;
   ${({ variant, theme }) => {
     if (variant === 'elevated') {
@@ -30,6 +31,7 @@ const StyledCard = styled.article.withConfig({
 
 const StyledCardHeader = styled.div.withConfig({
   displayName: 'StyledCardHeader',
+  componentId: 'StyledCardHeader',
   shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
@@ -38,6 +40,7 @@ const StyledCardHeader = styled.div.withConfig({
 
 const StyledCardBody = styled.div.withConfig({
   displayName: 'StyledCardBody',
+  componentId: 'StyledCardBody',
   shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
@@ -55,6 +58,7 @@ const StyledCardBody = styled.div.withConfig({
 
 const StyledCardFooter = styled.div.withConfig({
   displayName: 'StyledCardFooter',
+  componentId: 'StyledCardFooter',
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
   border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};

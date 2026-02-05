@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Modal Web Styles
  * Styled-components for Web platform
  * File: Modal.web.styles.jsx
@@ -44,7 +44,7 @@ const StyledModalContainer = styled.div.withConfig({
   componentId: 'StyledModalContainer',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-radius: ${({ theme, size }) => (size === 'fullscreen' ? 0 : theme.radius.lg)}px;
+  border-radius: ${({ theme, size }) => (size === 'fullscreen' ? 0 : theme.radius.sm)}px;
   width: ${({ size }) => {
     const widths = {
       small: '400px',
@@ -89,8 +89,10 @@ const StyledCloseButton = styled.button.withConfig({
   top: ${({ theme }) => theme.spacing.md}px;
   right: ${({ theme }) => theme.spacing.md}px;
   z-index: 10;
-  width: ${({ theme }) => theme.spacing.xl}px;
-  height: ${({ theme }) => theme.spacing.xl}px;
+  min-width: 44px;
+  min-height: 44px;
+  width: ${({ theme }) => theme.spacing.xxl}px;
+  height: ${({ theme }) => theme.spacing.xxl}px;
   display: flex;
   align-items: center;
   justify-content: center;

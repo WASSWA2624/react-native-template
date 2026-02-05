@@ -27,6 +27,10 @@ const darkColors = {
   textPrimary: '#FFFFFF',
   textSecondary: '#EBEBF5',
   onPrimary: '#FFFFFF',
+  tooltip: {
+    background: 'rgba(255, 255, 255, 0.15)',
+    text: '#000000',
+  },
 };
 
 export default {

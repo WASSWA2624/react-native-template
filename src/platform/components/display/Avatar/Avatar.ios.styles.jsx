@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Avatar iOS Styles
  * Styled-components for iOS platform
  * File: Avatar.ios.styles.jsx
@@ -19,11 +19,13 @@ const getAvatarDimensionPx = (size, theme) => {
 
 const StyledAvatar = styled.View.withConfig({
   displayName: 'StyledAvatar',
+  componentId: 'StyledAvatar',
 })`
   align-items: center;
   justify-content: center;
   border-radius: ${({ theme }) => theme.radius.full}px;
-  background-color: ${({ theme }) => theme.colors.background.secondary};
+  background-color: ${({ $showInitials, theme }) =>
+    $showInitials ? theme.colors.primary : theme.colors.background.secondary};
   overflow: hidden;
   width: ${({ size, theme }) => getAvatarDimensionPx(size, theme)}px;
   height: ${({ size, theme }) => getAvatarDimensionPx(size, theme)}px;
@@ -31,6 +33,7 @@ const StyledAvatar = styled.View.withConfig({
 
 const StyledAvatarImage = styled.Image.withConfig({
   displayName: 'StyledAvatarImage',
+  componentId: 'StyledAvatarImage',
 })`
   width: 100%;
   height: 100%;
@@ -39,6 +42,7 @@ const StyledAvatarImage = styled.Image.withConfig({
 
 const StyledAvatarText = styled.Text.withConfig({
   displayName: 'StyledAvatarText',
+  componentId: 'StyledAvatarText',
 })`
   font-family: ${({ theme }) => theme.typography.fontFamily.bold};
   font-size: ${({ size, theme }) => {
@@ -51,7 +55,8 @@ const StyledAvatarText = styled.Text.withConfig({
     return sizes[size] || sizes.medium;
   }}px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.text.secondary};
+  color: ${({ $showInitials, theme }) =>
+    $showInitials ? theme.colors.onPrimary : theme.colors.text.secondary};
   text-align: center;
 `;
 

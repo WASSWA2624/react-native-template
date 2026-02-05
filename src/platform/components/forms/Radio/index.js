@@ -5,4 +5,6 @@
  */
 
 export { default } from './Radio';
+export { useRadio } from './useRadio';
+export { RADIO_DEFAULTS } from './types';
 

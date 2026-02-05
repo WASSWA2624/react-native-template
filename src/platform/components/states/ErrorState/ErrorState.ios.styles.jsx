@@ -14,6 +14,10 @@ const StyledErrorState = styled.View.withConfig({
   align-items: center;
   justify-content: center;
   padding: ${({ theme }) => theme.spacing.xl}px;
+  background-color: ${({ theme }) => theme.colors.status?.error?.background || theme.colors.background?.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
+  border-left-width: 4px;
+  border-left-color: ${({ theme }) => theme.colors.error || theme.colors.status?.error?.text};
 `;
 
 const StyledIconContainer = styled.View.withConfig({
@@ -28,7 +32,6 @@ const StyledIconContainer = styled.View.withConfig({
     };
     return margins[size] || margins.medium;
   }}px;
-  opacity: 0.5;
 `;
 
 const StyledTitle = styled.Text.withConfig({

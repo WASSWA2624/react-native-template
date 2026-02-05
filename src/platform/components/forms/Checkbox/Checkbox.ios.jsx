@@ -5,6 +5,8 @@
  */
 
 import React from 'react';
+import { useI18n } from '@hooks';
+import { useCheckbox } from './useCheckbox';
 import { StyledCheckbox, StyledCheckboxBox, StyledCheckboxCheck, StyledCheckboxLabel } from './Checkbox.ios.styles';
 
 /**
@@ -16,6 +18,7 @@ import { StyledCheckbox, StyledCheckboxBox, StyledCheckboxCheck, StyledCheckboxL
  * @param {string} props.label - Checkbox label
  * @param {string} props.value - Checkbox value
  * @param {string} props.accessibilityLabel - Accessibility label
+ * @param {string} props.accessibilityHint - Accessibility hint
  * @param {string} props.testID - Test identifier
  * @param {Object} props.style - Additional styles
  */
@@ -26,15 +29,22 @@ const CheckboxIOS = ({
   label,
   value,
   accessibilityLabel,
+  accessibilityHint,
   testID,
   style,
   ...rest
 }) => {
-  const handlePress = () => {
-    if (!disabled && onChange) {
-      onChange(!checked, value);
-    }
-  };
+  const { t } = useI18n();
+  const { computedAccessibilityLabel, handlePress } = useCheckbox({
+    checked,
+    onChange,
+    disabled,
+    label,
+    value,
+    accessibilityLabel,
+  });
+
+  const finalAccessibilityLabel = computedAccessibilityLabel || t('common.checkbox');
 
   return (
     <StyledCheckbox
@@ -42,7 +52,8 @@ const CheckboxIOS = ({
       disabled={disabled}
       accessibilityRole="checkbox"
       accessibilityState={{ checked, disabled }}
-      accessibilityLabel={accessibilityLabel || label}
+      accessibilityLabel={finalAccessibilityLabel}
+      accessibilityHint={accessibilityHint}
       testID={testID}
       style={style}
       {...rest}

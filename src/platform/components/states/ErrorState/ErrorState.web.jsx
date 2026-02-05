@@ -8,6 +8,7 @@ import React from 'react';
 import { StyledErrorState, StyledIconContainer, StyledTitle, StyledDescription, StyledActionContainer } from './ErrorState.web.styles';
 import { useErrorState } from './useErrorState';
 import { SIZES } from './types';
+import Icon, { SIZES as IconSizes, TONES } from '@platform/components/display/Icon';
 
 /**
  * ErrorState component for Web
@@ -35,6 +36,16 @@ const ErrorStateWeb = ({
   ...rest
 }) => {
   const errorState = useErrorState({ size });
+  const iconSizeMap = { small: IconSizes.SM, medium: IconSizes.MD, large: IconSizes.LG };
+  const defaultIcon = !icon && (
+    <Icon
+      glyph="alert-circle"
+      size={iconSizeMap[errorState.size] || IconSizes.MD}
+      tone={TONES.ERROR}
+      decorative
+    />
+  );
+  const iconToRender = icon || defaultIcon;
 
   return (
     <StyledErrorState
@@ -47,9 +58,9 @@ const ErrorStateWeb = ({
       style={style}
       {...rest}
     >
-      {icon && (
+      {iconToRender && (
         <StyledIconContainer size={errorState.size}>
-          {icon}
+          {iconToRender}
         </StyledIconContainer>
       )}
       {title && (

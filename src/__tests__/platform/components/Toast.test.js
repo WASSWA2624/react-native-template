@@ -346,12 +346,22 @@ describe('Toast Component', () => {
           <ToastWeb visible message="Web Toast" onDismiss={onDismiss} testID="toast-web" />
         );
         const toast = getByLabelText('Web Toast');
-        
-        // Note: Toast component doesn't handle keyboard events directly - keyboard dismiss (Escape key)
-        // would be handled by a Toast provider/manager at a higher level. The component accepts onDismiss
-        // which can be called when Escape is pressed by the provider.
         expect(toast).toBeTruthy();
         expect(typeof onDismiss).toBe('function');
+      });
+
+      it('should call onDismiss when Escape key is pressed (keyboard on web)', () => {
+        const onDismiss = jest.fn();
+        const { getByLabelText } = renderWithTheme(
+          <ToastWeb visible message="Web Toast" onDismiss={onDismiss} testID="toast-web" />
+        );
+        expect(getByLabelText('Web Toast')).toBeTruthy();
+        if (typeof document !== 'undefined') {
+          act(() => {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+          });
+          expect(onDismiss).toHaveBeenCalledTimes(1);
+        }
       });
 
       it('should render all variants on web', () => {

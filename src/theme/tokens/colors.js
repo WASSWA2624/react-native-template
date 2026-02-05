@@ -5,7 +5,7 @@
  */
 
 export default {
-  primary: '#007AFF',
+  primary: '#0078D4',
   onPrimary: '#FFFFFF',
   secondary: '#5856D6',
   success: '#34C759',
@@ -62,6 +62,11 @@ export default {
   },
   overlay: {
     backdrop: 'rgba(0, 0, 0, 0.5)',
+  },
+  /** Fluent-style tooltip: dark surface, light text */
+  tooltip: {
+    background: 'rgba(0, 0, 0, 0.85)',
+    text: '#FFFFFF',
   },
 };
 

@@ -78,6 +78,8 @@ const ImageIOS = ({
     </StyledErrorContainer>
   );
 
+  const showImage = !hasError && imageSource?.uri;
+
   return (
     <StyledContainer
       style={[
@@ -89,15 +91,17 @@ const ImageIOS = ({
       ]}
       testID={testID}
     >
-      <StyledImage
-        source={imageSource}
-        resizeMode={resizeMode}
-        onLoad={handleLoad}
-        onError={handleError}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityHint={accessibilityHint}
-        {...rest}
-      />
+      {showImage && (
+        <StyledImage
+          source={imageSource}
+          resizeMode={resizeMode}
+          onLoad={handleLoad}
+          onError={handleError}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={accessibilityHint}
+          {...rest}
+        />
+      )}
       {isLoading && (placeholder || defaultPlaceholder)}
       {hasError && !isLoading && (errorComponent || defaultError)}
     </StyledContainer>

@@ -9,6 +9,10 @@ import { ThemeProvider } from 'styled-components/native';
 import Checkbox from '@platform/components/forms/Checkbox';
 import lightTheme from '@theme/light.theme';
 
+jest.mock('@hooks', () => ({
+  useI18n: () => ({ t: (key) => key }),
+}));
+
 const renderWithTheme = (component) => {
   return render(<ThemeProvider theme={lightTheme}>{component}</ThemeProvider>);
 };
@@ -634,6 +638,20 @@ describe('Checkbox Component', () => {
       // Test that index.js exports correctly
       const CheckboxFromIndex = require('@platform/components/forms/Checkbox').default;
       expect(CheckboxFromIndex).toBeDefined();
+    });
+
+    it('should export useCheckbox from index', () => {
+      const { useCheckbox } = require('@platform/components/forms/Checkbox');
+      expect(typeof useCheckbox).toBe('function');
+    });
+
+    it('should accept accessibilityHint on Android', () => {
+      const CheckboxAndroid = require('@platform/components/forms/Checkbox/Checkbox.android').default;
+      const { getByRole } = renderWithTheme(
+        <CheckboxAndroid label="Hint test" accessibilityHint="Toggles the option" />
+      );
+      const checkbox = getByRole('checkbox');
+      expect(checkbox.props.accessibilityHint).toBe('Toggles the option');
     });
 
     it('should handle types.js export', () => {

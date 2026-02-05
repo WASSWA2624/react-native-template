@@ -4,7 +4,7 @@
  * File: Toast.web.jsx
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledToast, StyledToastText } from './Toast.web.styles';
 import { useI18n } from '@hooks';
 import { VARIANTS, POSITIONS } from './types';
@@ -35,6 +35,18 @@ const ToastWeb = ({
   ...rest
 }) => {
   const { t } = useI18n();
+
+  useEffect(() => {
+    if (!visible || !onDismiss || typeof document === 'undefined') return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onDismiss();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [visible, onDismiss]);
   // Determine if we should use message as label (only for non-empty strings and numbers)
   const canUseMessageAsLabel = (typeof message === 'string' && message !== '') || typeof message === 'number';
   const defaultAccessibilityLabel = accessibilityLabel || (canUseMessageAsLabel ? undefined : t('common.message'));
@@ -57,6 +69,7 @@ const ToastWeb = ({
       testID={testID}
       className={className}
       style={style}
+      title={onDismiss ? t('common.toastDismissHint') : undefined}
       {...rest}
     >
       <StyledToastText variant={variant}>{message}</StyledToastText>

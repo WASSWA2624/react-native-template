@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Skeleton Web Styles
  * Styled-components for Web platform
  * File: Skeleton.web.styles.jsx
@@ -10,7 +10,6 @@ const StyledSkeleton = styled.div.withConfig({
   displayName: 'StyledSkeleton',
   componentId: 'StyledSkeleton',
 })`
-  background-color: ${({ theme }) => theme.colors.background.secondary};
   border-radius: ${({ variant, theme }) => {
     if (variant === 'circular') {
       return theme.radius.full;
@@ -40,7 +39,6 @@ const StyledSkeleton = styled.div.withConfig({
   }};
   opacity: 0.6;
   margin-bottom: ${({ isLastLine, theme }) => (isLastLine ? 0 : `${theme.spacing.sm}px`)};
-  animation: shimmer 1.5s infinite;
   background: linear-gradient(
     90deg,
     ${({ theme }) => theme.colors.background.secondary} 0%,
@@ -48,6 +46,7 @@ const StyledSkeleton = styled.div.withConfig({
     ${({ theme }) => theme.colors.background.secondary} 100%
   );
   background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
 
   @keyframes shimmer {
     0% {
@@ -60,6 +59,8 @@ const StyledSkeleton = styled.div.withConfig({
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+    background: ${({ theme }) => theme.colors.background.secondary};
+    background-size: auto;
   }
 `;
 

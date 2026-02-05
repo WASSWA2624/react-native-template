@@ -40,7 +40,7 @@ const BadgeWeb = ({
       size={resolved.size}
       role="status"
       aria-label={resolved.accessibilityLabel}
-      testID={testID}
+      data-testid={testID}
       className={className}
     >
       <StyledBadgeText variant={resolved.variant} size={resolved.size}>

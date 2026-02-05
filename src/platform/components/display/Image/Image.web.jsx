@@ -112,6 +112,12 @@ const ImageWeb = ({
     ...domProps
   } = rest;
 
+  const imageStyle = {
+    objectFit: objectFitValue,
+    objectPosition: objectPositionValue,
+    ...(hasError && { visibility: 'hidden', position: 'absolute', width: 0, height: 0 }),
+  };
+
   return (
     <StyledContainer
       width={width}
@@ -120,21 +126,20 @@ const ImageWeb = ({
       className={className}
       data-testid={testID ? `${testID}-container` : undefined}
     >
-      <StyledImage
-        src={resolvedSrc}
-        style={{
-          objectFit: objectFitValue,
-          objectPosition: objectPositionValue,
-        }}
-        loading={lazy ? 'lazy' : 'eager'}
-        onLoad={handleLoad}
-        onError={handleError}
-        alt={accessibilityLabel || t('common.imageDefaultAlt')}
-        aria-label={accessibilityLabel}
-        title={accessibilityHint}
-        data-testid={testID}
-        {...domProps}
-      />
+      {resolvedSrc && (
+        <StyledImage
+          src={resolvedSrc}
+          style={imageStyle}
+          loading={lazy ? 'lazy' : 'eager'}
+          onLoad={handleLoad}
+          onError={handleError}
+          alt={accessibilityLabel || t('common.imageDefaultAlt')}
+          aria-label={accessibilityLabel}
+          title={accessibilityHint}
+          data-testid={testID}
+          {...domProps}
+        />
+      )}
       {isLoading && (placeholder || defaultPlaceholder)}
       {hasError && !isLoading && (errorComponent || defaultError)}
     </StyledContainer>

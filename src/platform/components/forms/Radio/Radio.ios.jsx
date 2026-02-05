@@ -19,6 +19,7 @@ import { StyledRadio, StyledRadioCircle, StyledRadioDot, StyledRadioLabel } from
  * @param {string} props.label - Radio label
  * @param {*} props.value - Radio value
  * @param {string} props.accessibilityLabel - Accessibility label
+ * @param {string} props.accessibilityHint - Accessibility hint
  * @param {string} props.testID - Test identifier
  */
 const RadioIOS = ({
@@ -29,6 +30,7 @@ const RadioIOS = ({
   label,
   value,
   accessibilityLabel,
+  accessibilityHint,
   testID,
   ...rest
 }) => {
@@ -51,6 +53,7 @@ const RadioIOS = ({
       accessibilityRole="radio"
       accessibilityState={{ selected, disabled }}
       accessibilityLabel={finalAccessibilityLabel}
+      accessibilityHint={accessibilityHint}
       testID={testID}
       {...rest}
     >

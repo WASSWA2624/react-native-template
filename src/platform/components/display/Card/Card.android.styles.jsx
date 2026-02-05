@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Card Android Styles
  * Styled-components for Android platform
  * File: Card.android.styles.jsx
@@ -8,9 +8,10 @@ import styled from 'styled-components/native';
 
 const StyledCard = styled.View.withConfig({
   displayName: 'StyledCard',
+  componentId: 'StyledCard',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   overflow: hidden;
   ${({ variant, theme }) => {
     if (variant === 'elevated') {
@@ -34,6 +35,7 @@ const StyledCard = styled.View.withConfig({
 
 const StyledCardHeader = styled.View.withConfig({
   displayName: 'StyledCardHeader',
+  componentId: 'StyledCardHeader',
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
   border-bottom-width: ${({ hasBody, hasFooter }) => (hasBody || hasFooter ? 1 : 0)}px;
@@ -42,6 +44,7 @@ const StyledCardHeader = styled.View.withConfig({
 
 const StyledCardBody = styled.View.withConfig({
   displayName: 'StyledCardBody',
+  componentId: 'StyledCardBody',
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
   ${({ hasHeader, hasFooter }) => {
@@ -58,6 +61,7 @@ const StyledCardBody = styled.View.withConfig({
 
 const StyledCardFooter = styled.View.withConfig({
   displayName: 'StyledCardFooter',
+  componentId: 'StyledCardFooter',
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
   border-top-width: 1px;

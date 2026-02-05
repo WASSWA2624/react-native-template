@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ProgressBar Web Styles
  * Styled-components for Web platform
  * File: ProgressBar.web.styles.jsx
@@ -18,7 +18,7 @@ const StyledProgressBarTrack = styled.div.withConfig({
   componentId: 'StyledProgressBarTrack',
 })`
   width: 100%;
-  height: ${({ theme }) => theme.spacing.xs * 2}px;
+  height: ${({ theme }) => theme.spacing.xs}px;
   border-radius: ${({ theme }) => theme.radius.full}px;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   overflow: hidden;

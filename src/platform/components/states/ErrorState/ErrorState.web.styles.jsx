@@ -16,6 +16,9 @@ const StyledErrorState = styled.div.withConfig({
   align-items: center;
   justify-content: center;
   padding: ${({ theme }) => theme.spacing.xl}px;
+  background-color: ${({ theme }) => theme.colors.status?.error?.background || theme.colors.background?.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
+  border-left: 4px solid ${({ theme }) => theme.colors.error || theme.colors.status?.error?.text};
 `;
 
 const StyledIconContainer = styled.div.withConfig({
@@ -30,10 +33,10 @@ const StyledIconContainer = styled.div.withConfig({
     };
     return margins[size] || margins.medium;
   }}px;
-  opacity: 0.5;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${({ theme }) => theme.colors.error || theme.colors.status?.error?.text};
 `;
 
 const StyledTitle = styled.h2.withConfig({

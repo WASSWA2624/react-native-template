@@ -211,6 +211,16 @@ describe('Radio Component', () => {
       const radio = getByRole('radio');
       expect(radio.props.accessibilityState.disabled).toBe(true);
     });
+
+    it('should use accessibilityHint when provided', () => {
+      // eslint-disable-next-line import/no-unresolved
+      const RadioAndroid = require('@platform/components/forms/Radio/Radio.android').default;
+      const { getByRole } = renderWithTheme(
+        <RadioAndroid label="Option" value="a" accessibilityHint="Selects option A" />
+      );
+      const radio = getByRole('radio');
+      expect(radio.props.accessibilityHint).toBe('Selects option A');
+    });
   });
 
   describe('Test ID', () => {
@@ -417,7 +427,34 @@ describe('Radio Component', () => {
         expect(radio.props.testID).toBe('web-radio');
         expect(radio.props.className).toBe('custom-class');
         expect(radio.props.accessibilityLabel).toBe('Custom A11y');
+        expect(radio.props.accessibilityHint).toBe(undefined);
         expect(radio.props.value).toBe('web-value');
+      });
+
+      it('should pass accessibilityHint on Web', () => {
+        // eslint-disable-next-line import/no-unresolved
+        const RadioWeb = require('@platform/components/forms/Radio/Radio.web').default;
+        const { ThemeProvider: WebThemeProvider } = require('styled-components');
+        const { Provider } = require('react-redux');
+        const { configureStore } = require('@reduxjs/toolkit');
+        const rootReducer = require('@store/rootReducer').default;
+        const store = configureStore({ reducer: rootReducer, preloadedState: { ui: { theme: 'light', locale: 'en' }, network: { isOnline: true }, auth: { user: null, isAuthenticated: false } } });
+
+        const { UNSAFE_getByType } = render(
+          <Provider store={store}>
+            <WebThemeProvider theme={lightTheme}>
+              <RadioWeb
+                label="Option"
+                value="a"
+                accessibilityHint="Selects this option"
+                testID="web-radio-hint"
+              />
+            </WebThemeProvider>
+          </Provider>
+        );
+
+        const radio = UNSAFE_getByType(RadioWeb);
+        expect(radio.props.accessibilityHint).toBe('Selects this option');
       });
 
       it('should handle all handleSelect code paths on Web', () => {
@@ -564,6 +601,18 @@ describe('Radio Component', () => {
       expect(types.RADIO_DEFAULTS).toBeDefined();
       expect(types.RADIO_DEFAULTS.selected).toBe(false);
       expect(types.RADIO_DEFAULTS.disabled).toBe(false);
+    });
+
+    it('should export useRadio from index', () => {
+      const { useRadio } = require('@platform/components/forms/Radio');
+      expect(typeof useRadio).toBe('function');
+    });
+
+    it('should export RADIO_DEFAULTS from index', () => {
+      const { RADIO_DEFAULTS } = require('@platform/components/forms/Radio');
+      expect(RADIO_DEFAULTS).toBeDefined();
+      expect(RADIO_DEFAULTS.selected).toBe(false);
+      expect(RADIO_DEFAULTS.disabled).toBe(false);
     });
 
     it('should handle null value', () => {

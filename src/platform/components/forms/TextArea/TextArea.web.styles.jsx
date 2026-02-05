@@ -29,28 +29,34 @@ const StyledLabel = styled.label.withConfig({
 const StyledInputContainer = styled.div.withConfig({
   displayName: 'StyledInputContainer',
   componentId: 'StyledInputContainer',
+  shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   position: relative;
   display: flex;
   flex-direction: column;
   border-width: 1px;
   border-style: solid;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ theme }) => theme.colors.background.primary};
-  border-color: ${({ validationState, isFocused, theme }) => {
-    if (validationState === 'error') return theme.colors.error;
-    if (validationState === 'success') return theme.colors.success;
-    if (isFocused) return theme.colors.primary;
+  border-color: ${({ $validationState, $isFocused, theme }) => {
+    if ($validationState === 'error') return theme.colors.error;
+    if ($validationState === 'success') return theme.colors.success;
+    if ($isFocused) return theme.colors.primary;
     return theme.colors.background.tertiary;
   }};
   padding: ${({ theme }) => theme.spacing.md}px;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus-within {
-    border-color: ${({ validationState, theme }) => {
-      if (validationState === 'error') return theme.colors.error;
-      if (validationState === 'success') return theme.colors.success;
+    border-color: ${({ $validationState, theme }) => {
+      if ($validationState === 'error') return theme.colors.error;
+      if ($validationState === 'success') return theme.colors.success;
       return theme.colors.primary;
+    }};
+    box-shadow: 0 0 0 3px ${({ $validationState, theme }) => {
+      if ($validationState === 'error') return `${theme.colors.error}15`;
+      if ($validationState === 'success') return `${theme.colors.success}15`;
+      return `${theme.colors.primary}15`;
     }};
     outline: none;
   }
@@ -83,12 +89,13 @@ const StyledInput = styled.textarea.withConfig({
 const StyledHelperText = styled.span.withConfig({
   displayName: 'StyledHelperText',
   componentId: 'StyledHelperText',
+  shouldForwardProp: (prop) => !prop.startsWith('$'),
 })`
   font-family: ${({ theme }) => theme.typography.fontFamily.regular};
   font-size: ${({ theme }) => theme.typography.fontSize.xs}px;
-  color: ${({ validationState, theme }) => {
-    if (validationState === 'error') return theme.colors.error;
-    if (validationState === 'success') return theme.colors.success;
+  color: ${({ $validationState, theme }) => {
+    if ($validationState === 'error') return theme.colors.error;
+    if ($validationState === 'success') return theme.colors.success;
     return theme.colors.text.secondary;
   }};
   margin-top: ${({ theme }) => theme.spacing.xs}px;

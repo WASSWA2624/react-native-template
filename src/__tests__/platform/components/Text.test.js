@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { ThemeProvider as NativeThemeProvider } from 'styled-components/native';
 import { ThemeProvider as WebThemeProvider } from 'styled-components';
-import Text, { VARIANTS } from '@platform/components/display/Text';
+import Text, { VARIANTS, useText, getAccessibilityRole } from '@platform/components/display/Text';
 import TextAndroid from '@platform/components/display/Text/Text.android';
 import TextIOS from '@platform/components/display/Text/Text.ios';
 import TextWeb from '@platform/components/display/Text/Text.web';
@@ -394,6 +394,36 @@ describe('Text Component', () => {
     });
   });
 
+  describe('useText hook and getAccessibilityRole', () => {
+    it('should return header for h1/h2/h3 when no explicit role', () => {
+      expect(getAccessibilityRole('h1')).toBe('header');
+      expect(getAccessibilityRole('h2')).toBe('header');
+      expect(getAccessibilityRole('h3')).toBe('header');
+    });
+    it('should return text for body/caption/label when no explicit role', () => {
+      expect(getAccessibilityRole('body')).toBe('text');
+      expect(getAccessibilityRole('caption')).toBe('text');
+      expect(getAccessibilityRole('label')).toBe('text');
+    });
+    it('should return explicit accessibilityRole when provided', () => {
+      expect(getAccessibilityRole('h1', 'button')).toBe('button');
+      expect(getAccessibilityRole('body', 'heading')).toBe('heading');
+    });
+    it('should return text for undefined variant', () => {
+      expect(getAccessibilityRole(undefined)).toBe('text');
+    });
+    it('should return text for empty string role', () => {
+      expect(getAccessibilityRole('body', '')).toBe('text');
+    });
+    it('useText should return resolved accessibilityRole', () => {
+      expect(useText({ variant: 'h1' }).accessibilityRole).toBe('header');
+      expect(useText({ variant: 'body' }).accessibilityRole).toBe('text');
+      expect(useText({ variant: 'body', accessibilityRole: 'button' }).accessibilityRole).toBe('button');
+      expect(useText({}).accessibilityRole).toBe('text');
+      expect(useText().accessibilityRole).toBe('text');
+    });
+  });
+
   describe('Platform-Specific Implementations', () => {
     describe('Android Implementation', () => {
       it('should render Android Text component', () => {
@@ -651,23 +681,16 @@ describe('Text Component', () => {
       expect(typeof Text).toBe('function');
     });
 
-    it('should export VARIANTS from index.js', () => {
-      // Import index.js to ensure it's executed
+    it('should export VARIANTS, useText, and getAccessibilityRole from index.js', () => {
       const indexModule = require('@platform/components/display/Text/index.js');
       expect(indexModule.VARIANTS).toBeDefined();
       expect(indexModule.VARIANTS.H1).toBe('h1');
-      expect(indexModule.VARIANTS.H2).toBe('h2');
-      expect(indexModule.VARIANTS.H3).toBe('h3');
-      expect(indexModule.VARIANTS.BODY).toBe('body');
-      expect(indexModule.VARIANTS.CAPTION).toBe('caption');
-      expect(indexModule.VARIANTS.LABEL).toBe('label');
-      expect(VARIANTS).toBeDefined();
-      expect(VARIANTS.H1).toBe('h1');
-      expect(VARIANTS.H2).toBe('h2');
-      expect(VARIANTS.H3).toBe('h3');
-      expect(VARIANTS.BODY).toBe('body');
-      expect(VARIANTS.CAPTION).toBe('caption');
-      expect(VARIANTS.LABEL).toBe('label');
+      expect(indexModule.useText).toBeDefined();
+      expect(indexModule.getAccessibilityRole).toBeDefined();
+      expect(typeof indexModule.getAccessibilityRole).toBe('function');
+      expect(typeof indexModule.useText).toBe('function');
+      expect(getAccessibilityRole('h1')).toBe('header');
+      expect(useText({ variant: 'body' }).accessibilityRole).toBe('text');
     });
 
     it('should import and use default export from index.js', () => {

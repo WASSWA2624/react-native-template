@@ -4,7 +4,7 @@
  * File: Select.web.jsx
  */
 // 1. External dependencies
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 
 // 2. Platform components (from barrel file) - N/A for Select
 
@@ -102,6 +102,8 @@ const SelectWeb = ({
   const rootRef = useRef(null);
   const menuRef = useRef(null);
   const [focusedIndex, setFocusedIndex] = React.useState(-1);
+  const helperId = useId();
+  const resolvedHelperId = testID ? `${testID}-helper` : helperId;
 
   // Close on outside click
   useEffect(() => {
@@ -224,7 +226,7 @@ const SelectWeb = ({
         $compact={compact}
         role="combobox"
         aria-label={accessibilityLabel || label || defaultPlaceholder}
-        aria-describedby={displayHelperText ? `${testID || 'select'}-helper` : undefined}
+        aria-describedby={displayHelperText ? resolvedHelperId : undefined}
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-invalid={finalValidationState === 'error'}
@@ -269,7 +271,7 @@ const SelectWeb = ({
       {displayHelperText ? (
         <StyledHelperText
           $validationState={finalValidationState}
-          id={testID ? `${testID}-helper` : undefined}
+          id={resolvedHelperId}
         >
           {displayHelperText}
         </StyledHelperText>

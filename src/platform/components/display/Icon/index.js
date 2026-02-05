@@ -5,5 +5,6 @@
  */
 
 export { default } from './Icon';
+export { default as useIcon } from './useIcon';
 export { SIZES, TONES } from './types';
 

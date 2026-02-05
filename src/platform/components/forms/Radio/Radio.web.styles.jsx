@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Radio Web Styles
  * Styled-components for Web platform
  * File: Radio.web.styles.jsx
@@ -19,9 +19,10 @@ const StyledRadio = styled.button.withConfig({
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   gap: ${({ theme }) => theme.spacing.sm}px;
+  user-select: none;
 
   &:focus-visible {
-    outline: ${({ theme }) => Math.round(theme.spacing.xs / 2)}px solid ${({ theme }) => theme.colors.primary};
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 2px;
     border-radius: ${({ theme }) => theme.radius.sm}px;
   }

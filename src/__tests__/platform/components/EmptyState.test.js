@@ -447,6 +447,8 @@ describe('EmptyState Component', () => {
       // eslint-disable-next-line import/no-unresolved
       const IndexExports = require('@platform/components/states/EmptyState/index.js');
       expect(IndexExports.default).toBeDefined();
+      expect(IndexExports.useEmptyState).toBeDefined();
+      expect(typeof IndexExports.useEmptyState).toBe('function');
       expect(IndexExports.SIZES).toBeDefined();
       expect(IndexExports.SIZES.SMALL).toBe('small');
       expect(IndexExports.SIZES.MEDIUM).toBe('medium');
@@ -455,9 +457,12 @@ describe('EmptyState Component', () => {
   });
 
   describe('Web Platform specific', () => {
+    // eslint-disable-next-line import/no-unresolved
+    const EmptyStateWeb = require('@platform/components/states/EmptyState/EmptyState.web').default;
+
     it('should have role="status" on web', () => {
       const { getByTestId } = renderWithTheme(
-        <EmptyState title="Web Empty State" testID="empty-state-web" />
+        <EmptyStateWeb title="Web Empty State" testID="empty-state-web" />
       );
       const emptyState = getByTestId('empty-state-web');
       expect(emptyState.props.role).toBe('status');
@@ -465,14 +470,14 @@ describe('EmptyState Component', () => {
 
     it('should use aria-label on web', () => {
       const { getByLabelText } = renderWithTheme(
-        <EmptyState title="Web Empty State" testID="empty-state-web" />
+        <EmptyStateWeb title="Web Empty State" testID="empty-state-web" />
       );
       expect(getByLabelText('Web Empty State')).toBeTruthy();
     });
 
     it('should accept className prop on web', () => {
       const { getByTestId } = renderWithTheme(
-        <EmptyState title="Web Empty State" className="custom-class" testID="empty-state-web" />
+        <EmptyStateWeb title="Web Empty State" className="custom-class" testID="empty-state-web" />
       );
       const emptyState = getByTestId('empty-state-web');
       expect(emptyState.props.className).toBe('custom-class');

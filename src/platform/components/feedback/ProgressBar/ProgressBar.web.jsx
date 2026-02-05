@@ -15,17 +15,17 @@ import { useI18n } from '@hooks';
  * @param {number} props.value - Progress value (0-100)
  * @param {string} props.variant - ProgressBar variant (primary, success, warning, error)
  * @param {string} props.accessibilityLabel - Accessibility label
+ * @param {string} [props.accessibilityHint] - Accessibility hint
  * @param {string} props.testID - Test identifier
  * @param {string} props.className - Additional CSS class
- * @param {Object} props.style - Additional styles
  */
 const ProgressBarWeb = ({
   value = 0,
   variant,
   accessibilityLabel,
+  accessibilityHint,
   testID,
   className,
-  style,
   ...rest
 }) => {
   const progressBar = useProgressBar({ value, variant });
@@ -41,7 +41,7 @@ const ProgressBarWeb = ({
       aria-label={defaultAccessibilityLabel}
       data-testid={testID}
       className={className}
-      style={style}
+      title={accessibilityHint}
       {...rest}
     >
       <StyledProgressBarTrack>

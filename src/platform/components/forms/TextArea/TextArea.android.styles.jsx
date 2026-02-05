@@ -30,7 +30,7 @@ const StyledInputContainer = styled.View.withConfig({
   componentId: 'StyledInputContainer',
 })`
   border-width: 1px;
-  border-radius: ${({ theme }) => theme.radius.md}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-color: ${({ validationState, isFocused, theme }) => {
     if (validationState === 'error') return theme.colors.error;

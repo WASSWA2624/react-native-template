@@ -19,6 +19,7 @@ import { StyledRadio, StyledRadioCircle, StyledRadioDot, StyledRadioLabel } from
  * @param {string} props.label - Radio label
  * @param {*} props.value - Radio value
  * @param {string} props.accessibilityLabel - Accessibility label
+ * @param {string} props.accessibilityHint - Accessibility hint
  * @param {string} props.testID - Test identifier
  * @param {string} props.className - Additional CSS class
  */
@@ -30,6 +31,7 @@ const RadioWeb = ({
   label,
   value,
   accessibilityLabel,
+  accessibilityHint,
   testID,
   className,
   ...rest
@@ -56,6 +58,7 @@ const RadioWeb = ({
       disabled={disabled}
       className={className}
       aria-label={finalAccessibilityLabel}
+      aria-description={accessibilityHint || undefined}
       data-testid={testID}
       {...rest}
     >

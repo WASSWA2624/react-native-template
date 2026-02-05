@@ -155,8 +155,8 @@ describe('Chip Component', () => {
         <Chip removable onRemove={mockOnRemove} testID="chip">Chip</Chip>
       );
       // Find the remove button by aria-label or data-testid
-      const removeButton = UNSAFE_root.findByProps({ 'aria-label': 'Remove' }) || 
-                          UNSAFE_root.findByProps({ accessibilityLabel: 'Remove' }) ||
+      const removeButton = UNSAFE_root.findByProps({ accessibilityLabel: 'Remove' }) ||
+                          UNSAFE_root.findByProps({ 'aria-label': 'Remove' }) ||
                           UNSAFE_root.findByProps({ 'data-testid': 'chip-remove' });
       expect(removeButton).toBeTruthy();
       // Trigger the onClick/onPress handler
@@ -172,9 +172,9 @@ describe('Chip Component', () => {
       const { UNSAFE_root } = renderWithProviders(
         <Chip removable onRemove={mockOnRemove} onPress={mockOnPress} testID="chip">Chip</Chip>
       );
-      // Find the remove button by aria-label or data-testid
-      const removeButton = UNSAFE_root.findByProps({ 'aria-label': 'Remove' }) || 
-                          UNSAFE_root.findByProps({ accessibilityLabel: 'Remove' }) ||
+      // Find the remove button (native: accessibilityLabel, web: aria-label)
+      const removeButton = UNSAFE_root.findByProps({ accessibilityLabel: 'Remove' }) ||
+                          UNSAFE_root.findByProps({ 'aria-label': 'Remove' }) ||
                           UNSAFE_root.findByProps({ 'data-testid': 'chip-remove' });
       expect(removeButton).toBeTruthy();
       // Trigger the onClick/onPress handler with a mock event
@@ -217,9 +217,9 @@ describe('Chip Component', () => {
       const { UNSAFE_root } = renderWithProviders(
         <Chip onPress={mockOnPress}>Chip</Chip>
       );
-      // Find the chip container element
-      const chipContainer = UNSAFE_root.findByProps({ 'aria-label': 'Chip' }) || 
-                           UNSAFE_root.findByProps({ accessibilityLabel: 'Chip' });
+      // Find the chip container (native: accessibilityLabel, web: aria-label)
+      const chipContainer = UNSAFE_root.findByProps({ accessibilityLabel: 'Chip' }) ||
+                           UNSAFE_root.findByProps({ 'aria-label': 'Chip' });
       expect(chipContainer).toBeTruthy();
       // Check role/accessibilityRole prop
       const role = chipContainer.props?.role || chipContainer.props?.accessibilityRole;
@@ -230,9 +230,9 @@ describe('Chip Component', () => {
       const { UNSAFE_root } = renderWithProviders(
         <Chip>Chip</Chip>
       );
-      // Find the chip container element
-      const chipContainer = UNSAFE_root.findByProps({ 'aria-label': 'Chip' }) || 
-                           UNSAFE_root.findByProps({ accessibilityLabel: 'Chip' });
+      // Find the chip container (native: accessibilityLabel, web: aria-label)
+      const chipContainer = UNSAFE_root.findByProps({ accessibilityLabel: 'Chip' }) ||
+                           UNSAFE_root.findByProps({ 'aria-label': 'Chip' });
       expect(chipContainer).toBeTruthy();
       // Check role/accessibilityRole prop
       const role = chipContainer.props?.role || chipContainer.props?.accessibilityRole;
@@ -491,9 +491,9 @@ describe('Chip Component', () => {
       const { UNSAFE_root } = renderWithProviders(
         <Chip onPress={mockOnPress} testID="interactive-chip">Interactive</Chip>
       );
-      // Find the chip container element
-      const chipContainer = UNSAFE_root.findByProps({ 'aria-label': 'Interactive' }) || 
-                           UNSAFE_root.findByProps({ accessibilityLabel: 'Interactive' });
+      // Find the chip container (native: accessibilityLabel, web: aria-label)
+      const chipContainer = UNSAFE_root.findByProps({ accessibilityLabel: 'Interactive' }) ||
+                           UNSAFE_root.findByProps({ 'aria-label': 'Interactive' });
       expect(chipContainer).toBeTruthy();
       // Check role/accessibilityRole prop
       const role = chipContainer.props?.role || chipContainer.props?.accessibilityRole;

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Image Web Styles
  * Styled-components for Web platform
  * File: Image.web.styles.jsx
@@ -12,6 +12,7 @@ const StyledContainer = styled.div.withConfig({
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   display: inline-block;
   ${({ width }) =>
     width !== undefined && width !== null
@@ -42,6 +43,7 @@ const StyledPlaceholder = styled.div.withConfig({
   right: 0;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,6 +59,7 @@ const StyledErrorContainer = styled.div.withConfig({
   right: 0;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   display: flex;
   align-items: center;
   justify-content: center;

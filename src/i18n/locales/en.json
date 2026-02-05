@@ -36,8 +36,12 @@
     "clearAllFilters": "Clear all filters",
     "loadingPlaceholder": "Loading placeholder",
     "radio": "Radio",
+    "checkbox": "Checkbox",
     "emptyState": "Empty state",
-    "message": "Message"
+    "message": "Message",
+    "toastDismissHint": "Press Escape to dismiss",
+    "action": "Action",
+    "tooltip": "Tooltip"
   },
   "greeting": {
     "hello": "Hello, {{name}}"

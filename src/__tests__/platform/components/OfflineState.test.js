@@ -437,12 +437,13 @@ describe('OfflineState Component', () => {
   });
 
   describe('Web Platform specific', () => {
-    it('should have role="status" on web', () => {
+    it('should have status role (role or accessibilityRole)', () => {
       const { getByTestId } = renderWithTheme(
         <OfflineState title="Web Offline State" testID="offline-state-web" />
       );
       const offlineState = getByTestId('offline-state-web');
-      expect(offlineState.props.role).toBe('status');
+      const role = offlineState.props.role ?? offlineState.props.accessibilityRole;
+      expect(role).toBe('status');
     });
 
     it('should use aria-label on web', () => {

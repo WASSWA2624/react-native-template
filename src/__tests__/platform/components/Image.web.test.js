@@ -25,6 +25,15 @@ jest.mock('@hooks', () => ({
   }),
 }));
 
+// Mock Text so Image.web's import of @platform/components/display/Text resolves in Jest
+jest.mock('@platform/components/display/Text', () => {
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: ({ children, ...props }) => React.createElement('span', props, children),
+  };
+});
+
 // Mock useImage hook for testing error states
 jest.mock('@platform/components/display/Image/useImage', () => {
   const originalModule = jest.requireActual('@platform/components/display/Image/useImage');
@@ -34,12 +43,9 @@ jest.mock('@platform/components/display/Image/useImage', () => {
   };
 });
 
-// Import from index to get coverage
-import Image, { RESIZE_MODE } from '@platform/components/display/Image';
-
-// Import web component directly for web-specific tests
-// eslint-disable-next-line import/no-unresolved
-const ImageWeb = require('@platform/components/display/Image/Image.web').default;
+// Web tests use direct paths (index.js default relies on Metro platform resolution)
+import ImageWeb from '@platform/components/display/Image/Image.web';
+import { RESIZE_MODE } from '@platform/components/display/Image/types';
 
 const renderWithTheme = (component) => {
   return render(<ThemeProvider theme={lightTheme}>{component}</ThemeProvider>);
@@ -330,21 +336,20 @@ describe('Image Component - Web', () => {
   });
 
   describe('Index Export', () => {
-    it('should export Image component from index', () => {
-      expect(Image).toBeDefined();
-      expect(typeof Image).toBe('function');
+    it('should export Image (web) component', () => {
+      expect(ImageWeb).toBeDefined();
+      expect(typeof ImageWeb).toBe('function');
     });
 
-    it('should use exported Image component from index', () => {
+    it('should render Image component', () => {
       renderWithTheme(
-        <Image source="https://example.com/image.jpg" testID="image-from-index" />
+        <ImageWeb source="https://example.com/image.jpg" testID="image-from-index" />
       );
       const img = screen.getByTestId('image-from-index');
       expect(img).toBeTruthy();
     });
 
-    it('should export RESIZE_MODE from index', () => {
-      const { RESIZE_MODE } = require('@platform/components/display/Image');
+    it('should export RESIZE_MODE from types', () => {
       expect(RESIZE_MODE).toBeDefined();
       expect(RESIZE_MODE.COVER).toBe('cover');
       expect(RESIZE_MODE.CONTAIN).toBe('contain');
@@ -356,13 +361,11 @@ describe('Image Component - Web', () => {
 
   describe('Edge Cases', () => {
     it('should handle empty string source', () => {
-      // Empty string source should be handled gracefully
-      renderWithTheme(
+      const { container } = renderWithTheme(
         <ImageWeb source="" testID="test-image" />
       );
-      const img = screen.getByTestId('test-image');
-      expect(img).toBeTruthy();
-      // Component should render without crashing even with empty source
+      // No img is rendered when source is empty; container still renders
+      expect(container.querySelector('[data-testid="test-image-container"]')).toBeTruthy();
     });
 
     it('should handle object source with uri', () => {
@@ -375,13 +378,11 @@ describe('Image Component - Web', () => {
     });
 
     it('should handle object source without uri', () => {
-      // Object source without uri should default to empty string
-      renderWithTheme(
+      const { container } = renderWithTheme(
         <ImageWeb source={{}} testID="test-image" />
       );
-      const img = screen.getByTestId('test-image');
-      expect(img).toBeTruthy();
-      // Component should render without crashing
+      // No img when source.uri is missing; container still renders
+      expect(container.querySelector('[data-testid="test-image-container"]')).toBeTruthy();
     });
 
     it('should handle unknown resize mode', () => {

@@ -5,4 +5,5 @@
  */
 
 export { default } from './Switch';
+export { useSwitch } from './useSwitch';
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Image iOS Styles
  * Styled-components for iOS platform
  * File: Image.ios.styles.jsx
@@ -13,6 +13,7 @@ const StyledContainer = styled(View).withConfig({
   position: relative;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
 `;
 
 const StyledImage = styled(Image).withConfig({
@@ -33,6 +34,7 @@ const StyledPlaceholder = styled(View).withConfig({
   right: 0;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   align-items: center;
   justify-content: center;
 `;
@@ -47,6 +49,7 @@ const StyledErrorContainer = styled(View).withConfig({
   right: 0;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   align-items: center;
   justify-content: center;
 `;

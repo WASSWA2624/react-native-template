@@ -5,6 +5,7 @@
  */
 
 export { default } from './Screen';
+export { default as useScreen } from './useScreen';
 export { BACKGROUNDS, PADDING } from './types';
 
 

@@ -295,10 +295,12 @@ describe('Button Component', () => {
       );
       const button = getByTestId('disabled-accessible-button');
       expect(button).toBeTruthy();
-      // Button should be disabled - verify by attempting to press it
-      const mockPress = jest.fn();
-      // Component sets disabled attribute/state when disabled prop is true
-      // This is verified by the component implementation
+      if (button.props?.disabled !== undefined) {
+        expect(button.props.disabled).toBe(true);
+      }
+      if (button.props?.accessibilityState) {
+        expect(button.props.accessibilityState.disabled).toBe(true);
+      }
     });
   });
 

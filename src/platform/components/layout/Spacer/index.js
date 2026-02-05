@@ -5,5 +5,6 @@
  */
 
 export { default } from './Spacer';
+export { useSpacer } from './useSpacer';
 export * from './types';
 

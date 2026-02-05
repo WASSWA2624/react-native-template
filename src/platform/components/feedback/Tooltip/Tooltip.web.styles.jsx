@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tooltip Web Styles
  * Styled-components for Web platform
  * File: Tooltip.web.styles.jsx
@@ -17,12 +17,7 @@ const StyledTooltip = styled.div.withConfig({
   padding-top: ${({ theme }) => theme.spacing.sm}px;
   padding-bottom: ${({ theme }) => theme.spacing.sm}px;
   border-radius: ${({ theme }) => theme.radius.sm}px;
-  background-color: ${({ theme }) => {
-    // Use semi-transparent dark background for tooltip
-    return theme.colors.background.primary === '#FFFFFF' || theme.mode === 'light'
-      ? 'rgba(0, 0, 0, 0.85)'
-      : 'rgba(255, 255, 255, 0.15)';
-  }};
+  background-color: ${({ theme }) => theme.colors.tooltip.background};
   max-width: ${({ theme }) => theme.spacing.xxl * 4}px;
   animation: fadeIn 0.2s ease-out;
   
@@ -42,9 +37,7 @@ const StyledTooltip = styled.div.withConfig({
   ${({ position, theme }) => {
     const margin = theme.spacing.sm;
     const arrowSize = theme.spacing.xs + theme.spacing.xs / 2;
-    const bgColor = theme.colors.background.primary === '#FFFFFF' || theme.mode === 'light'
-      ? 'rgba(0, 0, 0, 0.85)'
-      : 'rgba(255, 255, 255, 0.15)';
+    const bgColor = theme.colors.tooltip.background;
     if (position === 'top') {
       return `
         bottom: 100%;
@@ -122,7 +115,7 @@ const StyledTooltipText = styled.span.withConfig({
   font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
   line-height: ${({ theme }) => theme.typography.fontSize.sm * theme.typography.lineHeight.normal}px;
-  color: ${({ theme }) => theme.colors.text.inverse};
+  color: ${({ theme }) => theme.colors.tooltip.text};
   text-align: center;
 `;
 

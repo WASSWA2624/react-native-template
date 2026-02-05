@@ -8,7 +8,8 @@ import React from 'react';
 import { fireEvent, render, waitFor, act } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import TooltipWeb from '@platform/components/feedback/Tooltip/Tooltip.web';
-import { useTooltip, POSITIONS } from '@platform/components/feedback/Tooltip';
+import useTooltip from '@platform/components/feedback/Tooltip/useTooltip';
+import { POSITIONS } from '@platform/components/feedback/Tooltip/types';
 import lightTheme from '@theme/light.theme';
 
 // Mock i18n hook

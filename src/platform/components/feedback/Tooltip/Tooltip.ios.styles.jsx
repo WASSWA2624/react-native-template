@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tooltip iOS Styles
  * Styled-components for iOS platform
  * File: Tooltip.ios.styles.jsx
@@ -15,11 +15,7 @@ const StyledTooltip = styled.View.withConfig({
   padding-horizontal: ${({ theme }) => theme.spacing.md}px;
   padding-vertical: ${({ theme }) => theme.spacing.sm}px;
   border-radius: ${({ theme }) => theme.radius.sm}px;
-  background-color: ${({ theme }) => {
-    return theme.colors.background.primary === '#FFFFFF' || theme.mode === 'light'
-      ? 'rgba(0, 0, 0, 0.85)'
-      : 'rgba(255, 255, 255, 0.15)';
-  }};
+  background-color: ${({ theme }) => theme.colors.tooltip.background};
   max-width: ${({ theme }) => theme.spacing.xxl * 4}px;
   shadow-color: ${({ theme }) => theme.colors.text.primary};
   shadow-offset: 0px ${({ theme }) => theme.spacing.xs / 2}px;
@@ -48,7 +44,7 @@ const StyledTooltipText = styled.Text.withConfig({
   font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
   line-height: ${({ theme }) => theme.typography.fontSize.sm * theme.typography.lineHeight.normal}px;
-  color: ${({ theme }) => theme.colors.text.inverse};
+  color: ${({ theme }) => theme.colors.tooltip.text};
   text-align: center;
 `;
 

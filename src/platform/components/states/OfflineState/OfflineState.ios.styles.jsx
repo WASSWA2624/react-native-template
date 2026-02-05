@@ -14,6 +14,7 @@ const StyledOfflineState = styled.View.withConfig({
   align-items: center;
   justify-content: center;
   padding: ${({ theme }) => theme.spacing.xl}px;
+  border-radius: ${({ theme }) => theme.radius.sm}px;
 `;
 
 const StyledIconContainer = styled.View.withConfig({

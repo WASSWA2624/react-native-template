@@ -9,12 +9,12 @@ import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import lightTheme from '@theme/light.theme';
 
-// Import from index to get coverage
-import Icon, { SIZES, TONES } from '@platform/components/display/Icon';
-
-// Import web component directly for web-specific tests
+// Import types from barrel; default from web (Jest does not resolve platform-specific barrel default)
+import { SIZES, TONES } from '@platform/components/display/Icon/types';
 // eslint-disable-next-line import/no-unresolved
 const IconWeb = require('@platform/components/display/Icon/Icon.web').default;
+/** Barrel default resolves to IconWeb in app (Metro); for tests we use IconWeb directly */
+const Icon = IconWeb;
 
 const renderWithTheme = (component) => {
   return render(<ThemeProvider theme={lightTheme}>{component}</ThemeProvider>);
