@@ -9,7 +9,6 @@ import { useRouter } from 'expo-router';
 import { useAuth, useI18n, useNavigationVisibility, useUiState } from '@hooks';
 import { MAIN_NAV_ITEMS, getMenuIconGlyph } from '@config/sideMenu';
 import { useAuthGuard } from '@navigation/guards';
-import { AUTH } from '@config';
 import { ACTION_VARIANTS } from '@platform/components/navigation/GlobalHeader/types';
 import { LoadingOverlay } from '@platform/components';
 
@@ -21,7 +20,7 @@ const useMainRouteLayoutNative = () => {
   useAuthGuard();
   const { t } = useI18n();
   const router = useRouter();
-  const { isAuthenticated, logout, roles } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const { isLoading } = useUiState();
   const { isItemVisible } = useNavigationVisibility();
   const mainItems = useMemo(
@@ -35,29 +34,10 @@ const useMainRouteLayoutNative = () => {
     [t]
   );
 
-  const canAccessRegister = useMemo(
-    () =>
-      isAuthenticated &&
-      AUTH.REGISTER_ROLES?.length > 0 &&
-      AUTH.REGISTER_ROLES.some((role) => roles.includes(role)),
-    [isAuthenticated, roles]
-  );
-
   const headerActions = useMemo(
     () =>
       isAuthenticated
         ? [
-            ...(canAccessRegister
-              ? [
-                  {
-                    id: 'register',
-                    label: t('auth.register.button'),
-                    accessibilityLabel: t('auth.register.button'),
-                    onPress: () => router.push('/register'),
-                    variant: ACTION_VARIANTS.GHOST,
-                  },
-                ]
-              : []),
             {
               id: 'logout',
               label: t('navigation.header.logout'),
@@ -66,16 +46,8 @@ const useMainRouteLayoutNative = () => {
               variant: ACTION_VARIANTS.GHOST,
             },
           ]
-        : [
-            {
-              id: 'login',
-              label: t('auth.login.button'),
-              accessibilityLabel: t('auth.login.button'),
-              onPress: () => router.push('/login'),
-              variant: ACTION_VARIANTS.PRIMARY,
-            },
-          ],
-    [isAuthenticated, canAccessRegister, logout, router, t]
+        : [],
+    [isAuthenticated, logout, t]
   );
 
   const overlaySlot = useMemo(

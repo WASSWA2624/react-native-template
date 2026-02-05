@@ -278,23 +278,15 @@ describe('MainLayout with Navigation Skeleton', () => {
       expect(getByTestId('slot')).toBeDefined();
     });
 
-    it('should pass login action when unauthenticated on web', () => {
+    it('should not show login/register in header when unauthenticated (auth screens removed)', () => {
       useAuth.mockReturnValue({ isAuthenticated: false, logout: jest.fn(), roles: [] });
       useAuthGuard.mockReturnValue({ authenticated: false, user: null });
       renderWithProviders(<MainRouteLayoutWeb />);
       const headerCall = GlobalHeader.mock.calls[0];
       const actionIds = headerCall[0].actions.map((action) => action.id);
-      expect(actionIds).toContain('login');
+      expect(actionIds).not.toContain('login');
+      expect(actionIds).not.toContain('register');
       expect(actionIds).not.toContain('logout');
-    });
-
-    it('should include register action for allowed roles on web', () => {
-      useAuth.mockReturnValue({ isAuthenticated: true, logout: jest.fn(), roles: ['admin'] });
-      renderWithProviders(<MainRouteLayoutWeb />);
-      const headerCall = GlobalHeader.mock.calls[0];
-      const actionIds = headerCall[0].actions.map((action) => action.id);
-      expect(actionIds).toContain('register');
-      expect(actionIds).toContain('toggle-sidebar');
     });
   });
 

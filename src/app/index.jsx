@@ -1,6 +1,6 @@
 /**
  * Root Index Route
- * Redirects to home if authenticated, otherwise to login.
+ * Redirects to home (auth screens removed).
  * Per app-router.mdc: guard logic in layouts; this route only redirects.
  */
 import { useEffect, useRef } from 'react';
@@ -20,7 +20,7 @@ export default function IndexRoute() {
       router.replace('/home');
     } else if (authenticated === false) {
       hasRedirected.current = true;
-      router.replace('/login');
+      router.replace('/home');
     }
   }, [authenticated, router]);
 

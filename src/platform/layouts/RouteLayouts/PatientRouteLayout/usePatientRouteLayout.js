@@ -37,23 +37,8 @@ const usePatientRouteLayout = () => {
               variant: ACTION_VARIANTS.GHOST,
             },
           ]
-        : [
-            {
-              id: 'login',
-              label: t('auth.login.button'),
-              accessibilityLabel: t('auth.login.button'),
-              onPress: () => router.push('/login'),
-              variant: ACTION_VARIANTS.PRIMARY,
-            },
-            {
-              id: 'register',
-              label: t('auth.register.button'),
-              accessibilityLabel: t('auth.register.button'),
-              onPress: () => router.push('/register'),
-              variant: ACTION_VARIANTS.GHOST,
-            },
-          ],
-    [isAuthenticated, logout, router, t]
+        : [],
+    [isAuthenticated, logout, t]
   );
 
   const overlaySlot = useMemo(

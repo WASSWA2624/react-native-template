@@ -56,20 +56,16 @@ describe('useAuthGuard', () => {
     };
     useRouter.mockReturnValue(mockRouter);
 
-    // Setup default mock state
-    // Note: Auth state is in UI slice for Phase 0-7 (will move to auth feature in Phase 9)
+    // Setup default mock state (selectors use state.auth)
     mockState = {
-      ui: {
-        theme: 'light',
-        locale: 'en',
-        isLoading: false,
+      auth: {
         isAuthenticated: false,
         user: null,
+        isLoading: false,
+        errorCode: null,
       },
-      network: {
-        isOnline: true,
-        isSyncing: false,
-      },
+      ui: { theme: 'light', locale: 'en', isLoading: false },
+      network: { isOnline: true, isSyncing: false },
     };
 
     // Mock useSelector to use mock state
@@ -81,8 +77,8 @@ describe('useAuthGuard', () => {
   describe('Hook returned API', () => {
     it('should return authenticated state and user data when authenticated', async () => {
       const mockUser = { id: '1', email: 'test@example.com' };
-      mockState.ui.isAuthenticated = true;
-      mockState.ui.user = mockUser;
+      mockState.auth.isAuthenticated = true;
+      mockState.auth.user = mockUser;
 
       let api;
       render(<TestComponent onResult={(v) => (api = v)} />);
@@ -94,8 +90,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should return unauthenticated state and null user when not authenticated', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       let api;
       render(<TestComponent onResult={(v) => (api = v)} />);
@@ -107,8 +103,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should return null user when user is undefined', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = undefined;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = undefined;
 
       let api;
       render(<TestComponent onResult={(v) => (api = v)} />);
@@ -121,20 +117,20 @@ describe('useAuthGuard', () => {
   });
 
   describe('Redirect behavior', () => {
-    it('should redirect to default /login path when unauthenticated', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+    it('should redirect to default /home path when unauthenticated', async () => {
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent onResult={() => {}} />);
 
       await waitFor(() => {
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
 
     it('should redirect to custom redirect path when provided', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent options={{ redirectPath: '/custom-login' }} onResult={() => {}} />);
 
@@ -144,8 +140,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should not redirect when authenticated', async () => {
-      mockState.ui.isAuthenticated = true;
-      mockState.ui.user = { id: '1', email: 'test@example.com' };
+      mockState.auth.isAuthenticated = true;
+      mockState.auth.user = { id: '1', email: 'test@example.com' };
 
       render(<TestComponent onResult={() => {}} />);
 
@@ -155,8 +151,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should only redirect once per unauthenticated state (idempotent)', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       const { rerender } = render(<TestComponent onResult={() => {}} />);
 
@@ -178,20 +174,11 @@ describe('useAuthGuard', () => {
       let currentAuthState = false;
       let currentUser = null;
 
-      // Mock useSelector to return current state (using ui slice structure)
       useSelector.mockImplementation((selector) => {
         const state = {
-          ui: {
-            theme: 'light',
-            locale: 'en',
-            isLoading: false,
-            isAuthenticated: currentAuthState,
-            user: currentUser,
-          },
-          network: {
-            isOnline: true,
-            isSyncing: false,
-          },
+          auth: { isAuthenticated: currentAuthState, user: currentUser, isLoading: false, errorCode: null },
+          ui: { theme: 'light', locale: 'en', isLoading: false },
+          network: { isOnline: true, isSyncing: false },
         };
         return selector(state);
       });
@@ -201,7 +188,7 @@ describe('useAuthGuard', () => {
 
       await waitFor(() => {
         expect(api.authenticated).toBe(false);
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
 
       // Transition to authenticated
@@ -221,20 +208,12 @@ describe('useAuthGuard', () => {
       let currentAuthState = true;
       let currentUser = { id: '1', email: 'test@example.com' };
 
-      // Mock useSelector to return current state (using ui slice structure)
+      // Mock useSelector to return current state (selectors use state.auth)
       useSelector.mockImplementation((selector) => {
         const state = {
-          ui: {
-            theme: 'light',
-            locale: 'en',
-            isLoading: false,
-            isAuthenticated: currentAuthState,
-            user: currentUser,
-          },
-          network: {
-            isOnline: true,
-            isSyncing: false,
-          },
+          auth: { isAuthenticated: currentAuthState, user: currentUser, isLoading: false, errorCode: null },
+          ui: { theme: 'light', locale: 'en', isLoading: false },
+          network: { isOnline: true, isSyncing: false },
         };
         return selector(state);
       });
@@ -255,7 +234,7 @@ describe('useAuthGuard', () => {
 
       await waitFor(() => {
         expect(api.authenticated).toBe(false);
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
 
@@ -263,20 +242,12 @@ describe('useAuthGuard', () => {
       let currentAuthState = false;
       let currentUser = null;
 
-      // Mock useSelector to return current state (using ui slice structure)
+      // Mock useSelector to return current state (selectors use state.auth)
       useSelector.mockImplementation((selector) => {
         const state = {
-          ui: {
-            theme: 'light',
-            locale: 'en',
-            isLoading: false,
-            isAuthenticated: currentAuthState,
-            user: currentUser,
-          },
-          network: {
-            isOnline: true,
-            isSyncing: false,
-          },
+          auth: { isAuthenticated: currentAuthState, user: currentUser, isLoading: false, errorCode: null },
+          ui: { theme: 'light', locale: 'en', isLoading: false },
+          network: { isOnline: true, isSyncing: false },
         };
         return selector(state);
       });
@@ -286,7 +257,7 @@ describe('useAuthGuard', () => {
 
       await waitFor(() => {
         expect(api.authenticated).toBe(false);
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
 
       // Transition to authenticated (should reset redirect flag - covers else if branch)
@@ -309,14 +280,14 @@ describe('useAuthGuard', () => {
 
       await waitFor(() => {
         expect(api.authenticated).toBe(false);
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
 
     it('should execute else if branch when starting authenticated', async () => {
       // Start authenticated - this should hit the else if branch (isAuthenticated = true)
-      mockState.ui.isAuthenticated = true;
-      mockState.ui.user = { id: '1', email: 'test@example.com' };
+      mockState.auth.isAuthenticated = true;
+      mockState.auth.user = { id: '1', email: 'test@example.com' };
 
       let api;
       render(<TestComponent onResult={(v) => (api = v)} />);
@@ -330,15 +301,15 @@ describe('useAuthGuard', () => {
     it('should not execute else if branch when unauthenticated and already redirected', async () => {
       // This tests the else if branch when isAuthenticated is false and hasRedirected.current is true
       // Start unauthenticated, trigger redirect, then change redirectPath to trigger effect again
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       let api;
       const { rerender } = render(<TestComponent onResult={(v) => (api = v)} />);
 
       await waitFor(() => {
         expect(api.authenticated).toBe(false);
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
         expect(mockRouter.replace).toHaveBeenCalledTimes(1);
       });
 
@@ -370,8 +341,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should handle router errors gracefully', () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       mockRouter.replace.mockImplementation(() => {
         throw new Error('Router error');
@@ -400,30 +371,30 @@ describe('useAuthGuard', () => {
 
   describe('Options parameter', () => {
     it('should use default redirect path when no options provided', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent onResult={() => {}} />);
 
       await waitFor(() => {
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
 
     it('should use default redirect path when options is empty object', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent options={{}} onResult={() => {}} />);
 
       await waitFor(() => {
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
 
     it('should use custom redirect path when provided in options', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent options={{ redirectPath: '/signin' }} onResult={() => {}} />);
 
@@ -433,8 +404,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should skip redirect when skipRedirect is true and user is unauthenticated', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       let api;
       render(<TestComponent options={{ skipRedirect: true }} onResult={(v) => (api = v)} />);
@@ -446,8 +417,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should skip redirect when skipRedirect is true and user is authenticated', async () => {
-      mockState.ui.isAuthenticated = true;
-      mockState.ui.user = { id: '1', email: 'test@example.com' };
+      mockState.auth.isAuthenticated = true;
+      mockState.auth.user = { id: '1', email: 'test@example.com' };
 
       let api;
       render(<TestComponent options={{ skipRedirect: true }} onResult={(v) => (api = v)} />);
@@ -459,8 +430,8 @@ describe('useAuthGuard', () => {
     });
 
     it('should skip redirect when skipRedirect is true even with custom redirectPath', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       let api;
       render(
@@ -477,21 +448,21 @@ describe('useAuthGuard', () => {
     });
 
     it('should not skip redirect when skipRedirect is false', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent options={{ skipRedirect: false }} onResult={() => {}} />);
 
       await waitFor(() => {
-        expect(mockRouter.replace).toHaveBeenCalledWith('/login');
+        expect(mockRouter.replace).toHaveBeenCalledWith('/home');
       });
     });
   });
 
   describe('Edge cases', () => {
     it('should handle empty string redirect path', async () => {
-      mockState.ui.isAuthenticated = false;
-      mockState.ui.user = null;
+      mockState.auth.isAuthenticated = false;
+      mockState.auth.user = null;
 
       render(<TestComponent options={{ redirectPath: '' }} onResult={() => {}} />);
 
@@ -508,8 +479,8 @@ describe('useAuthGuard', () => {
         roles: ['user'],
       };
 
-      mockState.ui.isAuthenticated = true;
-      mockState.ui.user = mockUser;
+      mockState.auth.isAuthenticated = true;
+      mockState.auth.user = mockUser;
 
       let api;
       render(<TestComponent onResult={(v) => (api = v)} />);

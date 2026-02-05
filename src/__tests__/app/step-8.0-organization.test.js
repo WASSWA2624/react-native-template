@@ -153,18 +153,12 @@ describe('Step 8.0: App Folder Organization', () => {
   describe('Route Group Layouts Organization', () => {
     it('should have route groups with parentheses', () => {
       const mainGroupPath = path.join(appPath, '(main)');
-      const authGroupPath = path.join(appPath, '(auth)');
-      
       expect(fs.existsSync(mainGroupPath)).toBe(true);
-      expect(fs.existsSync(authGroupPath)).toBe(true);
     });
 
     it('should have single _layout.jsx file per route group', () => {
       const mainLayoutPath = path.join(appPath, '(main)', '_layout.jsx');
-      const authLayoutPath = path.join(appPath, '(auth)', '_layout.jsx');
-      
       expect(fs.existsSync(mainLayoutPath)).toBe(true);
-      expect(fs.existsSync(authLayoutPath)).toBe(true);
       
       // Should NOT have platform-specific layout files in app/
       const mainLayoutAndroid = path.join(appPath, '(main)', '_layout.android.jsx');

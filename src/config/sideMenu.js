@@ -71,17 +71,8 @@ const SETTINGS_ITEMS = [
   { id: 'settings-wards', icon: 'medkit-outline', path: '/settings/wards' },
 ];
 
-/** Auth routes (reference; typically not in main sidebar) */
-const AUTH_ITEMS = [
-  { id: 'login', icon: 'log-in-outline', path: '/login' },
-  { id: 'register', icon: 'person-add-outline', path: '/register' },
-  { id: 'forgot-password', icon: 'key-outline', path: '/forgot-password' },
-  { id: 'reset-password', icon: 'key-outline', path: '/reset-password' },
-  { id: 'facility-selection', icon: 'business-outline', path: '/facility-selection' },
-  { id: 'tenant-selection', icon: 'layers-outline', path: '/tenant-selection' },
-  { id: 'verify-email', icon: 'mail-outline', path: '/verify-email' },
-  { id: 'verify-phone', icon: 'call-outline', path: '/verify-phone' },
-];
+/** Auth routes removed; kept for export compatibility */
+const AUTH_ITEMS = [];
 
 /** Full list for main sidebar (main nav + settings children). Labels via t('navigation.items.main.<id>'). */
 export const SIDE_MENU_ITEMS = [...MAIN_NAV_ITEMS, ...SETTINGS_ITEMS];

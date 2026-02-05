@@ -1,6 +1,6 @@
 /**
  * Root Index Route Tests
- * Tests redirect: authenticated -> /home, unauthenticated -> /login
+ * Tests redirect: authenticated -> /home, unauthenticated -> /home
  */
 const React = require('react');
 const { render } = require('@testing-library/react-native');
@@ -34,11 +34,11 @@ const renderWithTheme = (component, store = createMockStore()) =>
 describe('Index Route (index.jsx)', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it('should redirect to /login when unauthenticated', () => {
+  it('should redirect to /home when unauthenticated', () => {
     useAuthGuard.mockReturnValue({ authenticated: false });
     const IndexRoute = require('../../app/index').default;
     renderWithTheme(<IndexRoute />);
-    expect(mockReplace).toHaveBeenCalledWith('/login');
+    expect(mockReplace).toHaveBeenCalledWith('/home');
   });
 
   it('should redirect to /home when authenticated', () => {

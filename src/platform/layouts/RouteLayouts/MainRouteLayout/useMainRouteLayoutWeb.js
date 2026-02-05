@@ -11,7 +11,6 @@ import { useWindowDimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useAuth, useFocusTrap, useI18n, useNavigationVisibility, useUiState } from '@hooks';
 import { MAIN_NAV_ITEMS } from '@config/sideMenu';
-import { AUTH } from '@config';
 import breakpoints from '@theme/breakpoints';
 import { Icon, LoadingOverlay } from '@platform/components';
 import {
@@ -36,12 +35,7 @@ export default function useMainRouteLayoutWeb() {
     headerActionVisibility,
     footerVisible,
   } = useUiState();
-  const { isAuthenticated, logout, roles } = useAuth();
-  const canAccessRegister = useMemo(() => {
-    if (!isAuthenticated) return false;
-    if (!AUTH.REGISTER_ROLES?.length) return false;
-    return AUTH.REGISTER_ROLES.some((role) => roles.includes(role));
-  }, [isAuthenticated, roles]);
+  const { isAuthenticated, logout } = useAuth();
   const { isItemVisible } = useNavigationVisibility();
   const mainItems = MAIN_NAV_ITEMS;
   const { width } = useWindowDimensions();
@@ -177,8 +171,6 @@ export default function useMainRouteLayoutWeb() {
     setIsCommandPaletteOpen(false);
   }, []);
 
-  const handleGoToLogin = useCallback(() => router.push('/login'), [router]);
-  const handleGoToRegister = useCallback(() => router.push('/register'), [router]);
   const handleCloseMobileSidebar = useCallback(() => setIsMobileSidebarOpen(false), []);
   const handleToggleNotifications = useCallback(() => {
     setIsOverflowOpen(false);
@@ -312,31 +304,7 @@ export default function useMainRouteLayoutWeb() {
     [headerActionVisibility]
   );
 
-  const authHeaderActions = useMemo(() => {
-    if (!isAuthenticated) {
-      return [
-        {
-          id: 'login',
-          label: t('auth.login.button'),
-          accessibilityLabel: t('auth.login.button'),
-          onPress: handleGoToLogin,
-          variant: ACTION_VARIANTS.PRIMARY,
-        },
-      ];
-    }
-    const actions = [];
-    if (canAccessRegister) {
-      actions.push({
-        id: 'register',
-        label: t('auth.register.button'),
-        accessibilityLabel: t('auth.register.button'),
-        onPress: handleGoToRegister,
-        variant: ACTION_VARIANTS.GHOST,
-      });
-    }
-    /* Logout moved to HeaderUtility user menu */
-    return actions;
-  }, [canAccessRegister, handleGoToLogin, handleGoToRegister, isAuthenticated, t]);
+  const authHeaderActions = useMemo(() => [], []);
 
   const rawNotificationItems = useMemo(
     () => [
