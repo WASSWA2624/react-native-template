@@ -20,7 +20,7 @@ Goals:
 **Rules (Mandatory)**:
 - Avoid unnecessary re-renders:
   - Memoize expensive computations in hooks (`useMemo`, `useCallback`)
-  - Use memoized selectors (Reselect)
+  - Use memoized selectors (e.g. RTK `createSelector`)
   - Use `React.memo` for expensive components
   - Avoid creating new objects/functions in render
 - **Styled-Components Creation**: See `component-structure.mdc` - must be created in `.styles.jsx` files only

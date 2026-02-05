@@ -46,7 +46,7 @@ Examples:
 - **Props combinations**: All valid prop combinations, invalid prop handling, default props
 - **Event handlers**: All callbacks (onPress, onChange, onSubmit, etc.) with various inputs
 - **Error boundaries**: Component-level error handling and recovery
-- **Theme integration**: Light, dark, high-contrast themes; theme switching
+- **Theme integration**: Light and dark themes only; theme switching
 - **i18n**: All user-facing text uses i18n keys; locale switching
 
 ### Platform Screens (`src/platform/screens/**`)
@@ -135,7 +135,7 @@ Examples:
 
 ### Theme (`src/theme/**`)
 - **Theme tokens**: All token values, token usage, token validation
-- **Theme variants**: Light, dark, high-contrast themes, theme switching
+- **Theme variants**: Light and dark themes only, theme switching
 - **Animations**: Animation definitions, animation triggers, reduced motion support
 - **Breakpoints**: Responsive breakpoints, breakpoint usage, platform-specific breakpoints
 

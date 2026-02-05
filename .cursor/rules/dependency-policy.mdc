@@ -50,7 +50,7 @@ Keep the codebase **lean**, **secure**, and **maintainable** with minimal depend
 ## Documentation (Mandatory)
 When dependencies change:
 1. **Update `tech-stack.mdc`** (Single Source of Truth): Add/update dependency with version, purpose, usage rules, compatibility notes
-2. **Update `dev-plan/P000_setup.md`** if applicable
+2. **Update `dev-plan/P000_setup.md`** (or other `dev-plan/` docs) if applicable
 3. **Document compatibility test results**: platforms tested, known issues, bundle impact
 4. **Commit together** with dependency update
 

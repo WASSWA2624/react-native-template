@@ -17,7 +17,7 @@ This document is the **single entry point** for all coding standards, architectu
 - [App Router & navigation](./app-router.mdc) - **Single source of truth for routing**
 - [Platform UI layer](./platform-ui.mdc)
 - [UI component structure](./component-structure.mdc) - **Single source of truth for component organization**
-- [Theme & design system](./theme-design.mdc) - **Single source of truth for theming and styling**
+- [Theme & design system](./theme-design.mdc) - **Single source of truth for theming and styling** (Microsoft Fluent / Microsoft 365 look and feel)
 - [State management (Redux Toolkit)](./state-management.mdc)
 - [Features & domain rules](./features-domain.mdc)
 - [Services & integrations](./services-integration.mdc)
@@ -28,6 +28,7 @@ This document is the **single entry point** for all coding standards, architectu
 - [Accessibility (a11y) & User Experience (UX)](./accessibility.mdc)
 - [Performance & efficiency](./performance.mdc)
 - [Errors & logging](./errors-logging.mdc)
+- [Debug system](./debug.mdc) - Cross-platform debug scripts and log files (dev-only)
 - [Bootstrap & configuration](./bootstrap-config.mdc) - **Single source of truth for provider placement**
 - [Coding conventions, enforcement & change policy](./coding-conventions.mdc) - **Single source of truth for module system, imports, and conventions**
 - [Testing strategy](./testing.mdc) - **Single source of truth for testing**
@@ -37,7 +38,7 @@ To avoid contradictions, key areas have designated single sources of truth:
 - **Dependencies**: `tech-stack.mdc` - All dependency versions and usage rules
 - **Routing**: `app-router.mdc` - All routing conventions and route grouping
 - **Component Structure**: `component-structure.mdc` - Component/screen organization and file structure
-- **Theming**: `theme-design.mdc` - Theme tokens, design system, styled-components rules
+- **Theming**: `theme-design.mdc` - Theme tokens, design system, styled-components rules, Microsoft Fluent / Microsoft 365 visual direction
 - **Module System & Exports**: `coding-conventions.mdc` - ES modules, imports, exports, barrel files, index file extensions
 - **Provider Placement**: `bootstrap-config.mdc` - Where all providers are mounted
 - **Testing**: `testing.mdc` - All testing requirements and coverage standards

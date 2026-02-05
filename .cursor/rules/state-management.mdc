@@ -54,7 +54,7 @@ configureStore({
 ```
 
 ### Provider Placement
-**Single Source of Truth**: See `bootstrap-config.mdc` for provider placement rules
+See `bootstrap-config.mdc`.
 ---
 
 ## Slice Design Rules

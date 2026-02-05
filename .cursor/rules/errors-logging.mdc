@@ -41,8 +41,7 @@ src/logging/
 ## Error Boundary Rules
 ### Global Boundary
 * A single global `ErrorBoundary` must wrap the app
-* **Single Source of Truth**: See `bootstrap-config.mdc` for provider placement rules
-* All providers, including ErrorBoundary, must be mounted in `src/app/_layout.jsx` only
+* ErrorBoundary mounted in `src/app/_layout.jsx` only (see `bootstrap-config.mdc`).
 Responsibilities:
 * Catch render/runtime errors
 * Display fallback UI

@@ -41,7 +41,7 @@ Establish clear, consistent, and maintainable conventions for routing and naviga
 
 6. **Exports**
    - All pages and layouts **must** use default export.
-   - Barrel files (`index.js`/`index.jsx`) are optional for route folders only (see `coding-conventions.mdc` for barrel file guidance).
+   - Barrel files (`index.js`) are optional in route folders. See `coding-conventions.mdc`.
 
 7. **Platform-specific Pages**
    - Platform-specific pages allowed (e.g., `page.android.jsx`, `page.ios.jsx`, `page.web.jsx`).

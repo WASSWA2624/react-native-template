@@ -24,7 +24,7 @@ Ensure every user-facing string is translatable for a consistent, accessible exp
    - Avoid generic or unstable names (e.g., `text1`, `labelX`).
 
 4. **Automated & Manual Enforcement**
-   - No hardcoded strings allowed in UI code (JSX/TSX).
+   - No hardcoded strings allowed in UI code (JSX).
    - All new keys must be present in all locale files before use.
    - All visible error, form, accessibility, and non-dev user logs must be internationalized.
    - **Automation:** Linters/checks flag hardcoded UI strings and missing keys; tests validate key presence.
@@ -46,10 +46,6 @@ src/i18n/
 
 ### Supported Languages
 Supported locales are **project-specific** and must be documented in `dev-plan/`. In code and tests, the effective set of supported locales is defined by the JSON files present in `src/i18n/locales/`.
-
-### Locale File Order (Development vs Finalization)
-- **During development**: Only **en.json** is created and updated. All new translation keys are added to `src/i18n/locales/en.json` as features and screens are built. No other locale files are created or updated in this period.
-- **Other locales last**: All other locale files (e.g. the remaining 21 languages) are **defined and developed last**, in the Finalization phase. They are **derived from en.json** (same key structure; values translated). Do not create or maintain non-English locale files until en.json is complete and the Finalization phase creates them from en.json.
 
 ## Usage
 
@@ -74,7 +70,7 @@ const { t } = useI18n();
 
 ## Process for Adding New Translations
 
-1. **During development**: Add new translation keys to **en.json only** (`src/i18n/locales/en.json`) before usage in code. Other locale files are added in Finalization and derived from en.json.
+1. Add new translation keys to **all locale files in `src/i18n/locales/`** before usage in code.
 2. Reference only via `t()` or `tSync()`, never with string literals.
-3. **In Finalization**: Create other locale files from en.json (same keys; translate values). Validate appearance in all supported languages.
+3. Validate appearance in all supported languages.
 4. Update this standard if organizational structure changes.

@@ -16,18 +16,9 @@ Centralize **global coding conventions** and **governance** that apply across al
 ### Exports
 - **ES Modules (ESM) are mandatory** - use `export` statements exclusively
 - Prefer **named exports**: `export { name }` or `export const name = ...`
-- Use `index.js` / `index.jsx` as **barrel files only**
-
-**Index File Extensions** (Single Source of Truth):
-- **Barrel files** (export-only files): MUST use `index.js` (NOT `index.jsx`)
-  - Barrel files contain only exports: `export * from './module'` or `export { name } from './module'`
-  - No JSX allowed in barrel files
-  - Applies to: platform components, screens, layouts, features, services, hooks, utils, etc.
-  - See `component-structure.mdc` for platform component barrel file rules
-- **Route pages/layouts** (Expo App Router): Use `index.jsx` for pages/layouts that render JSX
-  - These are NOT barrel files; they are actual route pages/layouts
-  - Must use default exports: `export default Component` (see `app-router.mdc`)
-  - Barrel files in route folders are optional (see `app-router.mdc`)
+**Index file extensions** (authoritative):
+- **Barrel files** (export-only): MUST use `index.js` — no JSX; only re-exports. Applies to platform, features, services, hooks, utils, etc. See `component-structure.mdc` for platform barrel pattern.
+- **Route pages/layouts** (Expo App Router): Use `index.jsx` for pages/layouts that render JSX; default export required. See `app-router.mdc`. Barrel (`index.js`) in route folders is optional.
 
 ### Module System
 - **ES Modules (ESM) are mandatory** for all source code
@@ -35,6 +26,7 @@ Centralize **global coding conventions** and **governance** that apply across al
 - **CommonJS (`require`, `module.exports`) is forbidden** in source code (`src/**`)
 - **Configuration files at project root** (e.g., `babel.config.js`, `metro.config.js`, `jest.config.js`) may use **CommonJS** when required by tooling; prefer ES modules only when the toolchain supports it reliably
 - **Expo entrypoint exception**: the repository root `index.js` may use `require('expo-router/entry')` (tooling requirement). Do not use CommonJS elsewhere.
+- **Scripts** (e.g. under `scripts/`): use **ESM** (`.mjs` and `import`/`export`) so that the “no CommonJS elsewhere” rule is satisfied; run with `node path/to/script.mjs`.
 
 ### Imports
 - Use **absolute imports** via aliases
@@ -59,15 +51,14 @@ Centralize **global coding conventions** and **governance** that apply across al
 - `@logging` → `./src/logging`
 - `@bootstrap` → `./src/bootstrap`
 - `@navigation` → `./src/navigation`
+- `@debug` → `./src/debug`
 
 **Alias Usage Rules**:
 - Prefer specific aliases (`@services`, `@hooks`) over generic `@/` when possible
 - Use `@/` only for root-level imports when no specific alias exists
 - Example: `import { api } from '@services/api'` not `import { api } from '@/services/api'`
 
-### Side effects
-**Single Source of Truth**: This section defines where side effects are allowed.
-
+### Side effects (authoritative)
 Side effects belong in:
 - Redux middleware / thunks (see `state-management.mdc`)
 - Services (see `services-integration.mdc`)
@@ -85,7 +76,7 @@ UI must not perform side effects directly (see `platform-ui.mdc`).
 - Testing standards are defined in `testing.mdc`
 
 ## Internationalization (i18n) Enforcement
-- **100% internationalization is mandatory** — see `i18n.mdc` (single source of truth). Do not restate i18n rules here.
+- **100% i18n mandatory** — see `i18n.mdc`. Do not restate i18n rules here.
 
 ## Change policy
 - Architectural changes require updating the relevant `.mdc`

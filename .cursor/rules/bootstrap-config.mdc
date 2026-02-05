@@ -18,7 +18,7 @@ The Bootstrap Layer:
 - Initializes global providers
 - Wires theme, store, offline, and security systems
 - Controls startup order and readiness
-- Exposes a single `initApp()` entry
+- Exposes a single `bootstrapApp()` entry
 It does **not**:
 - Contain UI components
 - Implement business rules
@@ -39,7 +39,7 @@ src/bootstrap/
 
 ## Bootstrap Entry Rules
 ### `index.js`
-* Exports a single `bootstrapApp()` (or `initApp()`) function
+* Exports a single `bootstrapApp()` function
 * Calls all init modules in the correct order
 * Handles fatal startup errors
 Example:

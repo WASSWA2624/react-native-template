@@ -30,7 +30,7 @@ Rules:
 
 ### Expo App Router first
 - `src/app` is the **only routing system**
-- **Single Source of Truth**: See `app-router.mdc` for routing rules
+- See `app-router.mdc` for routing rules
 
 ### Platform-aware UI by design
 - All UI components support **Android**, **iOS**, and **Web** explicitly
@@ -45,7 +45,7 @@ Rules:
 - One folder = one concept
 
 ### Performance & Efficiency Principles
-**Single Source of Truth**: See `performance.mdc` for complete performance rules.
+See `performance.mdc` for performance rules.
 
 Structure enables:
 - **Barrel Exports**: Use `index.js` barrel files for clean imports and tree-shaking (see `coding-conventions.mdc`)
@@ -96,6 +96,13 @@ Structure enables:
 ├── metro.config.js          # Metro bundler configuration
 ├── package.json             # Dependencies & scripts
 ├── index.js                 # Expo entry point
+├── debug/                   # Generated log files only (see debug.mdc)
+│   ├── .gitkeep, README.md
+│   └── *.log                # expo-debug, android-debug, ios-debug, web-debug (gitignored)
+├── scripts/                 # Project scripts
+│   ├── debug/               # Debug script files (ESM .mjs) — write logs to root debug/
+│   │   └── *.mjs            # expo-with-logging, android/ios logcat, web-log-receiver, debug-all
+│   └── ...                  # Other scripts (e.g. android-logs, generate-locales)
 └── src/                     # Application source root
     ├── app/                 # Expo App Router routes & layouts
     │   ├── _layout.jsx                                  # Root layout (providers, guards, theme, store)
@@ -133,8 +140,7 @@ Structure enables:
     │   │   ├── radius.js
     │   │   └── shadows.js
     │   ├── light.theme.js
-    │   ├── dark.theme.js
-    │   └── high-contrast.theme.js
+    │   └── dark.theme.js
     │
     ├── store/                          # Redux Toolkit state management
     │   ├── index.js
@@ -202,7 +208,7 @@ Structure enables:
     │
     ├── utils/                          # Generic helpers
     │   ├── index.js
-    │   └── util-name.js                    # e.g: formatter.js, validator.js, helpers.js, etc.
+    │   └── util-name.js                    # e.g: formater.js, validator.js, helpers.js, etc.
     │
     ├── bootstrap/                      # App initialization
     │   ├── index.js

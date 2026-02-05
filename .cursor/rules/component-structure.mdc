@@ -7,8 +7,6 @@ alwaysApply: true
 Define the exact folder/file conventions for all UI components, screens, and layouts in the `src/platform` layer.
 For platform UI layer responsibilities, imports, and resilience rules, see `platform-ui.mdc`.
 
-**Look and feel**: Components and screens should align with the **Word-like** default layout and aesthetic (document-style UI, toolbar/ribbon, clear typography, subtle borders). See `theme-design.mdc` for default layout structure and Word-like aesthetic rules.
-
 ## Folder Structure per Component/Screen/Layout
 
 **MANDATORY**: Related UIs must be grouped in category folders. Structure:
@@ -39,6 +37,7 @@ platform/
             ├── useScreenName.js
             ├── types.js
             └── index.js                  # Barrel file (exports only)
+```
 
 ## Rules
 
@@ -69,9 +68,7 @@ platform/
    - Share logic in `useComponentName.js` (hooks) and `types.js`.  
    - Component files should handle rendering only.
 
-5. **Barrel/Index Files**:  
-   - **Single Source of Truth**: See `coding-conventions.mdc` for full barrel file rules.
-   - Always use `index.js` (never `index.jsx`) for barrel files.  
+5. **Barrel/Index Files**: See `coding-conventions.mdc`. Always `index.js` (never `index.jsx`) for barrel files.  
    - For the main component export, only do:
      ```js
      export { default } from './ComponentName';
@@ -85,9 +82,7 @@ platform/
    - Export order: Component → Hooks → Types/constants
 
 ### Naming Conventions
-**Single Source of Truth**: See `coding-conventions.mdc` for complete naming rules.
-
-Platform UI specific:
+See `coding-conventions.mdc`. Platform UI: 
 - Components, Screens, Layouts: PascalCase  
 - Hooks: `use` + PascalCase (e.g., `useButton`)  
 - Styles: `[ComponentName].platform.styles.jsx`  

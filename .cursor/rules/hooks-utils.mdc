@@ -39,9 +39,7 @@ src/utils/
 
 ## Hook Design Rules
 ### Naming
-**Single Source of Truth**: See `coding-conventions.mdc` for complete naming rules.
-
-Hooks:
+See `coding-conventions.mdc`. Hooks:
 * Must start with `use`
 * Use `camelCase`
 * One hook = one responsibility
@@ -90,9 +88,7 @@ const { user, login, logout } = useAuth();
 ---
 
 ## Side Effects
-**Single Source of Truth**: See `coding-conventions.mdc` for complete side effects rules.
-
-Side effects may exist in hooks **only if**:
+See `coding-conventions.mdc`. Side effects in hooks **only if**:
 * They are UI-adjacent (focus, lifecycle, subscriptions)
 * Irreversible work is delegated to **thunks/middleware/services/workers/bootstrap**
 

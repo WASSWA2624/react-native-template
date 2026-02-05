@@ -32,7 +32,7 @@ Goals:
 - Color must not be the only signal (icons/text + semantic status)
 - Contrast must meet WCAG AA expectations (4.5:1 for text, 3:1 for UI components)
 - Focus states must be visible on web (theme-defined)
-- Support high contrast modes where available
+- Support system high-contrast / accessibility preferences where available (app has light/dark themes only; see `theme-design.mdc`)
 
 ### 4. Content Accessibility
 - All images must have alt text or be marked decorative
@@ -104,10 +104,9 @@ Goals:
 - Consistent error handling patterns
 
 ## Theming & Contrast
-- Contrast must meet WCAG AA expectations; theme tokens must be adjusted if not
-- Focus states must be visible on web (theme-defined)
-- Support system dark mode preferences
-- Ensure theme works for color-blind users
+- Contrast: WCAG AA; theme tokens must be adjusted if not. Focus states visible on web (theme-defined).
+- Support system dark mode preferences (app themes: light/dark only).
+- Ensure theme works for color-blind users.
 
 ## Forbidden Patterns
 ❌ Inaccessible interactive elements
@@ -123,6 +122,6 @@ Goals:
 - Accessibility violations block PR approval
 - UX regressions must be addressed
 - All new features must include loading/error/empty states
-- **Single Source of Truth**: See `i18n.mdc` for i18n requirements
+- See `i18n.mdc` for i18n
 
 

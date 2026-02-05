@@ -12,7 +12,12 @@
     "web": "expo start --web",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
-    "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage"
+    "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
+    "debug:expo": "node scripts/debug/expo-with-logging.mjs",
+    "debug:android": "node scripts/debug/android-debug-logcat.mjs",
+    "debug:ios": "node scripts/debug/ios-debug-logcat.mjs",
+    "debug:web": "node scripts/debug/web-log-receiver.mjs",
+    "debug:all": "node scripts/debug/debug-all.mjs"
   },
   "postinstall": "patch-package",
   "dependencies": {

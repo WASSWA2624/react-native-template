@@ -4,7 +4,7 @@ alwaysApply: true
 # Platform UI Layer Standards
 
 ## Purpose
-Define rules and best practices for the `src/platform` layer, including components, screens, and layouts for Android, iOS, and Web. The default layout and app look and feel are **Word-like** (document-style UI, toolbar/ribbon, clear typography); see `theme-design.mdc`.
+Define rules and best practices for the `src/platform` layer, including components, screens, and layouts for Android, iOS, and Web. All UI must deliver a **Microsoft Fluent / Microsoft 365 look and feel** (see `theme-design.mdc`).
 
 ## Layer Principles
 1. **Presentation-only**: Layer boundary rules are defined in `project-structure.mdc`.
@@ -35,7 +35,7 @@ Forbidden:
 - “Shared styles” implemented by importing another platform’s style file
 
 ### styled-components entrypoint per platform (MANDATORY)
-- **Single Source of Truth**: See `theme-design.mdc`.
+See `theme-design.mdc`.
 
 ## Maximum reusability without duplication (MANDATORY)
 - Reuse via **composition**, shared hooks, and shared tokens:
@@ -45,11 +45,11 @@ Forbidden:
 - If multiple platforms need the same layout primitive (e.g., spacing rows/columns), create a reusable platform component/pattern and consume it, instead of duplicating style blocks across screens.
 
 ## Naming Conventions
-**Single Source of Truth**: See `coding-conventions.mdc` for global naming rules, `component-structure.mdc` for platform UI specifics.
+See `coding-conventions.mdc`, `component-structure.mdc`.
 
 ## Composition Rules
 * Prefer **hooks and composition** over class components.
-* Any state or side-effect must delegate to hooks, features, or Redux (see `coding-conventions.mdc` for complete side effects rules - single source of truth).
+* Any state or side-effect must delegate to hooks, features, or Redux (see `coding-conventions.mdc`).
 * Screens should be lightweight and delegate logic to features/hooks.
 
 ## Import Rules
@@ -65,10 +65,5 @@ Forbidden:
 ## Resilience (Fail-safe UI)
 * Every screen must handle: **loading**, **empty**, **error**, and **offline** states without crashing
 
-## Related `.mdc` files
-* `component-structure.mdc` - Component organization (single source of truth)
-* `app-router.mdc` - Routing (single source of truth)
-* `features-domain.mdc` - State/logic delegation
-* `testing.mdc` - Testing requirements (single source of truth)
-* `theme-design.mdc` - Theming (single source of truth)
-* `coding-conventions.mdc` - Side effects rules
+## Related
+`component-structure.mdc`, `app-router.mdc`, `features-domain.mdc`, `testing.mdc`, `theme-design.mdc`, `coding-conventions.mdc`.

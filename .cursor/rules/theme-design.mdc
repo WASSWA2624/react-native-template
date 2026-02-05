@@ -4,21 +4,15 @@ alwaysApply: true
 
 # Theme & Design System Standards
 ## Purpose
-This document defines **how styling, theming, responsiveness, and modern design principles are implemented** in the application.
-Goals:
-- Single source of truth for **all visual design**
-- Fully theme-driven UI (no hardcoded styles)
-- Platform-consistent but platform-flexible design
-- Scalable, maintainable, and accessible styling system
-- Support **mobile, tablet, desktop, and large screens**
-- **Modern, clean, and intuitive design** that follows platform guidelines
-The app uses **styled-components** as the **primary styling system**. Inline styles are forbidden. `StyleSheet` may be used only in limited cases for native performance (see below) and must still be theme/token-driven. See `core-principles.mdc` for the global styling policy.
+Single source of truth for **all visual design**. Theme-driven UI; Microsoft Fluent / Microsoft 365 look and feel across all platforms. Support mobile, tablet, desktop, and large screens.
+
+**Implementation**: styled-components only. Inline styles forbidden. `StyleSheet` only inside `*.android.styles.jsx` / `*.ios.styles.jsx` for static, theme-driven styles (see below). See `core-principles.mdc` for global styling policy.
 ---
 
 ## Theme Ownership
 The **Theme Layer** owns:
 - Colors, spacing, typography, radius, shadows
-- Light/Dark (and future) themes
+- Light and Dark themes only (exactly two)
 - Breakpoints & responsive helpers
 - Design tokens
 It does **not**:
@@ -40,8 +34,7 @@ src/theme/
     │   ├── radius.js
     │   └── shadows.js
     ├── light.theme.js        # Light theme definition
-    ├── dark.theme.js         # Dark theme definition
-    └── high-contrast.theme.js # Optional theme variant
+    └── dark.theme.js         # Dark theme definition
 ```
 ---
 
@@ -114,9 +107,12 @@ Rules:
 ---
 
 ## Theme Provider Rules
+### Supported Themes (Mandatory)
+* **Only two themes**: Light and Dark. No other theme variants (e.g. high-contrast) are part of the app theme system.
+* Theme provider and store must expose only `light` and `dark`; theme resolution must choose one of these two.
+
 ### Provider Placement
-* ThemeProvider is mounted **only once**
-* **Single Source of Truth**: See `bootstrap-config.mdc` for provider placement rules
+ThemeProvider mounted **only once**. See `bootstrap-config.mdc` for placement.
 
 ### Theme Switching
 * Theme switching is controlled via:
@@ -146,7 +142,7 @@ Forbidden:
 - Using `styled-components` inside native `*.android.styles.jsx` / `*.ios.styles.jsx`
 
 ### Styled Component Creation
-**Single Source of Truth**: See `component-structure.mdc` for complete rules and forbidden patterns
+See `component-structure.mdc`.
 ---
 
 ### Accessing Theme
@@ -199,83 +195,16 @@ Rules:
 * Focus states must be theme-defined
 * Motion must be reducible via theme flags
 
-## Default Layout & Word-Like Look and Feel (Mandatory)
-
-The **default application layout** and **overall look and feel** follow a **Microsoft Word–like** document-style UI. Layout and components should feel professional, document-oriented, and familiar to productivity-app users.
-
-### Default Layout Structure
-The default layout (used for main app routes) must provide:
-- **Toolbar/Ribbon**: Top bar with placeholder slots for primary actions (file, edit, view, etc.). Use theme tokens for height, background, borders.
-- **Sidebar**: Optional collapsible sidebar (placeholder or nav) for secondary navigation. Use theme tokens.
-- **Main content area**: Primary region where route content renders (e.g. `<Slot />`). Clear boundaries, padding from theme.
-- **Status bar**: Bottom strip for status/context (placeholder). Use theme tokens.
-
-All regions are **placeholders** until app-specific features wire real content. Use semantic tokens (e.g. `surface`, `border`, `textSecondary`) so the layout works in light/dark/high-contrast.
-
-### Word-Like Aesthetic
-- **Document-style UI**: Clear typography hierarchy, readable body text, subtle borders and dividers.
-- **Toolbar/ribbon**: Horizontal control strip; grouped actions; consistent icon + label where applicable.
-- **Professional**: Restrained shadows, consistent spacing, no decorative clutter.
-- **Components**: Buttons, inputs, cards, and lists should align with this aesthetic (see `component-structure.mdc` for component-level Word-like guidance).
-
----
-
-## Modern Design Principles (Mandatory)
-
-### 1. Clean & Minimal Design
-**Rules**:
-- Use whitespace effectively (spacing tokens)
-- Avoid visual clutter
-- Focus on content hierarchy
-- Use subtle shadows and borders for depth
-- Prefer flat design with subtle elevation
-
-### 2. Platform Guidelines
-**Rules**:
-- **Android**: Follow Material Design 3 principles where applicable
-  - Material surfaces, elevation, and motion
-  - Material color system
-  - Material typography scale
-- **iOS**: Follow Human Interface Guidelines where applicable
-  - Native iOS navigation patterns
-  - iOS typography and spacing
-  - iOS color and iconography
-- **Web**: Follow modern web design principles
-  - Responsive grid systems
-  - Modern CSS features
-  - Progressive enhancement
-
-### 3. Visual Hierarchy
-**Rules**:
-- Use typography scale for hierarchy (see typography tokens)
-- Use color contrast for emphasis
-- Use spacing to group related content
-- Use shadows/elevation to indicate importance
-- Clear visual separation between sections
-
-### 4. Modern UI Patterns
-**Rules**:
-- **Cards**: Use cards for grouped content with subtle shadows
-- **Shadows**: Use elevation-based shadows (see shadow tokens)
-- **Animations**: Subtle, purposeful animations (respect reduced motion)
-- **Micro-interactions**: Provide feedback for user actions
-- **Icons**: Use consistent icon system (semantic, clear, recognizable)
-
-### 5. Design Consistency
-**Rules**:
-- Consistent spacing scale across all components
-- Consistent typography scale
-- Consistent color usage (semantic colors)
-- Consistent border radius
-- Consistent shadow/elevation levels
-
-### 6. Responsive Design Patterns
-**Rules**:
-- Mobile-first approach (see `core-principles.mdc` Principle #7)
-- Use breakpoints for layout changes (see breakpoints section)
-- Adapt component layouts for different screen sizes
-- Optimize touch targets for mobile (minimum 44x44px)
-- Progressive enhancement for larger screens
+## Microsoft Fluent Design Principles (Mandatory)
+- **Typography**: Segoe UI–style (theme tokens); clear hierarchy.
+- **Colors**: Fluent blue primary (#0078D4–style), neutrals, semantic success/warning/error; theme tokens only.
+- **Corners**: 2–4px typical (theme radius); no large border-radius.
+- **Depth**: Light shadows/borders; no heavy skeuomorphism.
+- **Reference**: Fluent / Microsoft 365 patterns (cards, command bars, lists, forms). One cohesive Fluent look on Android, iOS, Web; prefer over Material/HIG unless a11y or platform requires.
+- **Cards**: Subtle borders or light shadows; restrained elevation.
+- **Motion**: Subtle; respect reduced motion.
+- **Consistency**: One spacing scale, one typography scale, semantic colors, small radius, consistent elevation (all from tokens).
+- **Responsive**: Mobile-first; breakpoints; 44x44px touch targets; command-bar/ribbon patterns on desktop where appropriate.
 
 ---
 ## Forbidden Patterns
@@ -291,12 +220,9 @@ All regions are **placeholders** until app-specific features wire real content. 
 ❌ Overuse of shadows or effects
 ❌ Cluttered layouts
 ❌ Poor visual hierarchy
+❌ Visual styles that conflict with Microsoft Fluent look and feel (e.g. heavy Material or iOS-only styling when Fluent is the target)
 
 ## Enforcement
-* All new UI must consume the theme
-* Any hardcoded visual value is a violation
-* Design changes require updating tokens or themes
-* Modern design principles must be followed
-* Platform guidelines should be respected where applicable
+All UI must consume the theme; no hardcoded visual values. Design changes require token/theme updates. Fluent principles and token semantics are mandatory.
 ---
-**The theme is the single source of truth for all visuals.**
+**Theme = single source of truth for all visuals. UI = Microsoft Fluent / Microsoft 365 look and feel.**

@@ -93,7 +93,7 @@ Fundamental principles guiding all development decisions. These take precedence 
 ### 8. Performance & Efficiency
 **Rule**: Application must be fast and efficient.
 
-**Requirements**: See `performance.mdc` (single source of truth) for complete performance rules.
+**Requirements**: See `performance.mdc`.
 
 **High-level requirements**:
 - Optimize initial load and time to interactive
