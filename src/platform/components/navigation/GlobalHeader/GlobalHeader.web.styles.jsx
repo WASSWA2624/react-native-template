@@ -12,7 +12,7 @@ const StyledHeader = styled.header.withConfig({
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.background.tertiary};
   padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
-  min-height: 36px;
+  min-height: ${({ theme }) => theme.spacing.xl + theme.spacing.xs}px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -25,16 +25,14 @@ const StyledHeader = styled.header.withConfig({
   flex-direction: column;
   justify-content: center;
 
-  /* Tablet */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    min-height: 36px;
-    padding: 6px ${({ theme }) => theme.spacing.sm}px;
+  @media (min-width: ${({ theme }) => theme.breakpoints?.tablet ?? 768}px) and (max-width: ${({ theme }) => (theme.breakpoints?.desktop ?? 1024) - 1}px) {
+    min-height: ${({ theme }) => theme.spacing.xl + theme.spacing.xs}px;
+    padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
   }
 
-  /* Mobile: Compact header */
-  @media (max-width: 767px) {
-    min-height: 40px;
-    padding: 6px 8px;
+  @media (max-width: ${({ theme }) => (theme.breakpoints?.tablet ?? 768) - 1}px) {
+    min-height: ${({ theme }) => theme.spacing.xxl}px;
+    padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
   }
 `;
 
@@ -50,10 +48,7 @@ const StyledHeaderRow = styled.div.withConfig({
   flex-wrap: nowrap;
   min-width: 0;
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    gap: ${({ theme }) => theme.spacing.sm}px;
-  }
-  @media (max-width: 767px) {
+  @media (max-width: ${({ theme }) => (theme.breakpoints?.tablet ?? 768) - 1}px) {
     gap: ${({ theme }) => theme.spacing.xs}px;
   }
 `;
@@ -122,8 +117,8 @@ const StyledActionButton = styled.button.withConfig({
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.xs}px;
   padding: 0 ${({ theme }) => theme.spacing.xs}px;
-  min-height: 28px;
-  min-width: 28px;
+  min-height: ${({ theme }) => theme.spacing.xl}px;
+  min-width: ${({ theme }) => theme.spacing.xl}px;
   border-radius: ${({ theme, isCircular }) =>
     isCircular ? theme.radius.full : theme.radius.sm}px;
   border: 1px solid
@@ -151,23 +146,12 @@ const StyledActionButton = styled.button.withConfig({
     outline-offset: 2px;
   }
 
-  /* Tablet */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    min-height: 28px;
-    min-width: 28px;
+  @media (max-width: ${({ theme }) => (theme.breakpoints?.tablet ?? 768) - 1}px) {
+    min-height: ${({ theme }) => theme.spacing.xl}px;
+    min-width: ${({ theme }) => theme.spacing.xl}px;
     padding: 0 ${({ theme }) => theme.spacing.xs}px;
-    font-size: 11px;
-  }
-
-  /* Mobile: Compact, well-aligned buttons */
-  @media (max-width: 767px) {
-    min-height: 28px;
-    min-width: 28px;
-    padding: 0 6px;
-    font-size: 11px;
-    border-radius: ${({ theme }) => theme.radius.full}px;
-    background-color: ${({ theme, isPrimary }) =>
-      isPrimary ? theme.colors.primary : theme.colors.background.secondary};
+    font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+    border-radius: ${({ theme }) => theme.radius?.full ?? 9999}px;
     border: none;
 
     &:active {

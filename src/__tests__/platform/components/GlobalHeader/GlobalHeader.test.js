@@ -115,6 +115,25 @@ describe('GlobalHeader Component', () => {
     expect(getByTestId('global-header-breadcrumbs')).toBeTruthy();
   });
 
+  it('should use default title from i18n when title is not provided', () => {
+    const { getByText } = renderWithProviders(<GlobalHeader testID="global-header" />);
+    expect(getByText('navigation.mainNavigation')).toBeTruthy();
+  });
+
+  it('should expose accessibility label on container', () => {
+    const { getByLabelText } = renderWithProviders(
+      <GlobalHeader title="App" accessibilityLabel="Main app header" testID="global-header" />
+    );
+    expect(getByLabelText('Main app header')).toBeTruthy();
+  });
+
+  it('should render with no actions without error', () => {
+    const { getByTestId } = renderWithProviders(
+      <GlobalHeader title="Empty" actions={[]} testID="global-header" />
+    );
+    expect(getByTestId('global-header')).toBeTruthy();
+  });
+
   describe('Platform-specific rendering', () => {
     it('should render Android variant', () => {
       // eslint-disable-next-line import/no-unresolved

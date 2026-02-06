@@ -7,7 +7,7 @@
 import React from 'react';
 import { Slot } from 'expo-router';
 import { useI18n } from '@hooks';
-import AppFrame from '../../AppFrame';
+import { AppFrame } from '@platform/layouts';
 import {
   GlobalHeader,
   LanguageControls,

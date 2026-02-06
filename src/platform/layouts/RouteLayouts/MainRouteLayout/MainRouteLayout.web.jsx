@@ -11,7 +11,7 @@
 import React, { useMemo } from 'react';
 import { Slot } from 'expo-router';
 import { useAuthGuard } from '@navigation/guards';
-import AppFrame from '../../AppFrame';
+import { AppFrame } from '@platform/layouts';
 import {
   GlobalHeader,
   Icon,

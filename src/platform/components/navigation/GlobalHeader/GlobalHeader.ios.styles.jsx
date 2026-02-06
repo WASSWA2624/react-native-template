@@ -15,10 +15,10 @@ const StyledHeader = styled(View).withConfig({
   border-bottom-color: ${({ theme }) => theme.colors.background.tertiary};
   padding: ${({ theme }) => theme.spacing.md}px;
   padding-top: ${({ theme, topInset }) => theme.spacing.md + (topInset || 0)}px;
-  shadow-color: #000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.08;
-  shadow-radius: 4px;
+  shadow-color: ${({ theme }) => theme.shadows?.md?.shadowColor ?? theme.shadows?.sm?.shadowColor ?? 'rgba(0,0,0,0.15)'};
+  shadow-offset: ${({ theme }) => `${theme.shadows?.md?.shadowOffset?.width ?? 0}px ${theme.shadows?.md?.shadowOffset?.height ?? 2}px`};
+  shadow-opacity: ${({ theme }) => theme.shadows?.md?.shadowOpacity ?? theme.shadows?.sm?.shadowOpacity ?? 0.08};
+  shadow-radius: ${({ theme }) => theme.shadows?.md?.shadowRadius ?? 4}px;
 `;
 
 const StyledHeaderRow = styled(View).withConfig({
@@ -80,7 +80,7 @@ const StyledActionButton = styled(Pressable).withConfig({
   min-height: 44px;
   min-width: 44px;
   border-radius: ${({ theme, isCircular }) =>
-    isCircular ? theme.radius.full : theme.spacing.xxl}px;
+    isCircular ? theme.radius.full : theme.radius.sm}px;
   border-width: 1px;
   border-color: ${({ theme, isPrimary }) =>
     isPrimary ? theme.colors.primary : theme.colors.background.tertiary};

@@ -107,7 +107,7 @@ const StyledContent = styled.main.withConfig({
   gap: 0;
   max-width: 100%;
   width: 100%;
-  padding-bottom: ${({ hasFooter, theme }) => (hasFooter ? '32px' : 0)};
+  padding-bottom: ${({ hasFooter, theme }) => (hasFooter ? `${theme.spacing.xl}px` : '0')};
 `;
 
 const StyledContentBody = styled.div.withConfig({
