@@ -3,6 +3,7 @@
  * File: index.js
  */
 
+export * from './app-identity';
 export * from './env';
 export * from './constants';
 export { endpoints } from './endpoints';

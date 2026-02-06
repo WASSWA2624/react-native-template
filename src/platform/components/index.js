@@ -53,6 +53,9 @@ export { default as NetworkConnectivityIcon } from './feedback/NetworkConnectivi
 export { default as DatabaseConnectivityIcon } from './feedback/DatabaseConnectivityIcon';
 export { default as DatabaseIndicator } from './feedback/DatabaseIndicator';
 
+// Branding
+export { default as AppLogo, useAppLogo, SIZES as AppLogoSizes } from './branding/AppLogo';
+
 // Display Components
 export { default as Text } from './display/Text';
 export { default as Image } from './display/Image';

@@ -1,38 +1,45 @@
+const {
+  APP_DISPLAY_NAME,
+  APP_SHORT_NAME,
+  FLUENT_PRIMARY,
+  ASSET_ICON,
+} = require('./src/config/app-identity');
+
 export default {
   expo: {
-    name: "hms",
+    name: APP_DISPLAY_NAME,
     slug: "hms",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/favicon.png",
+    icon: ASSET_ICON,
     userInterfaceStyle: "light",
     splash: {
-      image: "./assets/favicon.png",
+      image: ASSET_ICON,
       resizeMode: "contain",
-      backgroundColor: "#ffffff",
+      backgroundColor: FLUENT_PRIMARY,
     },
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.hms.ios",
+      icon: ASSET_ICON,
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/favicon.png",
-        backgroundColor: "#ffffff",
+        foregroundImage: ASSET_ICON,
+        backgroundColor: FLUENT_PRIMARY,
       },
       package: "com.hms.android",
     },
     web: {
-      favicon: "./assets/favicon.png",
+      favicon: ASSET_ICON,
       manifest: "./public/manifest.json",
       bundler: "metro",
       output: "static",
-      // PWA configuration
-      name: "Hospital Management System",
-      shortName: "HMS",
-      description: "Hospital Management System",
-      themeColor: "#007AFF",
+      name: APP_DISPLAY_NAME,
+      shortName: APP_SHORT_NAME,
+      description: APP_DISPLAY_NAME,
+      themeColor: FLUENT_PRIMARY,
       backgroundColor: "#ffffff",
       display: "standalone",
       orientation: "portrait",
