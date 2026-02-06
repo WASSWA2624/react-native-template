@@ -25,6 +25,16 @@ import usePatientRouteLayout from './usePatientRouteLayout';
 const PatientRouteLayoutAndroid = () => {
   const { t } = useI18n();
   const { headerActions, overlaySlot, patientItems, isItemVisible } = usePatientRouteLayout();
+  const tabBarItems = useMemo(
+    () =>
+      patientItems.map((it) => ({
+        ...it,
+        href: it.path,
+        label: t(`navigation.items.patient.${it.id}`),
+        icon: getMenuIconGlyph(it.icon),
+      })),
+    [patientItems, t]
+  );
   const banners = useShellBanners();
   const bannerSlot = banners.length ? (
     <ShellBanners banners={banners} testID="patient-shell-banners" />

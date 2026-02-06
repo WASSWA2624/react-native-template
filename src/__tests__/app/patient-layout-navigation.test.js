@@ -144,6 +144,20 @@ describe('PatientLayout with Navigation', () => {
     expect(getByTestId('slot')).toBeDefined();
   });
 
+  it('passes transformed nav items (label, icon, href) to TabBar on Android', () => {
+    render(<PatientRouteLayoutAndroid />);
+    const tabBarCall = TabBar.mock.calls[0];
+    const items = tabBarCall[0].items;
+    expect(Array.isArray(items)).toBe(true);
+    expect(items.length).toBeGreaterThan(0);
+    items.forEach((item) => {
+      expect(item).toHaveProperty('id');
+      expect(item).toHaveProperty('label');
+      expect(item).toHaveProperty('href');
+      expect(item).toHaveProperty('icon');
+    });
+  });
+
   it('passes logout action when authenticated on Android', () => {
     render(<PatientRouteLayoutAndroid />);
     const headerCall = GlobalHeader.mock.calls[0];
