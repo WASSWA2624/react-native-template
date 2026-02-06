@@ -58,6 +58,18 @@ const RetryButton = styled.button.withConfig({
   font-size: inherit;
 `;
 
+const DevMessage = styled.p.withConfig({
+  displayName: 'FallbackUI_DevMessage',
+  componentId: 'FallbackUI_DevMessage',
+})`
+  font-size: 12px;
+  color: #666;
+  margin: 8px 0 0 0;
+  text-align: center;
+  max-width: 90%;
+  word-break: break-word;
+`;
+
 const FallbackUI = ({ error, onRetry }) => {
   const title = getText('errors.fallback.title', 'Something went wrong');
   const message =
@@ -65,11 +77,13 @@ const FallbackUI = ({ error, onRetry }) => {
     getText('errors.fallback.message', 'An unexpected error occurred');
   const retry = getText('errors.fallback.retry', 'Retry');
   const retryHint = getText('errors.fallback.retryHint', 'Try again');
+  const showDevMessage = typeof __DEV__ !== 'undefined' && __DEV__ && error?.devMessage;
 
   return (
     <Container>
       <Title role="heading" aria-level={1}>{title}</Title>
       <Message>{message}</Message>
+      {showDevMessage && <DevMessage data-testid="error-dev-message">{error.devMessage}</DevMessage>}
       {onRetry && (
         <RetryButton
           type="button"

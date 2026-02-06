@@ -26,8 +26,9 @@ const GlobalStyle = createGlobalStyle`
 
 const ThemeProviderWrapper = ({ children }) => {
   const themeMode = useSelector(selectTheme);
+  const mode = themeMode === 'dark' ? 'dark' : 'light';
   return (
-    <BaseThemeProvider theme={themeMode}>
+    <BaseThemeProvider theme={mode}>
       <GlobalStyle />
       {children}
     </BaseThemeProvider>

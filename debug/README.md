@@ -31,3 +31,13 @@ Generated log files are written here by the scripts in `scripts/debug/`. All `*.
 5. **Optional**: run `npm run debug:all` to capture Expo + Android (and iOS on macOS) logs together while you reproduce the issue.
 
 See `.cursor/rules/debug.mdc` for full details.
+
+## Expo Go on Android not running
+
+1. **Expo Go version**: This project uses **Expo SDK 54**. Install or update **Expo Go** from the Google Play Store so it supports SDK 54.
+2. **Same network**: Phone and dev machine must be on the same Wi‑Fi (or use tunnel below). Disable VPN on either if it blocks LAN.
+3. **Start dev server**: From project root run `npm start` (or `npx expo start`). In the terminal you’ll see a QR code and a URL.
+4. **Open in Expo Go**: On the phone, open the **Expo Go** app and scan the QR code, or enter the URL manually. If it fails, try tunnel:
+   - Run `npm run android:tunnel` (starts with `--tunnel`) and scan the new QR code. Tunnel works across different networks.
+5. **Firewall**: Allow Node/Metro on your dev machine (e.g. port 8081, or the port shown in the terminal).
+6. **USB debugging (optional)**: For `npm run android` to launch the app automatically, connect the device via USB, enable USB debugging, and ensure `adb devices` lists the device.

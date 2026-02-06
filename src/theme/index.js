@@ -12,12 +12,16 @@ import darkTheme from './dark.theme';
 const ThemeProvider = Platform.OS === 'web' ? WebThemeProvider : NativeThemeProvider;
 
 const resolveSystemTheme = () => {
-  const systemScheme = Appearance.getColorScheme();
-  return systemScheme === 'dark' ? 'dark' : 'light';
+  try {
+    const systemScheme = typeof Appearance?.getColorScheme === 'function' ? Appearance.getColorScheme() : null;
+    return systemScheme === 'dark' ? 'dark' : 'light';
+  } catch {
+    return 'light';
+  }
 };
 
 export function getTheme(mode = 'light') {
-  const resolvedMode = mode === 'system' ? resolveSystemTheme() : mode;
+  const resolvedMode = mode === 'system' ? resolveSystemTheme() : (mode === 'dark' ? 'dark' : 'light');
   return resolvedMode === 'dark' ? darkTheme : lightTheme;
 }
 

@@ -31,18 +31,20 @@ export function useAuthGuard(options = {}) {
   
   useEffect(() => {
     if (skipRedirect) {
-      // Skip automatic redirect - let the calling component handle redirects
       return;
     }
-    
     if (isAuthenticated) {
-      // Reset redirect flag when authenticated
       hasRedirected.current = false;
-    } else if (!hasRedirected.current) {
-      // Only redirect if not authenticated and haven't redirected yet
-      hasRedirected.current = true;
-      router.replace(redirectPath);
+      return;
     }
+    if (hasRedirected.current) return;
+    hasRedirected.current = true;
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        router.replace(redirectPath);
+      });
+    });
+    return () => cancelAnimationFrame(id);
   }, [isAuthenticated, redirectPath, router, skipRedirect]);
   
   return {
