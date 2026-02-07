@@ -9,7 +9,7 @@ import { Text, Switch } from '@platform/components';
 import { ThemeControls, LanguageControls } from '@platform/components';
 import { selectFooterVisible } from '@store/selectors';
 import { actions as uiActions } from '@store/slices/ui.slice';
-import { StyledPanel, StyledSection } from './GeneralSettingsPanel.android.styles';
+import { StyledPanel, StyledSection, StyledControlsRow } from './GeneralSettingsPanel.android.styles';
 
 const GeneralSettingsPanelAndroid = () => {
   const { t } = useI18n();

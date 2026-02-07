@@ -18,7 +18,8 @@ const useCrud = (actions = {}) => {
         return result;
       } catch (error) {
         fail(error?.code);
-        throw error;
+        // Do not rethrow: state is updated (errorCode); avoids uncaught promise rejection in useEffect callers
+        return undefined;
       }
     },
     [start, succeed, fail]
