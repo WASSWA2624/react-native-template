@@ -8,6 +8,8 @@ const FOOTER_VARIANTS = {
   AUTH: 'auth',
   MAIN: 'main',
   PATIENT: 'patient',
+  /** Minimal footer (logo, app name, copyright, support) to match mobile web */
+  MINIMAL: 'minimal',
 };
 
 const STATUS_TONES = {

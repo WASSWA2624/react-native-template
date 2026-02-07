@@ -72,7 +72,15 @@ const AppFrameIOS = ({
           {breadcrumbs}
         </StyledBreadcrumbs>
       )}
-      <StyledScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <StyledScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          flexDirection: 'column',
+          paddingBottom: hasFooter ? 140 : 0,
+        }}
+      >
         {hasSidebar && <StyledSidebar>{sidebar}</StyledSidebar>}
         <StyledContent>{children}</StyledContent>
       </StyledScrollView>

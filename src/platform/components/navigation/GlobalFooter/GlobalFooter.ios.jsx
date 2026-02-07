@@ -1,13 +1,15 @@
 /**
  * GlobalFooter Component - iOS
- * Shared global footer with status, legal, and quick actions
+ * Shared global footer; MINIMAL variant matches mobile web (logo, app name, copyright, support)
  * File: GlobalFooter.ios.jsx
  */
 import React, { useMemo } from 'react';
+import { Linking, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '@platform/components/display/Text';
 import { useI18n } from '@hooks';
-import { APP_ENVIRONMENT, APP_VERSION, BUILD_NUMBER } from '@config/env';
+import { AppLogo, AppLogoSizes } from '@platform/components';
+import { APP_ENVIRONMENT, APP_VERSION, BUILD_NUMBER, SUPPORT_EMAIL, SUPPORT_PHONE } from '@config/env';
 import useGlobalFooter from './useGlobalFooter';
 import { ACTION_VARIANTS, FOOTER_VARIANTS, STATUS_TONES } from './types';
 import {
@@ -24,6 +26,11 @@ import {
   StyledQuickActionButton,
   StyledQuickActionIcon,
   StyledQuickActionsSlot,
+  StyledMinimalRow,
+  StyledFooterBrand,
+  StyledFooterCopyright,
+  StyledFooterLink,
+  StyledFooterSeparator,
 } from './GlobalFooter.ios.styles';
 
 const normalizeVariant = (variant) => {
@@ -190,6 +197,53 @@ const GlobalFooterIOS = ({
     build: BUILD_NUMBER,
   });
   const statusTextColor = resolvedStatusTone === STATUS_TONES.NEUTRAL ? 'text.secondary' : 'text.inverse';
+
+  if (resolvedVariant === FOOTER_VARIANTS.MINIMAL) {
+    const appName = t('app.name');
+    const year = new Date().getFullYear();
+    const copyright = t('navigation.footer.copyright', { year, appName });
+    const showEmail = Boolean(SUPPORT_EMAIL);
+    const showPhone = Boolean(SUPPORT_PHONE);
+    return (
+      <StyledFooter
+        accessibilityLabel={accessibilityLabel || t('navigation.footer.title')}
+        testID={testID}
+        {...rest}
+      >
+        <StyledFooterContent bottomInset={bottomInset}>
+          <StyledMinimalRow>
+            <StyledFooterBrand>
+              <AppLogo size={AppLogoSizes.SM} accessibilityLabel={appName} />
+              <Text variant="caption" color="text.secondary">{appName}</Text>
+            </StyledFooterBrand>
+            <StyledFooterCopyright>{copyright}</StyledFooterCopyright>
+            {showEmail && (
+              <>
+                <StyledFooterSeparator>·</StyledFooterSeparator>
+                <Pressable
+                  onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}`)}
+                  accessibilityLabel={t('navigation.footer.supportEmail')}
+                >
+                  <StyledFooterLink>{SUPPORT_EMAIL}</StyledFooterLink>
+                </Pressable>
+              </>
+            )}
+            {showPhone && (
+              <>
+                <StyledFooterSeparator>·</StyledFooterSeparator>
+                <Pressable
+                  onPress={() => Linking.openURL(`tel:${SUPPORT_PHONE.replace(/\s/g, '')}`)}
+                  accessibilityLabel={t('navigation.footer.supportPhone')}
+                >
+                  <StyledFooterLink>{SUPPORT_PHONE}</StyledFooterLink>
+                </Pressable>
+              </>
+            )}
+          </StyledMinimalRow>
+        </StyledFooterContent>
+      </StyledFooter>
+    );
+  }
 
   return (
     <StyledFooter

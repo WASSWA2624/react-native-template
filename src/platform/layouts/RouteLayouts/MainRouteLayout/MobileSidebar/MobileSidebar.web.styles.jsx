@@ -16,8 +16,9 @@ const StyledMobileSidebarOverlay = styled.div.withConfig({
   background-color: ${({ theme }) => theme.colors.overlay.backdrop};
   backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
   -webkit-backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   transition: opacity 0.2s ease;
 
   @media (prefers-reduced-motion: reduce) {
@@ -42,12 +43,13 @@ const StyledMobileSidebarPanel = styled.div.withConfig({
     if (!shadow) return '2px 0 16px rgba(0, 0, 0, 0.2)';
     return `${shadow.shadowOffset?.width || 0}px ${shadow.shadowOffset?.height || 2}px ${shadow.shadowRadius || 4}px rgba(0, 0, 0, ${shadow.shadowOpacity || 0.15})`;
   }};
-  transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
+  transform: translateX(${({ $isOpen }) => ($isOpen ? '0' : '-100%')});
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;

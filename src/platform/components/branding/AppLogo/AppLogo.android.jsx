@@ -9,8 +9,8 @@ import { StyledLogoImage } from './AppLogo.android.styles';
 import useAppLogo from './useAppLogo';
 import { SIZES } from './types';
 
-const LOGO_LIGHT = require('../../../../../../assets/logo-light.png');
-const LOGO_DARK = require('../../../../../../assets/logo-dark.png');
+const LOGO_LIGHT = require('../../../../../assets/logo-light.png');
+const LOGO_DARK = require('../../../../../assets/logo-dark.png');
 
 /**
  * @param {Object} props

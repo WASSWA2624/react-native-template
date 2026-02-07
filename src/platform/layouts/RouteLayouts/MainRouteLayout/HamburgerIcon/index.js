@@ -1,5 +1,5 @@
 /**
- * HamburgerIcon component barrel
+ * HamburgerIcon component barrel (platform resolution: .web, .ios, .android)
  * File: HamburgerIcon/index.js
  */
-export { default } from './HamburgerIcon.web';
+export { default } from './HamburgerIcon';

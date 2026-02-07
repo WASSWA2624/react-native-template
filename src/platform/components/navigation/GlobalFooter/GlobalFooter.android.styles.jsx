@@ -20,7 +20,7 @@ const StyledFooterContent = styled.View.withConfig({
 })`
   padding: ${({ theme }) => theme.spacing.md}px;
   padding-bottom: ${({ theme, bottomInset }) => theme.spacing.md + bottomInset}px;
-  row-gap: ${({ theme }) => theme.spacing.sm}px;
+  row-gap: ${({ theme }) => theme.spacing.md}px;
 `;
 
 const StyledFooterRow = styled.View.withConfig({
@@ -31,8 +31,8 @@ const StyledFooterRow = styled.View.withConfig({
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  column-gap: ${({ theme }) => theme.spacing.sm}px;
-  row-gap: ${({ theme }) => theme.spacing.xs}px;
+  column-gap: ${({ theme }) => theme.spacing.md}px;
+  row-gap: ${({ theme }) => theme.spacing.sm}px;
 `;
 
 const StyledStatusGroup = styled.View.withConfig({
@@ -76,8 +76,8 @@ const StyledLegalLinks = styled.View.withConfig({
 })`
   flex-direction: row;
   flex-wrap: wrap;
-  column-gap: ${({ theme }) => theme.spacing.sm}px;
-  row-gap: ${({ theme }) => theme.spacing.xs}px;
+  column-gap: ${({ theme }) => theme.spacing.md}px;
+  row-gap: ${({ theme }) => theme.spacing.sm}px;
   align-items: center;
 `;
 
@@ -141,6 +141,50 @@ const StyledQuickActionsSlot = styled.View.withConfig({
   width: 100%;
 `;
 
+const StyledMinimalRow = styled.View.withConfig({
+  displayName: 'StyledMinimalRow',
+  componentId: 'StyledMinimalRow',
+})`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+`;
+
+const StyledFooterBrand = styled.View.withConfig({
+  displayName: 'StyledFooterBrand',
+  componentId: 'StyledFooterBrand',
+})`
+  flex-direction: row;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+`;
+
+const StyledFooterCopyright = styled.Text.withConfig({
+  displayName: 'StyledFooterCopyright',
+  componentId: 'StyledFooterCopyright',
+})`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+`;
+
+const StyledFooterLink = styled.Text.withConfig({
+  displayName: 'StyledFooterLink',
+  componentId: 'StyledFooterLink',
+})`
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+`;
+
+const StyledFooterSeparator = styled.Text.withConfig({
+  displayName: 'StyledFooterSeparator',
+  componentId: 'StyledFooterSeparator',
+})`
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+`;
+
 export {
   StyledFooter,
   StyledFooterContent,
@@ -155,4 +199,9 @@ export {
   StyledQuickActionButton,
   StyledQuickActionIcon,
   StyledQuickActionsSlot,
+  StyledMinimalRow,
+  StyledFooterBrand,
+  StyledFooterCopyright,
+  StyledFooterLink,
+  StyledFooterSeparator,
 };

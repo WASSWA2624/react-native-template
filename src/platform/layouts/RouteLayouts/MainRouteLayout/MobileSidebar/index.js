@@ -1,5 +1,5 @@
 /**
- * MobileSidebar component barrel
+ * MobileSidebar component barrel (platform: .web, .ios, .android)
  * File: MobileSidebar/index.js
  */
-export { default } from './MobileSidebar.web';
+export { default } from './MobileSidebar';

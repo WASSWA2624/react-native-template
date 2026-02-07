@@ -20,15 +20,11 @@ const StyledHeader = styled.View.withConfig({
   displayName: 'StyledHeader',
   componentId: 'StyledHeader',
 })`
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.background.tertiary};
-  padding-horizontal: ${({ theme }) => theme.spacing.md}px;
-  padding-vertical: ${({ theme }) => theme.spacing.sm}px;
-  min-height: ${({ theme }) => theme.spacing.sm * 7}px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  background-color: transparent;
+  border-bottom-width: 0;
+  padding: 0;
+  flex-direction: column;
+  align-items: stretch;
 `;
 
 const StyledBanner = styled.View.withConfig({
@@ -55,6 +51,7 @@ const StyledScrollView = styled(ScrollView).withConfig({
 }).attrs({
   contentContainerStyle: {
     flexGrow: 1,
+    flexDirection: 'column',
   },
 })`
   flex: 1;
@@ -73,6 +70,8 @@ const StyledContent = styled.View.withConfig({
   componentId: 'StyledContent',
 })`
   flex: 1;
+  align-self: stretch;
+  width: 100%;
   padding: ${({ theme }) => theme.spacing.md}px;
 `;
 

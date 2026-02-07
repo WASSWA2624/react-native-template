@@ -55,6 +55,7 @@ const StyledScrollView = styled(ScrollView).withConfig({
 }).attrs({
   contentContainerStyle: {
     flexGrow: 1,
+    flexDirection: 'column',
   },
 })`
   flex: 1;
@@ -73,6 +74,8 @@ const StyledContent = styled.View.withConfig({
   componentId: 'StyledContent',
 })`
   flex: 1;
+  align-self: stretch;
+  width: 100%;
   padding: ${({ theme }) => theme.spacing.md}px;
 `;
 

@@ -1,6 +1,5 @@
 /**
- * Brand component barrel
+ * Brand component barrel (platform resolution: .web, .ios, .android)
  * File: Brand/index.js
- * Only web implementation exists; export explicitly so Jest resolves (Metro resolves platform automatically).
  */
-export { default } from './Brand.web';
+export { default } from './Brand';

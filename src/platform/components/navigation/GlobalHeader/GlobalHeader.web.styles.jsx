@@ -31,7 +31,7 @@ const StyledHeader = styled.header.withConfig({
   }
 
   @media (max-width: ${({ theme }) => (theme.breakpoints?.tablet ?? 768) - 1}px) {
-    min-height: ${({ theme }) => theme.spacing.xxl}px;
+    min-height: ${({ theme }) => theme.spacing.xl + theme.spacing.xs}px;
     padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
   }
 `;

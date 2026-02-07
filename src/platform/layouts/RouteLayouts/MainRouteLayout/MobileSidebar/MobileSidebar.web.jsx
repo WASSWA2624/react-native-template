@@ -28,12 +28,12 @@ export default function MobileSidebar({
 }) {
   return (
     <StyledMobileSidebarOverlay
-      isOpen={isOpen}
+      $isOpen={isOpen}
       aria-hidden={!isOpen}
       onKeyDown={onKeyDown}
     >
       <StyledMobileSidebarPanel
-        isOpen={isOpen}
+        $isOpen={isOpen}
         role="dialog"
         aria-modal="true"
         aria-label={sidebarLabel}

@@ -21,6 +21,14 @@ Define rules and best practices for the `src/platform` layer, including componen
 * Platform separation via file-level separation (`.android.jsx`, `.ios.jsx`, `.web.jsx`)
 * Each platform has its own `.styles.jsx` file
 
+## Mobile parity: iOS/Android = mobile web (MANDATORY)
+iOS and Android UIs must be **identically styled** to the mobile web app:
+- `.android.styles.jsx` and `.ios.styles.jsx` must mirror `.web.styles.jsx` at mobile breakpoint
+- Same layout, spacing, typography, colors, radius, and elevation as web mobile
+- Use identical theme tokens and semantic values
+- Platform-specific overrides allowed **only** for native constraints (e.g. safe area insets, status bar)
+- Avoid platform-only visual divergences (e.g. Material on Android, HIG on iOS); Fluent/mobile web is the source of truth
+
 ## Platform-correct style wiring (MANDATORY)
 To prevent accidental cross-platform styling and enforce correctness:
 

@@ -57,32 +57,41 @@ const StyledBody = styled.div.withConfig({
   overflow: hidden;
 `;
 
+const TABLET = 768;
+
 const StyledSidebar = styled.aside.withConfig({
   displayName: 'StyledSidebar',
   componentId: 'StyledSidebar',
   shouldForwardProp: (prop) => !['sidebarWidth', 'sidebarCollapsed', 'collapsedWidth'].includes(prop),
 })`
   display: none;
-  width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
-    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
-  min-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
-    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
-  max-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
-    sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
-  flex: 0 0 auto;
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  border-right: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+  width: 0;
+  min-width: 0;
+  max-width: 0;
   overflow: hidden;
+  visibility: hidden;
+  flex: 0 0 0;
+  border-right: none;
   transition: width 0.2s ease;
   position: relative;
-  box-shadow: ${({ theme }) => {
-    const shadow = theme.shadows?.sm;
-    if (!shadow) return 'none';
-    return `${shadow.shadowOffset?.width || 0}px ${shadow.shadowOffset?.height || 1}px ${shadow.shadowRadius || 2}px rgba(0, 0, 0, ${shadow.shadowOpacity || 0.1})`;
-  }};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints?.tablet ?? TABLET}px) {
     display: block;
+    width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+      sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+    min-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+      sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+    max-width: ${({ sidebarWidth, sidebarCollapsed, collapsedWidth }) =>
+      sidebarCollapsed ? `${collapsedWidth}px` : `${sidebarWidth}px`};
+    flex: 0 0 auto;
+    visibility: visible;
+    background-color: ${({ theme }) => theme.colors.background.primary};
+    border-right: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+    box-shadow: ${({ theme }) => {
+      const shadow = theme.shadows?.sm;
+      if (!shadow) return 'none';
+      return `${shadow.shadowOffset?.width || 0}px ${shadow.shadowOffset?.height || 1}px ${shadow.shadowRadius || 2}px rgba(0, 0, 0, ${shadow.shadowOpacity || 0.1})`;
+    }};
   }
 
   @media (prefers-reduced-motion: reduce) {
