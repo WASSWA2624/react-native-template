@@ -1,14 +1,15 @@
 /**
- * Sidebar Component - Android
- * Menu from MAIN_NAV_ITEMS; nested items under main item. Vertically scrollable; selected item uniquely styled.
+ * Sidebar - Android
+ * MAIN_NAV_ITEMS; one section expanded; sticky section headers (SectionList).
+ * Theme tokens; 44px targets (accessibility.mdc).
  */
 import React, { useMemo, useCallback, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { SectionList } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import { useI18n } from '@hooks';
 import { MAIN_NAV_ITEMS, getNavItemLabel } from '@config/sideMenu';
 import SidebarItem from '@platform/components/navigation/SidebarItem';
-import { StyledSidebar, StyledSidebarContent, StyledNavItemChildren } from './Sidebar.android.styles';
+import { StyledSidebar, StyledSectionHeaderWrap } from './Sidebar.android.styles';
 
 const isItemActive = (pathname, href) =>
   href && (pathname === href || (href !== '/' && pathname.startsWith(href + '/')));
@@ -26,7 +27,7 @@ const SidebarAndroid = ({
   const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
-  const [expandedSections, setExpandedSections] = useState({});
+  const [expandedId, setExpandedId] = useState(null);
 
   const tree = useMemo(() => {
     const list =
@@ -41,62 +42,84 @@ const SidebarAndroid = ({
     return isItemVisible ? list.filter(isItemVisible) : list;
   }, [itemsProp, isItemVisible, t]);
 
-  const isSectionExpanded = useCallback(
-    (itemId) => {
-      if (expandedSections[itemId] !== undefined) return expandedSections[itemId];
-      const item = tree.find((i) => i.id === itemId);
-      return item && hasActiveChild(pathname, item.children);
-    },
-    [tree, pathname, expandedSections]
+  const expandedIdResolved = useMemo(() => {
+    if (expandedId !== null && expandedId !== undefined) return expandedId;
+    const withActive = tree.find((i) => i.children && hasActiveChild(pathname, i.children));
+    return withActive ? withActive.id : null;
+  }, [tree, pathname, expandedId]);
+
+  const sections = useMemo(
+    () =>
+      tree.map((item) => ({
+        key: item.id,
+        id: item.id,
+        item,
+        data:
+          expandedIdResolved === item.id && item.children && item.children.length > 0
+            ? item.children
+            : [],
+      })),
+    [tree, expandedIdResolved]
   );
 
   const toggleSection = useCallback((id) => {
-    setExpandedSections((prev) => ({ ...prev, [id]: !prev[id] }));
+    setExpandedId((prev) => (prev === id ? null : id));
   }, []);
 
-  const renderItem = (item, level = 0) => {
-    const href = item.href ?? item.path;
-    const label = item.label ?? getNavItemLabel(t, item);
-    const icon = item.icon ?? item.id;
-    const active = isItemActive(pathname, href);
-    const hasChildren = item.children != null && item.children.length > 0;
-    const expanded = hasChildren && isSectionExpanded(item.id);
+  const renderSectionHeader = useCallback(
+    ({ section }) => {
+      const { item } = section;
+      const href = item.href ?? item.path;
+      const label = item.label ?? getNavItemLabel(t, item);
+      const active = isItemActive(pathname, href);
+      const hasChildren = item.children != null && item.children.length > 0;
+      const expanded = expandedIdResolved === item.id;
 
-    return (
-      <React.Fragment key={item.id}>
+      return (
+        <StyledSectionHeaderWrap>
+          <SidebarItem
+            item={{ ...item, href, label, path: href }}
+            icon={item.icon}
+            label={label}
+            path={href}
+            collapsed={false}
+            active={active}
+            level={0}
+            hasChildren={hasChildren}
+            expanded={expanded}
+            onToggleExpand={hasChildren ? () => toggleSection(item.id) : undefined}
+            onPress={() => href && router.push(href)}
+            testID={testID ? `sidebar-item-${item.id}` : undefined}
+          />
+        </StyledSectionHeaderWrap>
+      );
+    },
+    [pathname, expandedIdResolved, toggleSection, router, t, testID]
+  );
+
+  const renderItem = useCallback(
+    ({ item: child }) => {
+      const href = child.path;
+      const label = getNavItemLabel(t, child);
+      const active = isItemActive(pathname, href);
+      return (
         <SidebarItem
-          key={item.id}
-          item={{ ...item, href, label, path: href }}
-          icon={icon}
+          item={{ ...child, href, label, path: href }}
+          icon={child.icon}
           label={label}
           path={href}
           collapsed={false}
           active={active}
-          level={level}
-          hasChildren={hasChildren}
-          expanded={expanded}
-          onToggleExpand={hasChildren ? () => toggleSection(item.id) : undefined}
+          level={1}
           onPress={() => href && router.push(href)}
-          testID={testID ? `sidebar-item-${item.id}` : undefined}
+          testID={testID ? `sidebar-item-${child.id}` : undefined}
         />
-        {hasChildren && expanded && (
-          <StyledNavItemChildren>
-            {item.children.map((child) =>
-              renderItem(
-                {
-                  ...child,
-                  href: child.path,
-                  label: getNavItemLabel(t, child),
-                  icon: child.icon,
-                },
-                1
-              )
-            )}
-          </StyledNavItemChildren>
-        )}
-      </React.Fragment>
-    );
-  };
+      );
+    },
+    [pathname, t, router, testID]
+  );
+
+  const keyExtractor = useCallback((child) => child.id, []);
 
   return (
     <StyledSidebar
@@ -106,16 +129,17 @@ const SidebarAndroid = ({
       style={style}
       {...rest}
     >
-      <ScrollView
+      <SectionList
+        sections={sections}
+        keyExtractor={keyExtractor}
+        renderSectionHeader={renderSectionHeader}
+        renderItem={renderItem}
+        stickySectionHeadersEnabled
         scrollEnabled
         showsVerticalScrollIndicator
-        contentContainerStyle={{ paddingBottom: 16 }}
         style={{ flex: 1 }}
-      >
-        <StyledSidebarContent>
-          {tree.map((item) => renderItem(item))}
-        </StyledSidebarContent>
-      </ScrollView>
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
+      />
     </StyledSidebar>
   );
 };

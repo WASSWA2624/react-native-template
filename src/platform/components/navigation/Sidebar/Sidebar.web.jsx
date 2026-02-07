@@ -1,9 +1,16 @@
+/**
+ * Sidebar - Web
+ * MAIN_NAV_ITEMS; one section expanded at a time; section header sticks at top while nested scrolls.
+ * theme-design.mdc, accessibility.mdc (44px targets, focus).
+ */
 import React, { useMemo, useCallback, useState } from 'react';
 import { usePathname, useRouter } from 'expo-router';
 import { useI18n } from '@hooks';
 import {
   StyledSidebar,
   StyledSidebarContent,
+  StyledSidebarSection,
+  StyledSidebarSectionHeader,
   StyledNavItemChildren,
 } from './Sidebar.web.styles';
 import SidebarItem from '@platform/components/navigation/SidebarItem';
@@ -21,11 +28,6 @@ const hasActiveChild = (pathname, children) => {
   return children.some((c) => isItemActive(pathname, c.path));
 };
 
-/**
- * Sidebar component for Web.
- * Menu populated from MAIN_NAV_ITEMS; nested items shown under their main item.
- * Vertically scrollable; scrollbar visible only when needed. Selected item uniquely styled.
- */
 const SidebarWeb = ({
   items = MAIN_NAV_ITEMS,
   itemsI18nPrefix = 'navigation.items.main',
@@ -41,24 +43,21 @@ const SidebarWeb = ({
   const { t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
-  const [expandedSections, setExpandedSections] = useState(() => ({}));
+  const [expandedId, setExpandedId] = useState(() => null);
 
   const tree = useMemo(() => {
     const list = Array.isArray(items) ? items : [];
     return list.filter((item) => (isItemVisible ? isItemVisible(item) : true));
   }, [items, isItemVisible]);
 
-  const isSectionExpanded = useCallback(
-    (itemId) => {
-      if (expandedSections[itemId] !== undefined) return expandedSections[itemId];
-      const item = tree.find((i) => i.id === itemId);
-      return item && hasActiveChild(pathname, item.children);
-    },
-    [tree, pathname, expandedSections]
-  );
+  const expandedIdResolved = useMemo(() => {
+    if (expandedId !== null && expandedId !== undefined) return expandedId;
+    const withActive = tree.find((i) => i.children && hasActiveChild(pathname, i.children));
+    return withActive ? withActive.id : null;
+  }, [tree, pathname, expandedId]);
 
   const toggleSection = useCallback((itemId) => {
-    setExpandedSections((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
+    setExpandedId((prev) => (prev === itemId ? null : itemId));
   }, []);
 
   const handleItemClick = useCallback(
@@ -69,35 +68,26 @@ const SidebarWeb = ({
     [onItemPress, router]
   );
 
-  const renderItem = (item, level = 0) => {
-    const href = item.href ?? item.path;
-    const label = item.label ?? getNavItemLabel(t, item, itemsI18nPrefix);
-    const active = isItemActive(pathname, href);
-    const hasChildren = item.children != null && item.children.length > 0;
-    const expanded = hasChildren && isSectionExpanded(item.id);
-
-    return (
-      <React.Fragment key={item.id}>
+  const renderChildItem = useCallback(
+    (child, itemsI18nPrefixKey) => {
+      const href = child.path;
+      const label = getNavItemLabel(t, child, itemsI18nPrefixKey);
+      const active = isItemActive(pathname, href);
+      return (
         <SidebarItem
-          item={{ ...item, href, label, path: href }}
+          key={child.id}
+          item={{ ...child, href, label, path: href }}
           collapsed={collapsed}
           active={active}
-          testID={testID ? `sidebar-item-${item.id}` : undefined}
-          onClick={() => handleItemClick(item, href)}
-          onPress={() => handleItemClick(item, href)}
-          level={level}
-          hasChildren={hasChildren}
-          expanded={expanded}
-          onToggleExpand={hasChildren ? () => toggleSection(item.id) : undefined}
+          level={1}
+          testID={testID ? `sidebar-item-${child.id}` : undefined}
+          onClick={() => handleItemClick(child, href)}
+          onPress={() => handleItemClick(child, href)}
         />
-        {hasChildren && expanded && !collapsed && (
-          <StyledNavItemChildren>
-            {item.children.map((child) => renderItem({ ...child, href: child.path, label: getNavItemLabel(t, child, itemsI18nPrefix) }, 1))}
-          </StyledNavItemChildren>
-        )}
-      </React.Fragment>
-    );
-  };
+      );
+    },
+    [pathname, collapsed, testID, handleItemClick, t, itemsI18nPrefix]
+  );
 
   return (
     <StyledSidebar
@@ -110,7 +100,37 @@ const SidebarWeb = ({
       {...rest}
     >
       <StyledSidebarContent $collapsed={collapsed}>
-        {tree.map((item) => renderItem(item))}
+        {tree.map((item) => {
+          const href = item.href ?? item.path;
+          const label = item.label ?? getNavItemLabel(t, item, itemsI18nPrefix);
+          const active = isItemActive(pathname, href);
+          const hasChildren = item.children != null && item.children.length > 0;
+          const expanded = hasChildren && expandedIdResolved === item.id;
+
+          return (
+            <StyledSidebarSection key={item.id}>
+              <StyledSidebarSectionHeader>
+                <SidebarItem
+                  item={{ ...item, href, label, path: href }}
+                  collapsed={collapsed}
+                  active={active}
+                  testID={testID ? `sidebar-item-${item.id}` : undefined}
+                  onClick={() => handleItemClick(item, href)}
+                  onPress={() => handleItemClick(item, href)}
+                  level={0}
+                  hasChildren={hasChildren}
+                  expanded={expanded}
+                  onToggleExpand={hasChildren ? () => toggleSection(item.id) : undefined}
+                />
+              </StyledSidebarSectionHeader>
+              {hasChildren && expanded && !collapsed && (
+                <StyledNavItemChildren>
+                  {item.children.map((child) => renderChildItem(child, itemsI18nPrefix))}
+                </StyledNavItemChildren>
+              )}
+            </StyledSidebarSection>
+          );
+        })}
       </StyledSidebarContent>
     </StyledSidebar>
   );

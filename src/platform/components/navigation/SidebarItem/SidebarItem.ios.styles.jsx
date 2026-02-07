@@ -1,3 +1,7 @@
+/**
+ * SidebarItem Styles - iOS
+ * Theme tokens only; 44px min touch target (accessibility.mdc).
+ */
 import styled from 'styled-components/native';
 import { TouchableOpacity, Text, View } from 'react-native';
 
@@ -8,8 +12,10 @@ export const Row = styled(TouchableOpacity).withConfig({
 })`
   flex-direction: row;
   align-items: center;
-  padding: 12px 14px;
-  padding-left: ${({ theme, $level = 0 }) => 14 + (theme.spacing?.md ?? 16) * $level}px;
+  min-height: 44px;
+  padding: ${({ theme }) => theme.spacing.sm}px ${({ theme }) => theme.spacing.md}px;
+  padding-left: ${({ theme, $level = 0 }) => theme.spacing.md + $level * theme.spacing.lg}px;
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : 'transparent')};
 `;
 
@@ -17,8 +23,10 @@ export const IconBox = styled(View).withConfig({
   displayName: 'IconBox',
   componentId: 'SidebarItem_IconBox',
 })`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Label = styled(Text).withConfig({
@@ -26,9 +34,20 @@ export const Label = styled(Text).withConfig({
   componentId: 'Label',
   shouldForwardProp: (prop) => prop !== '$active',
 })`
-  margin-left: 12px;
-  font-size: 14px;
-  font-weight: ${({ theme, $active }) => ($active ? theme.typography?.fontWeight?.medium ?? 600 : theme.typography?.fontWeight?.normal ?? 400)};
+  margin-left: ${({ theme }) => theme.spacing.sm}px;
+  flex: 1;
+  font-size: ${({ theme }) => theme.typography?.fontSize?.sm ?? 14}px;
+  font-weight: ${({ theme, $active }) => ($active ? theme.typography?.fontWeight?.semibold : theme.typography?.fontWeight?.normal)};
   color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.text.primary)};
 `;
 
+export const ExpandTouch = styled(TouchableOpacity).withConfig({
+  displayName: 'ExpandTouch',
+  componentId: 'ExpandTouch',
+})`
+  padding: ${({ theme }) => theme.spacing.xs}px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  align-items: center;
+`;

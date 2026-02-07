@@ -1,6 +1,6 @@
 /**
  * Sidebar Component Styles - Web
- * Semantic HTML only; Microsoft Fluent look (theme-design.mdc, component-structure.mdc).
+ * Semantic HTML; Microsoft Fluent (theme-design.mdc). Single scroll; sticky section headers.
  * File: Sidebar.web.styles.jsx
  */
 import styled from 'styled-components';
@@ -27,13 +27,46 @@ const StyledSidebarContent = styled.div.withConfig({
 })`
   flex: 1;
   min-height: 0;
-  padding: ${({ theme, $collapsed }) =>
-    $collapsed ? '0' : `${theme.spacing.md}px`};
-  gap: ${({ theme }) => theme.spacing.sm}px;
+  padding: ${({ theme, $collapsed }) => ($collapsed ? theme.spacing.xs : theme.spacing.sm)}px;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+`;
+
+const StyledSidebarSection = styled.div.withConfig({
+  displayName: 'StyledSidebarSection',
+  componentId: 'StyledSidebarSection',
+})`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+`;
+
+const StyledSidebarSectionHeader = styled.div.withConfig({
+  displayName: 'StyledSidebarSectionHeader',
+  componentId: 'StyledSidebarSectionHeader',
+})`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  flex-shrink: 0;
+  margin: 0 -${({ theme }) => theme.spacing.xs}px;
+  padding: 0 ${({ theme }) => theme.spacing.xs}px;
+`;
+
+const StyledNavItemChildren = styled.div.withConfig({
+  displayName: 'StyledNavItemChildren',
+  componentId: 'StyledNavItemChildren',
+})`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.xs}px;
+  padding-left: ${({ theme }) => theme.spacing.sm}px;
+  border-left: 2px solid ${({ theme }) => theme.colors.background.tertiary};
+  margin-left: ${({ theme }) => theme.spacing.sm}px;
 `;
 
 const StyledSidebarFooter = styled.div.withConfig({
@@ -43,9 +76,6 @@ const StyledSidebarFooter = styled.div.withConfig({
   padding: ${({ theme }) => theme.spacing.md}px;
   border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};
   background-color: ${({ theme }) => theme.colors.background.primary};
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm}px;
   flex-shrink: 0;
 `;
 
@@ -61,7 +91,6 @@ const StyledNavSectionHeader = styled.div.withConfig({
   componentId: 'StyledNavSectionHeader',
 })`
   padding: ${({ theme }) => theme.spacing.sm}px ${({ theme }) => theme.spacing.md}px;
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
 `;
 
 const StyledNavSectionTitle = styled.span.withConfig({
@@ -80,22 +109,24 @@ const StyledNavItem = styled.button.withConfig({
   componentId: 'StyledNavItem',
   shouldForwardProp: (prop) => !['active', 'level'].includes(prop),
 })`
-  padding: ${({ theme }) => theme.spacing.xs}px ${({ theme }) => theme.spacing.sm}px;
-  margin-bottom: ${({ theme }) => theme.spacing.xs}px;
+  padding: ${({ theme }) => theme.spacing.sm}px ${({ theme }) => theme.spacing.md}px;
+  min-height: 44px;
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   background-color: ${({ theme, active }) =>
     active ? theme.colors.background.secondary : 'transparent'};
   display: flex;
   flex-direction: row;
   align-items: center;
-  min-height: 40px;
-  padding-left: ${({ theme, level = 0 }) => theme.spacing.sm + level * theme.spacing.sm}px;
-  transition: background-color 0.15s ease;
   border: none;
   cursor: pointer;
   width: 100%;
   text-align: left;
   font: inherit;
   color: inherit;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   &:hover {
     background-color: ${({ theme, active }) =>
@@ -129,11 +160,10 @@ const StyledNavItemLabel = styled.span.withConfig({
   shouldForwardProp: (prop) => prop !== 'active',
 })`
   flex: 1;
-  font-size: ${({ theme }) => theme.typography.fontSize.md}px;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm}px;
   font-weight: ${({ theme, active }) =>
     active ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.normal};
-  color: ${({ theme, active }) =>
-    active ? theme.colors.primary : theme.colors.text.primary};
+  color: inherit;
 `;
 
 const StyledNavItemBadge = styled.span.withConfig({
@@ -141,14 +171,6 @@ const StyledNavItemBadge = styled.span.withConfig({
   componentId: 'StyledNavItemBadge',
 })`
   margin-left: auto;
-`;
-
-const StyledNavItemChildren = styled.div.withConfig({
-  displayName: 'StyledNavItemChildren',
-  componentId: 'StyledNavItemChildren',
-})`
-  margin-top: ${({ theme }) => theme.spacing.xs}px;
-  margin-left: ${({ theme }) => theme.spacing.md}px;
 `;
 
 const StyledExpandIcon = styled.span.withConfig({
@@ -165,6 +187,9 @@ const StyledExpandIcon = styled.span.withConfig({
 export {
   StyledSidebar,
   StyledSidebarContent,
+  StyledSidebarSection,
+  StyledSidebarSectionHeader,
+  StyledNavItemChildren,
   StyledSidebarFooter,
   StyledNavSection,
   StyledNavSectionHeader,
@@ -173,6 +198,5 @@ export {
   StyledNavItemContent,
   StyledNavItemLabel,
   StyledNavItemBadge,
-  StyledNavItemChildren,
   StyledExpandIcon,
 };

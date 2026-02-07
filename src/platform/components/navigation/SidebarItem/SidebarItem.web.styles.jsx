@@ -10,7 +10,7 @@ export const Row = styled.a.withConfig({
   justify-content: ${({ $collapsed }) => ($collapsed ? 'center' : 'flex-start')};
   min-height: 44px;
   padding: ${({ theme, $collapsed, $level = 0 }) =>
-    $collapsed ? `${theme.spacing.xs}px` : `${theme.spacing.xs}px ${theme.spacing.sm + $level * theme.spacing.sm}px`};
+    $collapsed ? `${theme.spacing.xs}px` : `${theme.spacing.sm}px ${theme.spacing.sm + $level * theme.spacing.md}px`};
   border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   cursor: pointer;
   text-decoration: none;
@@ -18,6 +18,9 @@ export const Row = styled.a.withConfig({
   background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : 'transparent')};
   font-weight: ${({ theme, $active }) => ($active ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.normal)};
   transition: background-color 0.15s ease, color 0.15s ease;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   &:hover {
     background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : theme.colors.background.tertiary)};
@@ -73,6 +76,9 @@ export const ExpandButton = styled.button.withConfig({
   transform: ${({ $expanded }) => ($expanded ? 'rotate(0deg)' : 'rotate(-90deg)')};
   transition: transform 0.2s ease;
   line-height: 1;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 2px;

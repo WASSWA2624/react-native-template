@@ -18,6 +18,15 @@ const StyledSidebar = styled(View).withConfig({
   elevation: 4;
 `;
 
+const StyledSectionHeaderWrap = styled(View).withConfig({
+  displayName: 'StyledSectionHeaderWrap',
+  componentId: 'StyledSectionHeaderWrap',
+})`
+  padding-horizontal: ${({ theme }) => theme.spacing.md}px;
+  padding-bottom: ${({ theme }) => theme.spacing.xs}px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+`;
+
 const StyledSidebarContent = styled(View).withConfig({
   displayName: 'StyledSidebarContent',
   componentId: 'StyledSidebarContent',
@@ -114,6 +123,7 @@ const StyledExpandIcon = styled(Text).withConfig({
 
 export {
   StyledSidebar,
+  StyledSectionHeaderWrap,
   StyledSidebarContent,
   StyledNavSection,
   StyledNavSectionHeader,
