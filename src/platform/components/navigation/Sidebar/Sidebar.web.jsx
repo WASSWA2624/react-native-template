@@ -62,7 +62,7 @@ const SidebarWeb = ({
 
   const handleItemClick = useCallback(
     (item, href) => {
-      if (onItemPress) onItemPress(item);
+      if (onItemPress) onItemPress(item, href);
       else if (href) router.push(href);
     },
     [onItemPress, router]

@@ -19,6 +19,7 @@ const hasActiveChild = (pathname, children) =>
 const SidebarIOS = ({
   items: itemsProp,
   isItemVisible,
+  onItemPress,
   accessibilityLabel,
   testID,
   style,
@@ -28,6 +29,14 @@ const SidebarIOS = ({
   const router = useRouter();
   const pathname = usePathname();
   const [expandedId, setExpandedId] = useState(null);
+
+  const handleItemPress = useCallback(
+    (item, href) => {
+      if (onItemPress) onItemPress(item, href);
+      else if (href) router.push(href);
+    },
+    [onItemPress, router]
+  );
 
   const tree = useMemo(() => {
     const list =
@@ -88,13 +97,13 @@ const SidebarIOS = ({
             hasChildren={hasChildren}
             expanded={expanded}
             onToggleExpand={hasChildren ? () => toggleSection(item.id) : undefined}
-            onPress={() => href && router.push(href)}
+            onPress={() => handleItemPress(item, href)}
             testID={testID ? `sidebar-item-${item.id}` : undefined}
           />
         </StyledSectionHeaderWrap>
       );
     },
-    [pathname, expandedIdResolved, toggleSection, router, t, testID]
+    [pathname, expandedIdResolved, toggleSection, handleItemPress, t, testID]
   );
 
   const renderItem = useCallback(
@@ -111,12 +120,12 @@ const SidebarIOS = ({
           collapsed={false}
           active={active}
           level={1}
-          onPress={() => href && router.push(href)}
+          onPress={() => handleItemPress(child, href)}
           testID={testID ? `sidebar-item-${child.id}` : undefined}
         />
       );
     },
-    [pathname, t, router, testID]
+    [pathname, t, handleItemPress, testID]
   );
 
   const keyExtractor = useCallback((child) => child.id, []);

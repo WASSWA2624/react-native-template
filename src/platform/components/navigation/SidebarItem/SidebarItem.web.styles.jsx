@@ -10,12 +10,13 @@ export const Row = styled.a.withConfig({
   justify-content: ${({ $collapsed }) => ($collapsed ? 'center' : 'flex-start')};
   min-height: 44px;
   padding: ${({ theme, $collapsed, $level = 0 }) =>
-    $collapsed ? `${theme.spacing.xs}px` : `${theme.spacing.sm}px ${theme.spacing.sm + $level * theme.spacing.md}px`};
+    $collapsed ? `${theme.spacing.xs}px` : `${theme.spacing.sm}px ${theme.spacing.md + $level * theme.spacing.lg}px`};
   border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   cursor: pointer;
   text-decoration: none;
   color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.text.primary)};
   background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : 'transparent')};
+  font-size: ${({ theme }) => theme.typography?.fontSize?.sm ?? 14}px;
   font-weight: ${({ theme, $active }) => ($active ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.normal)};
   transition: background-color 0.15s ease, color 0.15s ease;
   @media (prefers-reduced-motion: reduce) {
@@ -39,8 +40,8 @@ export const IconWrapper = styled.span.withConfig({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   color: inherit;
 `;
@@ -67,17 +68,29 @@ export const ExpandButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== '$expanded',
 })`
   margin-left: auto;
-  padding: ${({ theme }) => theme.spacing.xs}px;
-  background: none;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   border: none;
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
+  color: ${({ theme }) => theme.colors.text.secondary};
   cursor: pointer;
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.text.tertiary};
-  transform: ${({ $expanded }) => ($expanded ? 'rotate(0deg)' : 'rotate(-90deg)')};
-  transition: transform 0.2s ease;
+  font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+  font-weight: ${({ theme }) => theme.typography?.fontWeight?.semibold};
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: ${({ $expanded }) => ($expanded ? 'rotate(0deg)' : 'rotate(-90deg)')};
+  transition: transform 0.2s ease, background-color 0.15s ease;
   @media (prefers-reduced-motion: reduce) {
     transition: none;
+  }
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.background.secondary};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary};

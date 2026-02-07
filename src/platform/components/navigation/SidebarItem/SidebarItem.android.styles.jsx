@@ -5,7 +5,7 @@
 import styled from 'styled-components/native';
 import { TouchableOpacity, Text, View } from 'react-native';
 
-export const Row = styled(TouchableOpacity).withConfig({
+export const Row = styled(View).withConfig({
   displayName: 'Row',
   componentId: 'Row',
   shouldForwardProp: (prop) => prop !== '$active' && prop !== '$level',
@@ -17,6 +17,16 @@ export const Row = styled(TouchableOpacity).withConfig({
   padding-left: ${({ theme, $level = 0 }) => theme.spacing.md + $level * theme.spacing.lg}px;
   border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : 'transparent')};
+`;
+
+export const RowPressable = styled(TouchableOpacity).withConfig({
+  displayName: 'RowPressable',
+  componentId: 'RowPressable',
+})`
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-height: 44px;
 `;
 
 export const IconBox = styled(View).withConfig({
@@ -44,10 +54,23 @@ export const Label = styled(Text).withConfig({
 export const ExpandTouch = styled(TouchableOpacity).withConfig({
   displayName: 'ExpandTouch',
   componentId: 'ExpandTouch',
+  shouldForwardProp: (prop) => prop !== '$expanded',
 })`
-  padding: ${({ theme }) => theme.spacing.xs}px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 32px;
+  height: 32px;
+  border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
+  background-color: ${({ theme }) => theme.colors.background.tertiary};
   justify-content: center;
   align-items: center;
+`;
+
+export const ExpandChevron = styled(Text).withConfig({
+  displayName: 'ExpandChevron',
+  componentId: 'ExpandChevron',
+  shouldForwardProp: (prop) => prop !== '$expanded',
+})`
+  font-size: ${({ theme }) => theme.typography?.fontSize?.xs ?? 12}px;
+  font-weight: ${({ theme }) => theme.typography?.fontWeight?.semibold};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  transform: ${({ $expanded }) => ($expanded ? 'rotate(0deg)' : 'rotate(-90deg)')};
 `;

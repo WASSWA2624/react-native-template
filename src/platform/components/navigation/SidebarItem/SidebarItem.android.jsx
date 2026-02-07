@@ -1,8 +1,7 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import Icon from '@platform/components/display/Icon';
 import { getMenuIconGlyph } from '@config/sideMenu';
-import { Row, IconBox, Label, ExpandTouch } from './SidebarItem.android.styles.jsx';
+import { Row, RowPressable, IconBox, Label, ExpandTouch, ExpandChevron } from './SidebarItem.android.styles.jsx';
 
 const normalize = (props) => {
   if (props.item) {
@@ -43,25 +42,28 @@ const SidebarItemAndroid = (props) => {
 
   const testID = props.testID ?? (props.item?.id ? `sidebar-item-${props.item.id}` : undefined);
   return (
-    <TouchableOpacity testID={testID} onPress={handlePress} accessibilityLabel={label} accessibilityState={{ selected: !!active }}>
-      <Row $active={active} $level={level}>
+    <Row $active={active} $level={level}>
+      <RowPressable
+        testID={testID}
+        onPress={handlePress}
+        accessibilityLabel={label}
+        accessibilityState={{ selected: !!active }}
+      >
         <IconBox>
           <Icon glyph={getMenuIconGlyph(icon)} size="sm" decorative />
         </IconBox>
         <Label $active={active}>{label}</Label>
-        {hasChildren && (
-          <ExpandTouch
-            onPress={(e) => {
-              e?.stopPropagation?.();
-              onToggleExpand?.();
-            }}
-            accessibilityLabel={expanded ? 'Collapse' : 'Expand'}
-          >
-            <Label $active={false}>{expanded ? '▾' : '▸'}</Label>
-          </ExpandTouch>
-        )}
-      </Row>
-    </TouchableOpacity>
+      </RowPressable>
+      {hasChildren && (
+        <ExpandTouch
+          onPress={() => onToggleExpand?.()}
+          accessibilityLabel={expanded ? 'Collapse' : 'Expand'}
+          $expanded={expanded}
+        >
+          <ExpandChevron $expanded={expanded}>▾</ExpandChevron>
+        </ExpandTouch>
+      )}
+    </Row>
   );
 };
 

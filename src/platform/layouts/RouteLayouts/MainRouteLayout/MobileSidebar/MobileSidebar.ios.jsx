@@ -1,10 +1,11 @@
 /**
  * MobileSidebar - iOS
- * Drawer overlay with panel and Sidebar (matches mobile web)
+ * Drawer overlay; close on navigate so routing works and drawer closes.
  * File: MobileSidebar/MobileSidebar.ios.jsx
  */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Modal } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Sidebar } from '@platform/components';
 import Brand from '../Brand';
 import {
@@ -30,6 +31,15 @@ export default function MobileSidebar({
   closeButtonRef,
   panelRef,
 }) {
+  const router = useRouter();
+  const handleItemPress = useCallback(
+    (item, href) => {
+      onClose();
+      if (href) router.push(href);
+    },
+    [onClose, router]
+  );
+
   if (!isOpen) return null;
   return (
     <Modal
@@ -62,6 +72,7 @@ export default function MobileSidebar({
               accessibilityLabel={sidebarLabel}
               items={mainItems}
               collapsed={false}
+              onItemPress={handleItemPress}
               testID="main-sidebar-mobile"
             />
           </StyledMobileSidebarContent>
