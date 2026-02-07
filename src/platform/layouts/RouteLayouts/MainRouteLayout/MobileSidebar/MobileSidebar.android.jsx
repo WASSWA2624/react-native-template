@@ -1,11 +1,10 @@
 /**
  * MobileSidebar - Android
- * Drawer overlay; close on navigate so routing works and drawer closes.
+ * Sidebar closes only on close button or backdrop tap (not on menu item tap).
  * File: MobileSidebar/MobileSidebar.android.jsx
  */
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Modal } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Sidebar } from '@platform/components';
 import Brand from '../Brand';
 import {
@@ -31,15 +30,6 @@ export default function MobileSidebar({
   closeButtonRef,
   panelRef,
 }) {
-  const router = useRouter();
-  const handleItemPress = useCallback(
-    (item, href) => {
-      onClose();
-      if (href) router.push(href);
-    },
-    [onClose, router]
-  );
-
   if (!isOpen) return null;
   return (
     <Modal
@@ -51,6 +41,11 @@ export default function MobileSidebar({
       accessibilityLabel={sidebarLabel}
     >
       <StyledMobileSidebarWrap>
+        <StyledMobileSidebarBackdrop
+          accessibilityLabel={closeLabel}
+          accessibilityRole="button"
+          onPress={onClose}
+        />
         <StyledMobileSidebarPanel ref={panelRef}>
           <StyledMobileSidebarHeader>
             <StyledMobileSidebarHeaderBrand>
@@ -72,16 +67,10 @@ export default function MobileSidebar({
               accessibilityLabel={sidebarLabel}
               items={mainItems}
               collapsed={false}
-              onItemPress={handleItemPress}
               testID="main-sidebar-mobile"
             />
           </StyledMobileSidebarContent>
         </StyledMobileSidebarPanel>
-        <StyledMobileSidebarBackdrop
-          accessibilityLabel={closeLabel}
-          accessibilityRole="button"
-          onPress={onClose}
-        />
       </StyledMobileSidebarWrap>
     </Modal>
   );

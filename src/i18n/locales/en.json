@@ -185,7 +185,8 @@
     "patientNavigation": "Patient navigation",
     "items": {
       "main": {
-        "home": "Home",
+        "home": "Dashboard",
+        "dashboard": "Dashboard",
         "settings": "Settings",
         "settings-addresses": "Addresses",
         "settings-api-keys": "API Keys",

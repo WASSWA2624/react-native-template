@@ -85,7 +85,7 @@ const SidebarAndroid = ({
       const expanded = expandedIdResolved === item.id;
 
       return (
-        <StyledSectionHeaderWrap>
+        <StyledSectionHeaderWrap pointerEvents="box-none">
           <SidebarItem
             item={{ ...item, href, label, path: href }}
             icon={item.icon}
@@ -146,6 +146,7 @@ const SidebarAndroid = ({
         stickySectionHeadersEnabled
         scrollEnabled
         showsVerticalScrollIndicator
+        keyboardShouldPersistTaps="handled"
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
       />

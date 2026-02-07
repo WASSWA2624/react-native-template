@@ -57,7 +57,9 @@ const SidebarItemAndroid = (props) => {
       {hasChildren && (
         <ExpandTouch
           onPress={() => onToggleExpand?.()}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           accessibilityLabel={expanded ? 'Collapse' : 'Expand'}
+          accessibilityRole="button"
           $expanded={expanded}
         >
           <ExpandChevron $expanded={expanded}>▾</ExpandChevron>

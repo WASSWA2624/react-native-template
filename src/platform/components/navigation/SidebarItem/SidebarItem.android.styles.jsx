@@ -3,7 +3,7 @@
  * Theme tokens only; 44px min touch target (accessibility.mdc).
  */
 import styled from 'styled-components/native';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, Pressable, Text, View } from 'react-native';
 
 export const Row = styled(View).withConfig({
   displayName: 'Row',
@@ -51,13 +51,13 @@ export const Label = styled(Text).withConfig({
   color: ${({ theme, $active }) => ($active ? theme.colors.primary : theme.colors.text.primary)};
 `;
 
-export const ExpandTouch = styled(TouchableOpacity).withConfig({
+export const ExpandTouch = styled(Pressable).withConfig({
   displayName: 'ExpandTouch',
   componentId: 'ExpandTouch',
   shouldForwardProp: (prop) => prop !== '$expanded',
 })`
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: ${({ theme }) => theme.radius?.sm ?? 4}px;
   background-color: ${({ theme }) => theme.colors.background.tertiary};
   justify-content: center;

@@ -1,10 +1,9 @@
 /**
  * MobileSidebar - Web
- * Mobile sidebar overlay; close on navigate so routing works and drawer closes.
+ * Sidebar closes only on close button or backdrop click (not on menu item tap).
  * File: MobileSidebar/MobileSidebar.web.jsx
  */
-import React, { useCallback } from 'react';
-import { useRouter } from 'expo-router';
+import React from 'react';
 import { Sidebar } from '@platform/components';
 import Brand from '../Brand';
 import {
@@ -30,15 +29,6 @@ export default function MobileSidebar({
   closeButtonRef,
   panelRef,
 }) {
-  const router = useRouter();
-  const handleItemPress = useCallback(
-    (item, href) => {
-      onClose();
-      if (href) router.push(href);
-    },
-    [onClose, router]
-  );
-
   return (
     <StyledMobileSidebarOverlay
       $isOpen={isOpen}
@@ -73,7 +63,6 @@ export default function MobileSidebar({
             accessibilityLabel={sidebarLabel}
             items={mainItems}
             collapsed={false}
-            onItemPress={handleItemPress}
             footerSlot={null}
             testID="main-sidebar-mobile"
           />

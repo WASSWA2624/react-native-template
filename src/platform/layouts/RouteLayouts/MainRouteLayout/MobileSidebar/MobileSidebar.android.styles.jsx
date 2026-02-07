@@ -25,7 +25,8 @@ const StyledMobileSidebarPanel = styled(View).withConfig({
   max-width: 85%;
   background-color: ${({ theme }) => theme.colors.background.primary};
   flex-direction: column;
-  elevation: 8;
+  elevation: 10;
+  z-index: 1;
   shadow-color: #000;
   shadow-offset: 2px 0;
   shadow-opacity: 0.2;

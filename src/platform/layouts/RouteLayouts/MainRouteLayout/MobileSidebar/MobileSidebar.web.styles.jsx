@@ -37,6 +37,8 @@ const StyledMobileSidebarPanel = styled.div.withConfig({
   width: 240px;
   max-width: 80vw;
   height: 100%;
+  flex-shrink: 0;
+  z-index: 1;
   background-color: ${({ theme }) => theme.colors.background.primary};
   box-shadow: ${({ theme }) => {
     const shadow = theme.shadows?.md;
