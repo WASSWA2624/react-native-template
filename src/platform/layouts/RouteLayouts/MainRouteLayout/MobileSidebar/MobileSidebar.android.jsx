@@ -44,12 +44,10 @@ export default function MobileSidebar({
         <StyledMobileSidebarPanel ref={panelRef}>
           <StyledMobileSidebarHeader>
             <StyledMobileSidebarHeaderBrand>
-              {appName != null && (
-                <Brand
-                  appName={appName}
-                  appShortName={appShortName ?? appName}
-                />
-              )}
+              <Brand
+                appName={appName ?? ''}
+                appShortName={appShortName ?? appName ?? ''}
+              />
             </StyledMobileSidebarHeaderBrand>
             <StyledMobileCloseButton
               onPress={onClose}

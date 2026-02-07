@@ -6,10 +6,12 @@
 
 import React from 'react';
 import { Sidebar } from '@platform/components';
+import Brand from '../Brand';
 import {
   StyledMobileSidebarBackdrop,
   StyledMobileSidebarContent,
   StyledMobileSidebarHeader,
+  StyledMobileSidebarHeaderBrand,
   StyledMobileSidebarOverlay,
   StyledMobileSidebarPanel,
   StyledMobileCloseButton,
@@ -23,6 +25,8 @@ export default function MobileSidebar({
   closeLabel,
   mainItems,
   isItemVisible,
+  appName,
+  appShortName,
   closeButtonRef,
   panelRef,
 }) {
@@ -40,6 +44,12 @@ export default function MobileSidebar({
         ref={panelRef}
       >
         <StyledMobileSidebarHeader>
+          <StyledMobileSidebarHeaderBrand>
+            <Brand
+              appName={appName ?? ''}
+              appShortName={appShortName ?? appName ?? ''}
+            />
+          </StyledMobileSidebarHeaderBrand>
           <StyledMobileCloseButton
             type="button"
             onClick={onClose}

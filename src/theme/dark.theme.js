@@ -31,6 +31,10 @@ const darkColors = {
     background: 'rgba(255, 255, 255, 0.15)',
     text: '#000000',
   },
+  overlay: {
+    ...colors.overlay,
+    sheetBackdrop: 'rgba(0, 0, 0, 0.35)',
+  },
 };
 
 export default {

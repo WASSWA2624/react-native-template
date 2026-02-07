@@ -13,7 +13,7 @@ const StyledMobileSidebarOverlay = styled.div.withConfig({
   z-index: 1200;
   display: flex;
   align-items: stretch;
-  background-color: ${({ theme }) => theme.colors.overlay.backdrop};
+  background-color: ${({ theme }) => theme.colors.overlay.sheetBackdrop};
   backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
   -webkit-backdrop-filter: blur(${({ theme }) => theme.spacing.sm}px);
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
@@ -78,9 +78,19 @@ const StyledMobileSidebarHeader = styled.div.withConfig({
 })`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.spacing.md}px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.background.tertiary};
+`;
+
+const StyledMobileSidebarHeaderBrand = styled.div.withConfig({
+  displayName: 'StyledMobileSidebarHeaderBrand',
+  componentId: 'StyledMobileSidebarHeaderBrand',
+})`
+  flex: 1;
+  min-width: 100px;
+  margin-right: ${({ theme }) => theme.spacing.sm}px;
 `;
 
 const StyledMobileSidebarContent = styled.div.withConfig({
@@ -97,6 +107,7 @@ const StyledMobileCloseButton = styled.button.withConfig({
 })`
   min-width: 44px;
   min-height: 44px;
+  flex-shrink: 0;
   border-radius: ${({ theme }) => theme.radius.md}px;
   border: 1px solid ${({ theme }) => theme.colors.background.tertiary};
   background-color: ${({ theme }) => theme.colors.background.secondary};
@@ -123,6 +134,7 @@ export {
   StyledMobileSidebarPanel,
   StyledMobileSidebarBackdrop,
   StyledMobileSidebarHeader,
+  StyledMobileSidebarHeaderBrand,
   StyledMobileSidebarContent,
   StyledMobileCloseButton,
 };

@@ -62,6 +62,8 @@ export default {
   },
   overlay: {
     backdrop: 'rgba(0, 0, 0, 0.5)',
+    /** Lighter backdrop for sheet/drawer overlays (e.g. mobile sidebar) */
+    sheetBackdrop: 'rgba(0, 0, 0, 0.4)',
   },
   /** Fluent-style tooltip: dark surface, light text */
   tooltip: {
