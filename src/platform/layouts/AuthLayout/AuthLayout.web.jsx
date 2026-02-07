@@ -6,6 +6,7 @@
 
 import React from 'react';
 import {
+  StyledBanner,
   StyledContainer,
   StyledCard,
   StyledBranding,
@@ -19,6 +20,7 @@ import {
  * @param {React.ReactNode} props.children - Auth form content
  * @param {React.ReactNode} props.branding - Branding/logo area
  * @param {React.ReactNode} props.helpLinks - Help/forgot password links
+ * @param {React.ReactNode} props.banner - Optional banner slot (e.g. ShellBanners)
  * @param {string} props.accessibilityLabel - Accessibility label
  * @param {string} props.testID - Test identifier
  * @param {string} props.className - Additional CSS class
@@ -27,6 +29,7 @@ const AuthLayoutWeb = ({
   children,
   branding,
   helpLinks,
+  banner,
   accessibilityLabel,
   testID,
   className,
@@ -38,6 +41,7 @@ const AuthLayoutWeb = ({
       role="main"
       aria-label={accessibilityLabel}
     >
+      {banner ? <StyledBanner role="region">{banner}</StyledBanner> : null}
       <StyledCard>
         {branding && (
           <StyledBranding>

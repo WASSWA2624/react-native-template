@@ -17,10 +17,12 @@ import {
   Icon,
   LanguageControls,
   NoticeSurface,
+  ShellBanners,
   Sidebar,
   ThemeControls,
 } from '@platform/components';
 import GlobalFooter, { FOOTER_VARIANTS } from '@platform/components/navigation/GlobalFooter';
+import { useShellBanners } from '@hooks';
 import { useHeaderActions } from './useMainLayoutMemo';
 import useMainRouteLayoutWeb from './useMainRouteLayoutWeb';
 import Brand from './Brand';
@@ -37,6 +39,10 @@ import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH } from '.
 const MainRouteLayoutWeb = () => {
   useAuthGuard();
   const layout = useMainRouteLayoutWeb();
+  const banners = useShellBanners();
+  const bannerSlot = banners.length ? (
+    <ShellBanners banners={banners} testID="main-shell-banners" />
+  ) : null;
   const {
     t,
     mainItems,
@@ -131,6 +137,7 @@ const MainRouteLayoutWeb = () => {
             />
           ) : null
         }
+        banner={bannerSlot}
         overlay={overlaySlot}
         notices={<NoticeSurface testID="main-notice-surface" />}
         sidebarCollapsed={isSidebarCollapsed}

@@ -6,12 +6,13 @@
 
 import React from 'react';
 import { Slot } from 'expo-router';
-import { useI18n } from '@hooks';
+import { useI18n, useShellBanners } from '@hooks';
 import { AppFrame } from '@platform/layouts';
 import {
   GlobalHeader,
   LanguageControls,
   NoticeSurface,
+  ShellBanners,
   TabBar,
   ThemeControls,
 } from '@platform/components';
@@ -24,6 +25,10 @@ import useMainRouteLayoutNative from './useMainRouteLayoutNative';
 const MainRouteLayoutAndroid = () => {
   const { t } = useI18n();
   const { headerActions, overlaySlot, mainItems, isItemVisible } = useMainRouteLayoutNative();
+  const banners = useShellBanners();
+  const bannerSlot = banners.length ? (
+    <ShellBanners banners={banners} testID="main-shell-banners" />
+  ) : null;
 
   return (
     <AppFrame
@@ -56,6 +61,7 @@ const MainRouteLayoutAndroid = () => {
           )}
         />
       }
+      banner={bannerSlot}
       overlay={overlaySlot}
       notices={<NoticeSurface testID="main-notice-surface" />}
       accessibilityLabel={t('navigation.mainNavigation')}

@@ -5,12 +5,13 @@
  */
 import React from 'react';
 import { Slot } from 'expo-router';
-import { useI18n } from '@hooks';
+import { useI18n, useShellBanners } from '@hooks';
 import PatientFrame from '../../PatientFrame';
 import {
   GlobalHeader,
   LanguageControls,
   NoticeSurface,
+  ShellBanners,
   Sidebar,
   ThemeControls,
 } from '@platform/components';
@@ -23,6 +24,10 @@ import usePatientRouteLayout from './usePatientRouteLayout';
 const PatientRouteLayoutWeb = () => {
   const { t } = useI18n();
   const { headerActions, overlaySlot, patientItems, isItemVisible } = usePatientRouteLayout();
+  const banners = useShellBanners();
+  const bannerSlot = banners.length ? (
+    <ShellBanners banners={banners} testID="patient-shell-banners" />
+  ) : null;
 
   return (
     <PatientFrame
@@ -56,6 +61,7 @@ const PatientRouteLayoutWeb = () => {
           testID="patient-footer"
         />
       )}
+      banner={bannerSlot}
       overlay={overlaySlot}
       notices={<NoticeSurface testID="patient-notice-surface" />}
       accessibilityLabel={t('navigation.patientNavigation')}

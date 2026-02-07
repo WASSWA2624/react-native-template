@@ -21,6 +21,7 @@ import {
  * @param {React.ReactNode} props.children - Auth form content
  * @param {React.ReactNode} props.branding - Branding/logo area
  * @param {React.ReactNode} props.helpLinks - Help/forgot password links
+ * @param {React.ReactNode} props.banner - Optional banner slot (e.g. ShellBanners)
  * @param {string} props.accessibilityLabel - Accessibility label
  * @param {string} props.testID - Test identifier
  */
@@ -28,6 +29,7 @@ const AuthLayoutIOS = ({
   children,
   branding,
   helpLinks,
+  banner,
   accessibilityLabel,
   testID,
 }) => {
@@ -37,6 +39,7 @@ const AuthLayoutIOS = ({
       testID={testID}
       accessibilityRole="none"
     >
+      {banner || null}
       <StyledKeyboardAvoidingView behavior="padding">
         <StyledScrollView
           keyboardShouldPersistTaps="handled"

@@ -20,6 +20,14 @@ const StyledContainer = styled.main.withConfig({
   padding: ${({ theme }) => theme.spacing.lg}px;
 `;
 
+const StyledBanner = styled.div.withConfig({
+  displayName: 'StyledBanner',
+  componentId: 'StyledBanner',
+})`
+  width: 100%;
+  margin-bottom: ${({ theme }) => theme.spacing.md}px;
+`;
+
 const StyledCard = styled.div.withConfig({
   displayName: 'StyledCard',
   componentId: 'StyledCard',
@@ -65,6 +73,7 @@ const StyledHelpLinks = styled.div.withConfig({
 `;
 
 export {
+  StyledBanner,
   StyledContainer,
   StyledCard,
   StyledBranding,
