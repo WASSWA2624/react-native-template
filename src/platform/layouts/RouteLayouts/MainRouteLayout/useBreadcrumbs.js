@@ -7,7 +7,7 @@
 import { useMemo } from 'react';
 import { usePathname } from 'expo-router';
 import { useI18n } from '@hooks';
-import { getMenuIconGlyph } from '@config/sideMenu';
+import { getMenuIconGlyph, getNavItemLabel } from '@config/sideMenu';
 
 /**
  * Finds a navigation item matching path (items from config/sideMenu: id, path, icon).
@@ -83,7 +83,7 @@ const useBreadcrumbs = (navigationItems = [], itemsI18nPrefix = 'navigation.item
       currentPath += `/${segment}`;
       const isLast = index === segments.length - 1;
       const navItem = findNavigationItem(navigationItems, currentPath);
-      const label = (navItem?.label ?? (navItem?.id ? t(`${itemsI18nPrefix}.${navItem.id}`) : '')) || formatSegmentLabel(segment, t);
+      const label = (navItem ? (navItem.label ?? getNavItemLabel(t, navItem, itemsI18nPrefix)) : '') || formatSegmentLabel(segment, t);
       const icon = navItem?.icon ? getMenuIconGlyph(navItem.icon) : null;
 
       items.push({

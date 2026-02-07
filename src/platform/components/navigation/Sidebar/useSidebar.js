@@ -1,23 +1,20 @@
 /**
  * useSidebar Hook
- * Shared logic for Sidebar component
- * File: useSidebar.js
+ * Shared logic for Sidebar component. Sidebar is populated from MAIN_NAV_ITEMS (tree).
  */
 import { useState, useMemo } from 'react';
 import { usePathname } from 'expo-router';
-import { SIDE_MENU_ITEMS } from '@config/sideMenu';
+import { MAIN_NAV_ITEMS, SIDE_MENU_ITEMS } from '@config/sideMenu';
 
 /**
  * Sidebar hook
  * @param {Object} options - Hook options
- * @param {Array} options.items - Navigation items
- * @param {string} options.pathname - Current pathname
- * @param {Function} options.onItemPress - Item press handler
+ * @param {Array} options.items - Navigation items (default: MAIN_NAV_ITEMS)
  * @param {Function} options.isItemVisible - Function to check item visibility (optional)
  * @returns {Object} Sidebar state and handlers
  */
 const useSidebar = ({
-  items = [],
+  items = MAIN_NAV_ITEMS,
   pathname,
   onItemPress,
   isItemVisible,
@@ -27,37 +24,26 @@ const useSidebar = ({
   const activePathname = pathname || currentPathname;
 
   const isItemActive = (item) => {
-    if (!item.href) return false;
-    return activePathname === item.href || activePathname.startsWith(item.href + '/');
+    const href = item.href ?? item.path;
+    if (!href) return false;
+    return activePathname === href || activePathname.startsWith(href + '/');
   };
 
-  const defaultIsItemVisible = (item) => {
-    // If custom visibility function provided, use it
-    if (isItemVisible) {
-      return isItemVisible(item);
-    }
-    // Default: all items visible
-    return true;
-  };
+  const defaultIsItemVisible = (item) => (isItemVisible ? isItemVisible(item) : true);
 
   const toggleSection = (sectionId) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId],
-    }));
+    setExpandedSections((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
   };
 
   const handleItemPress = (item) => {
-    if (onItemPress) {
-      onItemPress(item);
-    } else if (item.onPress) {
-      item.onPress(item);
-    }
+    if (onItemPress) onItemPress(item);
+    else if (item.onPress) item.onPress(item);
   };
 
-  const filteredItems = useMemo(() => {
-    return items.filter(defaultIsItemVisible);
-  }, [items, isItemVisible]);
+  const filteredItems = useMemo(
+    () => (Array.isArray(items) ? items.filter(defaultIsItemVisible) : []),
+    [items, isItemVisible]
+  );
 
   return {
     pathname: activePathname,
@@ -71,7 +57,7 @@ const useSidebar = ({
 
 export default useSidebar;
 
-/** Sidebar items for native (labels resolved via t('navigation.items.main.<id>') in component). */
+/** Flat list for legacy consumers; labels via t('navigation.items.main.<id>') in component. */
 export const sidebarMenu = SIDE_MENU_ITEMS.map((it) => ({
   id: it.id,
   icon: it.icon,

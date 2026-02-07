@@ -6,7 +6,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import { useAuth, useI18n, useNavigationVisibility, useUiState } from '@hooks';
-import { MAIN_NAV_ITEMS } from '@config/sideMenu';
+import { MAIN_NAV_ITEMS, getNavItemLabel } from '@config/sideMenu';
 import { useAuthGuard } from '@navigation/guards';
 import { ACTION_VARIANTS } from '@platform/components/navigation/GlobalHeader/types';
 import { LoadingOverlay } from '@platform/components';
@@ -28,7 +28,7 @@ const useMainRouteLayoutNative = () => {
       MAIN_NAV_ITEMS.map((it) => ({
         ...it,
         href: it.path,
-        label: t(`navigation.items.main.${it.id}`),
+        label: getNavItemLabel(t, it),
         icon: it.icon,
       })),
     [t]

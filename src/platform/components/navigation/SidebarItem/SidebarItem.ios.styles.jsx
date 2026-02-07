@@ -4,11 +4,12 @@ import { TouchableOpacity, Text, View } from 'react-native';
 export const Row = styled(TouchableOpacity).withConfig({
   displayName: 'Row',
   componentId: 'Row',
-  shouldForwardProp: (prop) => prop !== '$active',
+  shouldForwardProp: (prop) => prop !== '$active' && prop !== '$level',
 })`
   flex-direction: row;
   align-items: center;
   padding: 12px 14px;
+  padding-left: ${({ theme, $level = 0 }) => 14 + (theme.spacing?.md ?? 16) * $level}px;
   background-color: ${({ theme, $active }) => ($active ? theme.colors.background.secondary : 'transparent')};
 `;
 

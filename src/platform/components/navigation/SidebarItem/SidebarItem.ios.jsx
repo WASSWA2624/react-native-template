@@ -14,6 +14,10 @@ const normalize = (props) => {
       collapsed: props.collapsed,
       active: props.active,
       onPress: props.onPress,
+      level: props.level,
+      hasChildren: props.hasChildren,
+      expanded: props.expanded,
+      onToggleExpand: props.onToggleExpand,
     };
   }
   return {
@@ -23,25 +27,40 @@ const normalize = (props) => {
     collapsed: props.collapsed,
     active: props.active,
     onPress: props.onPress,
+    level: props.level,
+    hasChildren: props.hasChildren,
+    expanded: props.expanded,
+    onToggleExpand: props.onToggleExpand,
   };
 };
 
 const SidebarItemIOS = (props) => {
-  const { path, label, icon, collapsed, active, onPress } = normalize(props);
+  const { path, label, icon, collapsed, active, onPress, level = 0, hasChildren, expanded, onToggleExpand } = normalize(props);
 
   const handlePress = () => {
     if (onPress) onPress();
-    // Navigation logic can be handled at a higher level or by passing a handler via props
   };
 
   const testID = props.testID ?? (props.item?.id ? `sidebar-item-${props.item.id}` : undefined);
   return (
     <TouchableOpacity testID={testID} onPress={handlePress} accessibilityLabel={label} accessibilityState={{ selected: !!active }}>
-      <Row $active={active}>
+      <Row $active={active} $level={level}>
         <IconBox>
           <Icon glyph={getMenuIconGlyph(icon)} size="sm" decorative />
         </IconBox>
         <Label $active={active}>{label}</Label>
+        {hasChildren && (
+          <TouchableOpacity
+            onPress={(e) => {
+              e?.stopPropagation?.();
+              onToggleExpand?.();
+            }}
+            style={{ padding: 4 }}
+            accessibilityLabel={expanded ? 'Collapse' : 'Expand'}
+          >
+            <Label $active={false}>{expanded ? '▾' : '▸'}</Label>
+          </TouchableOpacity>
+        )}
       </Row>
     </TouchableOpacity>
   );

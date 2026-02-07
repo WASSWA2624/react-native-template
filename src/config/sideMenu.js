@@ -1,13 +1,14 @@
 /**
  * Sidebar menu configuration (app-router.mdc: paths omit group segments).
- * Labels via i18n: navigation.items.main.<id>. Icons via MENU_ICON_GLYPHS / getMenuIconGlyph.
+ * Each main item: id, icon, path, name (i18n key for locale), children (null or array).
+ * Children: id, icon, path, name (no children). Icons via MENU_ICON_GLYPHS / getMenuIconGlyph.
  */
 
-/** @typedef {{ id: string, icon: string, path: string }} SidebarItem */
+/** @typedef {{ id: string, icon: string, path: string, name: string, children?: null | Array<{ id: string, icon: string, path: string, name: string }> }} MainNavItem */
+/** @typedef {{ id: string, icon: string, path: string, name: string }} MainNavChild */
 
 /** Icon key → glyph (single source of truth for menu icons; UI uses getMenuIconGlyph). */
 export const MENU_ICON_GLYPHS = {
-  /* outline keys (sideMenu items) */
   'home-outline': '🏠',
   'settings-outline': '⚙',
   'map-outline': '📍',
@@ -33,53 +34,76 @@ export const MENU_ICON_GLYPHS = {
 };
 
 const DEFAULT_ICON_GLYPH = '•';
+const MAIN_NAV_I18N = 'navigation.items.main';
 
-/** Resolve menu icon key to glyph for display. */
 export function getMenuIconGlyph(iconKey) {
   if (!iconKey) return DEFAULT_ICON_GLYPH;
   return MENU_ICON_GLYPHS[iconKey] ?? DEFAULT_ICON_GLYPH;
 }
 
-/** Main app sidebar: home + settings */
-const MAIN_NAV_ITEMS = [
-  { id: 'home', icon: 'home-outline', path: '/home' },
-  { id: 'settings', icon: 'settings-outline', path: '/settings' },
-];
+/**
+ * Resolve display label for a nav item (locale support via name).
+ * @param {Function} t - i18n translate
+ * @param {{ name?: string, id?: string }} item - item with name (i18n key) or id fallback
+ * @param {string} [prefix=MAIN_NAV_I18N] - i18n prefix when using id fallback
+ * @returns {string}
+ */
+export function getNavItemLabel(t, item, prefix = MAIN_NAV_I18N) {
+  if (!item) return '';
+  if (item.name) return t(item.name);
+  if (item.id) return t(`${prefix}.${item.id}`);
+  return '';
+}
 
-/** Settings sub-routes (index list) */
+// ─── Settings children (same structure: id, icon, path, name; no children) ───
+/** @type {MainNavChild[]} */
 const SETTINGS_ITEMS = [
-  { id: 'settings-addresses', icon: 'map-outline', path: '/settings/addresses' },
-  { id: 'settings-api-keys', icon: 'key-outline', path: '/settings/api-keys' },
-  { id: 'settings-api-key-permissions', icon: 'shield-outline', path: '/settings/api-key-permissions' },
-  { id: 'settings-beds', icon: 'bed-outline', path: '/settings/beds' },
-  { id: 'settings-branches', icon: 'git-branch-outline', path: '/settings/branches' },
-  { id: 'settings-contacts', icon: 'people-outline', path: '/settings/contacts' },
-  { id: 'settings-departments', icon: 'folder-outline', path: '/settings/departments' },
-  { id: 'settings-facilities', icon: 'business-outline', path: '/settings/facilities' },
-  { id: 'settings-oauth-accounts', icon: 'lock-open-outline', path: '/settings/oauth-accounts' },
-  { id: 'settings-permissions', icon: 'shield-outline', path: '/settings/permissions' },
-  { id: 'settings-role-permissions', icon: 'shield-checkmark-outline', path: '/settings/role-permissions' },
-  { id: 'settings-roles', icon: 'people-outline', path: '/settings/roles' },
-  { id: 'settings-rooms', icon: 'home-outline', path: '/settings/rooms' },
-  { id: 'settings-tenants', icon: 'layers-outline', path: '/settings/tenants' },
-  { id: 'settings-units', icon: 'grid-outline', path: '/settings/units' },
-  { id: 'settings-user-mfas', icon: 'lock-closed-outline', path: '/settings/user-mfas' },
-  { id: 'settings-user-profiles', icon: 'person-outline', path: '/settings/user-profiles' },
-  { id: 'settings-user-roles', icon: 'people-outline', path: '/settings/user-roles' },
-  { id: 'settings-user-sessions', icon: 'time-outline', path: '/settings/user-sessions' },
-  { id: 'settings-users', icon: 'people-outline', path: '/settings/users' },
-  { id: 'settings-wards', icon: 'medkit-outline', path: '/settings/wards' },
+  { id: 'settings-addresses', icon: 'map-outline', path: '/settings/addresses', name: `${MAIN_NAV_I18N}.settings-addresses` },
+  { id: 'settings-api-keys', icon: 'key-outline', path: '/settings/api-keys', name: `${MAIN_NAV_I18N}.settings-api-keys` },
+  { id: 'settings-api-key-permissions', icon: 'shield-outline', path: '/settings/api-key-permissions', name: `${MAIN_NAV_I18N}.settings-api-key-permissions` },
+  { id: 'settings-beds', icon: 'bed-outline', path: '/settings/beds', name: `${MAIN_NAV_I18N}.settings-beds` },
+  { id: 'settings-branches', icon: 'git-branch-outline', path: '/settings/branches', name: `${MAIN_NAV_I18N}.settings-branches` },
+  { id: 'settings-contacts', icon: 'people-outline', path: '/settings/contacts', name: `${MAIN_NAV_I18N}.settings-contacts` },
+  { id: 'settings-departments', icon: 'folder-outline', path: '/settings/departments', name: `${MAIN_NAV_I18N}.settings-departments` },
+  { id: 'settings-facilities', icon: 'business-outline', path: '/settings/facilities', name: `${MAIN_NAV_I18N}.settings-facilities` },
+  { id: 'settings-oauth-accounts', icon: 'lock-open-outline', path: '/settings/oauth-accounts', name: `${MAIN_NAV_I18N}.settings-oauth-accounts` },
+  { id: 'settings-permissions', icon: 'shield-outline', path: '/settings/permissions', name: `${MAIN_NAV_I18N}.settings-permissions` },
+  { id: 'settings-role-permissions', icon: 'shield-checkmark-outline', path: '/settings/role-permissions', name: `${MAIN_NAV_I18N}.settings-role-permissions` },
+  { id: 'settings-roles', icon: 'people-outline', path: '/settings/roles', name: `${MAIN_NAV_I18N}.settings-roles` },
+  { id: 'settings-rooms', icon: 'home-outline', path: '/settings/rooms', name: `${MAIN_NAV_I18N}.settings-rooms` },
+  { id: 'settings-tenants', icon: 'layers-outline', path: '/settings/tenants', name: `${MAIN_NAV_I18N}.settings-tenants` },
+  { id: 'settings-units', icon: 'grid-outline', path: '/settings/units', name: `${MAIN_NAV_I18N}.settings-units` },
+  { id: 'settings-user-mfas', icon: 'lock-closed-outline', path: '/settings/user-mfas', name: `${MAIN_NAV_I18N}.settings-user-mfas` },
+  { id: 'settings-user-profiles', icon: 'person-outline', path: '/settings/user-profiles', name: `${MAIN_NAV_I18N}.settings-user-profiles` },
+  { id: 'settings-user-roles', icon: 'people-outline', path: '/settings/user-roles', name: `${MAIN_NAV_I18N}.settings-user-roles` },
+  { id: 'settings-user-sessions', icon: 'time-outline', path: '/settings/user-sessions', name: `${MAIN_NAV_I18N}.settings-user-sessions` },
+  { id: 'settings-users', icon: 'people-outline', path: '/settings/users', name: `${MAIN_NAV_I18N}.settings-users` },
+  { id: 'settings-wards', icon: 'medkit-outline', path: '/settings/wards', name: `${MAIN_NAV_I18N}.settings-wards` },
 ];
 
-/** Auth routes removed; kept for export compatibility */
-const AUTH_ITEMS = [];
+// ─── Main sidebar nav: id, icon, path, name, children (null = no nesting) ─────
+/** @type {MainNavItem[]} */
+export const MAIN_NAV_ITEMS = [
+  { id: 'home', icon: 'home-outline', path: '/home', name: `${MAIN_NAV_I18N}.home`, children: null },
+  { id: 'settings', icon: 'settings-outline', path: '/settings', name: `${MAIN_NAV_I18N}.settings`, children: SETTINGS_ITEMS },
+];
 
-/** Full list for main sidebar (main nav + settings children). Labels via t('navigation.items.main.<id>'). */
-export const SIDE_MENU_ITEMS = [...MAIN_NAV_ITEMS, ...SETTINGS_ITEMS];
+/** Flattened list (main + all children). Labels via getNavItemLabel(t, item). */
+export const SIDE_MENU_ITEMS = (() => {
+  const out = [];
+  for (const it of MAIN_NAV_ITEMS) {
+    out.push(it);
+    if (it.children && it.children.length > 0) out.push(...it.children);
+  }
+  return out;
+})();
 
 /** Patient shell nav. Labels via t('navigation.items.patient.<id>'). */
 export const PATIENT_MENU_ITEMS = [
-  { id: 'home', icon: 'home-outline', path: '/' },
+  { id: 'home', icon: 'home-outline', path: '/', name: 'navigation.items.patient.home' },
 ];
 
-export { MAIN_NAV_ITEMS, SETTINGS_ITEMS, AUTH_ITEMS };
+/** @deprecated Kept for export compatibility */
+export const AUTH_ITEMS = [];
+
+export { SETTINGS_ITEMS };
