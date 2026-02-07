@@ -9,9 +9,9 @@ import styled from 'styled-components';
 const StyledBackdrop = styled.div.withConfig({
   displayName: 'StyledBackdrop',
   componentId: 'StyledBackdrop',
+  shouldForwardProp: (prop) => prop !== 'testID',
 }).attrs(({ testID }) => ({
   'data-testid': testID,
-  testID,
 }))`
   position: fixed;
   top: 0;
@@ -42,6 +42,7 @@ const StyledBackdrop = styled.div.withConfig({
 const StyledModalContainer = styled.div.withConfig({
   displayName: 'StyledModalContainer',
   componentId: 'StyledModalContainer',
+  shouldForwardProp: (prop) => prop !== 'size',
 })`
   background-color: ${({ theme }) => theme.colors.background.primary};
   border-radius: ${({ theme, size }) => (size === 'fullscreen' ? 0 : theme.radius.sm)}px;
@@ -81,9 +82,9 @@ const StyledModalContainer = styled.div.withConfig({
 const StyledCloseButton = styled.button.withConfig({
   displayName: 'StyledCloseButton',
   componentId: 'StyledCloseButton',
+  shouldForwardProp: (prop) => prop !== 'testID',
 }).attrs(({ testID }) => ({
   'data-testid': testID,
-  testID,
 }))`
   position: absolute;
   top: ${({ theme }) => theme.spacing.md}px;

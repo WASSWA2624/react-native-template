@@ -34,7 +34,6 @@ const GlobalFooterWeb = ({
       role="contentinfo"
       aria-label={accessibilityLabel || t('navigation.footer.title')}
       data-testid={testID}
-      testID={testID}
       className={className}
       {...rest}
     >

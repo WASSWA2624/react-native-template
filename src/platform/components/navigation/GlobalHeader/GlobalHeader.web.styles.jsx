@@ -108,9 +108,11 @@ const StyledUtilityGroup = styled.div.withConfig({
   flex-shrink: 0;
 `;
 
+const ACTION_BUTTON_STYLE_PROPS = ['isPrimary', 'isDisabled', 'isCircular'];
 const StyledActionButton = styled.button.withConfig({
   displayName: 'StyledActionButton',
   componentId: 'StyledActionButton',
+  shouldForwardProp: (prop) => !ACTION_BUTTON_STYLE_PROPS.includes(prop),
 })`
   display: inline-flex;
   align-items: center;

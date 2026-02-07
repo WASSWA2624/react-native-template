@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const StyledContainer = styled.main.withConfig({
   displayName: 'StyledContainer',
   componentId: 'StyledContainer',
-  shouldForwardProp: (prop) => !prop.startsWith('$'),
+  shouldForwardProp: (prop) => prop !== 'testID' && !prop.startsWith('$'),
 }).attrs(({ testID }) => ({
   'data-testid': testID,
 }))`

@@ -43,7 +43,7 @@ const EmptyStateIOS = ({
   return (
     <StyledEmptyState
       size={emptyState.size}
-      accessibilityRole="status"
+      accessibilityRole="none"
       accessibilityLabel={defaultAccessibilityLabel}
       testID={testID}
       style={style}

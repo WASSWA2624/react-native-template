@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const StyledFooter = styled.footer.withConfig({
   displayName: 'StyledFooter',
   componentId: 'StyledFooter',
+  shouldForwardProp: (prop) => prop !== 'testID',
 })`
   background-color: ${({ theme }) => theme.colors.background.secondary};
   border-top: 1px solid ${({ theme }) => theme.colors.background.tertiary};
@@ -116,9 +117,11 @@ const StyledStatusGroup = styled.div.withConfig({
   gap: ${({ theme }) => theme.spacing.sm}px;
 `;
 
+const STYLE_ONLY_PROPS = ['tone'];
 const StyledStatusBadge = styled.div.withConfig({
   displayName: 'StyledStatusBadge',
   componentId: 'StyledStatusBadge',
+  shouldForwardProp: (prop) => !STYLE_ONLY_PROPS.includes(prop),
 })`
   display: inline-flex;
   align-items: center;
@@ -214,9 +217,11 @@ const StyledQuickActionsGroup = styled.div.withConfig({
   flex-wrap: wrap;
 `;
 
+const ACTION_BUTTON_STYLE_PROPS = ['isPrimary', 'isDisabled'];
 const StyledQuickActionButton = styled.button.withConfig({
   displayName: 'StyledQuickActionButton',
   componentId: 'StyledQuickActionButton',
+  shouldForwardProp: (prop) => !ACTION_BUTTON_STYLE_PROPS.includes(prop),
 })`
   display: inline-flex;
   align-items: center;

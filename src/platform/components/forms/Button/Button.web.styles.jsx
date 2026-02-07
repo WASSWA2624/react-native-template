@@ -5,9 +5,11 @@
  */
 import styled from 'styled-components';
 
+const BUTTON_STYLE_PROPS = ['variant', 'state', 'hasIcon', 'size'];
 const StyledButton = styled.button.withConfig({
   displayName: 'StyledButton',
   componentId: 'StyledButton',
+  shouldForwardProp: (prop) => !BUTTON_STYLE_PROPS.includes(prop),
 })`
   display: inline-flex;
   flex-direction: row;
@@ -182,9 +184,11 @@ const StyledButtonContent = styled.span.withConfig({
   justify-content: center;
 `;
 
+const SPINNER_STYLE_PROPS = ['size', 'variant', 'hasText'];
 const StyledSpinner = styled.span.withConfig({
   displayName: 'StyledSpinner',
   componentId: 'StyledSpinner',
+  shouldForwardProp: (prop) => !SPINNER_STYLE_PROPS.includes(prop),
 })`
   display: inline-block;
   width: ${({ size, theme }) => {

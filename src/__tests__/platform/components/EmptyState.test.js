@@ -144,12 +144,14 @@ describe('EmptyState Component', () => {
   });
 
   describe('Accessibility', () => {
-    it('should have status role', () => {
+    it('should have status role (web) or none (native)', () => {
       const { getByTestId } = renderWithTheme(
         <EmptyState title="No items" testID="empty-state" />
       );
       const emptyState = getByTestId('empty-state');
-      expect(emptyState.props.accessibilityRole || emptyState.props.role).toBe('status');
+      const role = emptyState.props.accessibilityRole || emptyState.props.role;
+      // Web: role="status"; React Native: accessibilityRole="none" (status not supported)
+      expect(['status', 'none']).toContain(role);
     });
 
     it('should use custom accessibility label', () => {
@@ -241,12 +243,12 @@ describe('EmptyState Component', () => {
         expect(getByText('Android Empty State')).toBeTruthy();
       });
 
-      it('should have accessibilityRole="status" on Android', () => {
+      it('should have accessibilityRole="none" on Android', () => {
         const { getByTestId } = renderWithTheme(
           <EmptyStateAndroid title="Android Empty State" testID="empty-state-android" />
         );
         const emptyState = getByTestId('empty-state-android');
-        expect(emptyState.props.accessibilityRole).toBe('status');
+        expect(emptyState.props.accessibilityRole).toBe('none');
       });
 
       it('should use custom accessibility label on Android', () => {
@@ -336,12 +338,12 @@ describe('EmptyState Component', () => {
         expect(getByText('iOS Empty State')).toBeTruthy();
       });
 
-      it('should have accessibilityRole="status" on iOS', () => {
+      it('should have accessibilityRole="none" on iOS', () => {
         const { getByTestId } = renderWithTheme(
           <EmptyStateIOS title="iOS Empty State" testID="empty-state-ios" />
         );
         const emptyState = getByTestId('empty-state-ios');
-        expect(emptyState.props.accessibilityRole).toBe('status');
+        expect(emptyState.props.accessibilityRole).toBe('none');
       });
 
       it('should use custom accessibility label on iOS', () => {

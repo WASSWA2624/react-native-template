@@ -124,12 +124,14 @@ describe('OfflineState Component', () => {
   });
 
   describe('Accessibility', () => {
-    it('should have status role', () => {
+    it('should have status role (web) or none (native)', () => {
       const { getByTestId } = renderWithTheme(
         <OfflineState title="Offline" testID="offline-state" />
       );
       const offlineState = getByTestId('offline-state');
-      expect(offlineState.props.accessibilityRole || offlineState.props.role).toBe('status');
+      const role = offlineState.props.accessibilityRole || offlineState.props.role;
+      // Web: role="status"; React Native: accessibilityRole="none" (status not supported)
+      expect(['status', 'none']).toContain(role);
     });
 
     it('should use custom accessibility label', () => {
@@ -221,12 +223,12 @@ describe('OfflineState Component', () => {
         expect(getByText('Android Offline State')).toBeTruthy();
       });
 
-      it('should have accessibilityRole="status" on Android', () => {
+      it('should have accessibilityRole="none" on Android', () => {
         const { getByTestId } = renderWithTheme(
           <OfflineStateAndroid title="Android Offline State" testID="offline-state-android" />
         );
         const offlineState = getByTestId('offline-state-android');
-        expect(offlineState.props.accessibilityRole).toBe('status');
+        expect(offlineState.props.accessibilityRole).toBe('none');
       });
 
       it('should use custom accessibility label on Android', () => {
@@ -317,12 +319,12 @@ describe('OfflineState Component', () => {
         expect(getByText('iOS Offline State')).toBeTruthy();
       });
 
-      it('should have accessibilityRole="status" on iOS', () => {
+      it('should have accessibilityRole="none" on iOS', () => {
         const { getByTestId } = renderWithTheme(
           <OfflineStateIOS title="iOS Offline State" testID="offline-state-ios" />
         );
         const offlineState = getByTestId('offline-state-ios');
-        expect(offlineState.props.accessibilityRole).toBe('status');
+        expect(offlineState.props.accessibilityRole).toBe('none');
       });
 
       it('should use custom accessibility label on iOS', () => {
@@ -437,7 +439,7 @@ describe('OfflineState Component', () => {
   });
 
   describe('Web Platform specific', () => {
-    it('should have status role (role or accessibilityRole)', () => {
+    it('should have role="status" on web', () => {
       const { getByTestId } = renderWithTheme(
         <OfflineState title="Web Offline State" testID="offline-state-web" />
       );

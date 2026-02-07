@@ -37,7 +37,7 @@ const OfflineStateIOS = ({
   return (
     <StyledOfflineState
       size={offlineState.size}
-      accessibilityRole="status"
+      accessibilityRole="none"
       accessibilityLabel={accessibilityLabel || (typeof title === 'string' ? title : undefined)}
       testID={testID}
       style={style}
